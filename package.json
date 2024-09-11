@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-starter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "NODE_ENV=production npx nuxi typecheck",
+    "unit": "vitest run",
+    "unit:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^0.3.13",
+    "nuxt": "^3.12.1",
+    "vue": "^3.4.21"
+  },
+  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a",
+  "devDependencies": {
+    "@types/eslint": "^8.56.10",
+    "typescript": "5.4.4",
+    "vue-tsc": "^1"
+  }
+}
