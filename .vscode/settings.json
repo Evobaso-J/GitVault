@@ -28,5 +28,17 @@
     "javascript",
     "typescript",
     "vue"
-  ]
+  ],
+  "i18n-ally.localesPaths": "./src/locales",
+  "i18n-ally.displayLanguage": "en-US",
+  "i18n-ally.sourceLanguage": "en-US",
+  "i18n-ally.enabledFrameworks": [
+    "vue"
+  ],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.theme.annotation": "rgba(52, 137, 235, .8)",
+  "i18n-ally.theme.annotationBorder": "rgba(52, 137, 235, .8)",
+  "i18n-ally.theme.annotationMissing": "#d37070",
+  "i18n-ally.theme.annotationMissingBorder": "#d37070",
+  "i18n-ally.sortKeys": true
 }

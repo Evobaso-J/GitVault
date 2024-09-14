@@ -7,7 +7,8 @@
     "dbaeumer.vscode-eslint",
     "nuxtr.nuxtr-vscode",
     "bradlc.vscode-tailwindcss",
-    "kamikillerto.vscode-colorize"
+    "kamikillerto.vscode-colorize",
+    "lokalise.i18n-ally"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": [
