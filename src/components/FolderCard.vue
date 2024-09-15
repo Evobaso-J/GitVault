@@ -15,7 +15,7 @@
         <span>
           <UIcon
             name="i-material-symbols-folder"
-            class="w-6 h-6"
+            class="w-6 h-6 text-gray-500"
           />
         </span>
         <span class="text-sm truncate">
