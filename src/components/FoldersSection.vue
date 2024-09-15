@@ -6,11 +6,11 @@
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <div
         v-for="folder in folders"
-        :key="folder.title"
+        :key="folder.name"
         class="col-span-1"
       >
         <FolderCard
-          :title="folder.title"
+          :title="folder.name"
           :to="folder.to"
         />
       </div>
@@ -19,12 +19,12 @@
 </template>
 
 <script setup lang='ts'>
-import type { Folder } from '~/resources/folders'
+import type { CDNFolder } from '~/resources/CDNFolders'
 
 defineComponent({ name: 'FoldersSection' })
 
 type FoldersSectionProps = {
-  folders: Folder[]
+  folders: CDNFolder[]
 }
 defineProps<FoldersSectionProps>()
 </script>
