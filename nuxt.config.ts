@@ -14,7 +14,18 @@ export default defineNuxtConfig({
     checker: true,
   },
 
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
+
   srcDir: 'src/',
+  serverDir: 'server/',
   ssr: true,
   compatibilityDate: '2024-07-04',
+
+  runtimeConfig: {
+    ghToken: '',
+    ghRepoOwner: '',
+    ghRepoName: '',
+  },
 })
