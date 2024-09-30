@@ -7,30 +7,19 @@
 </template>
 
 <script setup lang="ts">
-import type { CDNFolder } from '~/resources/CDNFolders'
+import { parseGhRepoContentsToCDNFolder } from '~/resources/CDNFolders/parse'
 
 const route = useRoute()
 
-const parseGhFolderToCDNFolder = (folders: any[]): CDNFolder[] => {
-  // Filter folders by 'dir' type and map them to CDNFolder
-  return folders.reduce((acc, folder) => {
-    if (folder.type === 'dir') {
-      acc.push({
-        name: folder.name,
-        to: `/${folder.path}`,
-      })
-    }
-    return acc
-  }, [])
-}
 const queryPath = computed(() => {
   if (Array.isArray(route.params.path)) return route.params.path.join('/')
   return route.params.path
 })
-const { data } = useFetch('/api/folders', {
+const { data } = useFetch('/api/ghRepoContents', {
+  method: 'GET',
   query: {
     path: queryPath.value,
   },
-  transform: parseGhFolderToCDNFolder,
+  transform: parseGhRepoContentsToCDNFolder,
 })
 </script>
