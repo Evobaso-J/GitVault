@@ -11,17 +11,9 @@
         },
       }"
     >
-      <span class="flex items-center gap-3">
-        <span>
-          <UIcon
-            name="i-material-symbols-folder"
-            class="w-6 h-6 text-gray-500"
-          />
-        </span>
-        <span class="text-sm truncate">
-          {{ title }}
-        </span>
-      </span>
+      <FileCardHeader
+        :title
+      />
     </UCard>
   </ULink>
 </template>
@@ -30,7 +22,7 @@
 import type { NuxtLinkProps } from '#app'
 
 defineComponent({ name: 'FileCard' })
-type FileCardProps = {
+export type FileCardProps = {
   title: string
   to: NuxtLinkProps['to']
 }
