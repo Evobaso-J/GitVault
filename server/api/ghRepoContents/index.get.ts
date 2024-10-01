@@ -1,6 +1,6 @@
-import type { ghRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
+import type { GhRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
 
-export default defineEventHandler(async (event): Promise<ghRepoContentsResponseData> => {
+export default defineEventHandler(async (event): Promise<GhRepoContentsResponseData> => {
   const query = getQuery(event)
   const { ghToken, ghRepoOwner, ghRepoName } = useRuntimeConfig(event)
   return await $fetch(`https://api.github.com/repos/${ghRepoOwner}/${ghRepoName}/contents/${query.path}`, {
