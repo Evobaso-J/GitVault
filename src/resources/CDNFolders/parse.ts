@@ -1,7 +1,7 @@
 import type { CDNFolder } from '.'
-import type { ghContentsResponseData } from '~~/server/resources/gitHubRepoContents'
+import type { ghRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
 
-export const parseGhRepoContentsToCDNFolder = (ghRepoContentsData: ghContentsResponseData): CDNFolder[] => {
+export const parseGhRepoContentsToCDNFolder = (ghRepoContentsData: ghRepoContentsResponseData): CDNFolder[] => {
   if (!Array.isArray(ghRepoContentsData)) {
     console.error('ghRepoContentsData is not an array')
     return []

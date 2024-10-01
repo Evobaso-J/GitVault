@@ -2,7 +2,7 @@
   <UContainer>
     <UBreadcrumb
       :links="links"
-      class="my-4"
+      class="my-6"
     />
 
     <slot />
