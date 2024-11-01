@@ -20,11 +20,10 @@ const videoFileExtensions: FileExtension[] = ['.mp4', '.webm', '.ogg', '.mov', '
 
 const fileIcon = computed(() => {
   const fileExtension = getExtensionFromFileName(props.title)
-  if (fileExtension === '.pdf') return 'i-material-symbols-pdf'
+  if (fileExtension === '.pdf') return 'i-material-symbols-picture-as-pdf-outline'
   if (codeFileExtensions.includes(fileExtension)) return 'i-material-symbols-code'
   if (imageFileExtensions.includes(fileExtension)) return 'i-material-symbols-image'
   if (videoFileExtensions.includes(fileExtension)) return 'i-material-symbols-video'
-
   return 'i-material-symbols-file-copy'
 })
 </script>
