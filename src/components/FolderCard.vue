@@ -10,6 +10,7 @@
           padding: 'px-4 py-3 sm:px-4 sm:py-3',
         },
       }"
+      class="min-w-56"
     >
       <span class="flex items-center gap-3">
         <span>

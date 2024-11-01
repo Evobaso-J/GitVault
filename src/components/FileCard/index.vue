@@ -5,14 +5,19 @@
     <UCard
       :ui="{
         // UCard Config: https://ui.nuxt.com/components/card#config
-        background: 'hover:bg-gray-100 dark:hover:bg-gray-800',
         body: {
-          padding: 'px-4 py-3 sm:px-4 sm:py-3',
+          padding: 'px-0 pt-3 pb-0 sm:px-0 sm:pt-3 sm:pb-0',
         },
       }"
+      class="min-w-56 min-h-48"
     >
       <FileCardHeader
         :title
+        class="mb-2 px-4"
+      />
+      <FileCardPreview
+        class="px-0"
+        :file-name="title"
       />
     </UCard>
   </ULink>
