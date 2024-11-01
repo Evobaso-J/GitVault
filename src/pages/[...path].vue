@@ -1,9 +1,11 @@
 <template>
   <div class="flex flex-col gap-6">
     <FoldersSection
+      v-if="folders.length"
       :folders="folders"
     />
     <FilesSection
+      v-if="files.length"
       :files="files"
     />
   </div>
