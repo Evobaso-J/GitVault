@@ -8,6 +8,7 @@
         body: {
           padding: 'px-0 pt-3 pb-0 sm:px-0 sm:pt-3 sm:pb-0',
         },
+        ring: 'hover:ring-gray-400 dark:hover:ring-gray-500',
       }"
       class="min-w-56 min-h-48"
     >

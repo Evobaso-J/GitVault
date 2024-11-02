@@ -3,6 +3,7 @@
     :ui="{
       rounded: 'rounded-none rounded-b-lg',
       background: 'bg-gray-100 dark:bg-gray-800',
+      ring: 'ring-0',
     }"
     class="flex items-center justify-around"
   >
