@@ -1,13 +1,16 @@
 <template>
   <span class="flex items-center gap-3">
-    <span>
-      <FileCardIcon
-        :title
-      />
-    </span>
-    <span class="text-sm truncate">
+    <FileCardIcon
+      :title
+    />
+    <span class="text-sm truncate flex-1">
       {{ title }}
     </span>
+    <FileCardMenu
+      :to
+      :title
+      :download-url="downloadUrl"
+    />
   </span>
 </template>
 
@@ -15,6 +18,6 @@
 import type { FileCardProps } from './index.vue'
 
 defineComponent({ name: 'FileCardHeader' })
-type FileCardHeaderProps = Pick<FileCardProps, 'title'>
+export type FileCardHeaderProps = FileCardProps
 defineProps<FileCardHeaderProps>()
 </script>

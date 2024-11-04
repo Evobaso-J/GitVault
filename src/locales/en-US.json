@@ -1,4 +1,8 @@
 {
+  "copied": "Copied!",
+  "copyLink": "Copy link",
+  "download": "Download",
   "files": "Files",
-  "folders": "Folders"
+  "folders": "Folders",
+  "openInNewTab": "Open in a new tab"
 }

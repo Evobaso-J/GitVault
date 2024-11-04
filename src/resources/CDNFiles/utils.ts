@@ -1,4 +1,5 @@
 import type { FileExtension } from '.'
+import type { NuxtLinkProps } from '#app'
 
 export const getFileExtension = (fileName: string): FileExtension => `.${fileName.split('.').pop()}`
 
@@ -13,4 +14,19 @@ export const getIconFromFileName = (fileName: string): string => {
   if (imageFileExtensions.includes(fileExtension)) return 'i-mdi-file-image'
   if (videoFileExtensions.includes(fileExtension)) return 'i-mdi-file-video'
   return 'i-mdi-file-document'
+}
+
+export const downloadFile = (url: string, fileName: string) => {
+  const link = document.createElement('a')
+  link.href = url
+  link.download = fileName
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+export const getPathFromNuxtLinkTo = (nuxtLinkToProp: NuxtLinkProps['to']): string => {
+  if (typeof nuxtLinkToProp === 'string') return nuxtLinkToProp
+  if (!nuxtLinkToProp?.path) throw new Error('NuxtLinkProps.to.path is required')
+  return nuxtLinkToProp.path
 }

@@ -14,6 +14,8 @@
     >
       <FileCardHeader
         :title
+        :to
+        :download-url="downloadUrl"
         class="mb-2 px-4"
       />
       <FileCardPreview
@@ -31,6 +33,7 @@ defineComponent({ name: 'FileCard' })
 export type FileCardProps = {
   title: string
   to: NuxtLinkProps['to']
+  downloadUrl: string | null
 }
 
 defineProps<FileCardProps>()

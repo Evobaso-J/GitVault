@@ -10,5 +10,6 @@ export const parseGhRepoContentsToCDNFile = (ghRepoContentsData: GhRepoContentsR
   return filesData.map(file => ({
     name: file.name,
     to: `/${file.path}`,
+    downloadUrl: file.download_url,
   }))
 }
