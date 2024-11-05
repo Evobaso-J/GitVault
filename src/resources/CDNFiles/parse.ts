@@ -6,12 +6,7 @@ export const parseGhRepoContentsToCDNFiles = (ghRepoContentsData: GhRepoContents
     console.error('ghRepoContentsData is not an array')
     return []
   }
-  const filesData = ghRepoContentsData.filter(content => content.type === 'file')
-  return filesData.map(file => ({
-    name: file.name,
-    to: `/${file.path}`,
-    downloadUrl: file.download_url,
-  }))
+  return ghRepoContentsData.filter(content => content.type === 'file')
 }
 
 export const parseGhRepoContentsToCDNFile = (ghRepoContentsData: GhRepoContentsResponseData | null): CDNFile | null => {
@@ -20,9 +15,5 @@ export const parseGhRepoContentsToCDNFile = (ghRepoContentsData: GhRepoContentsR
     console.error('ghRepoContentsData should not be an array')
     return null
   }
-  return {
-    name: ghRepoContentsData.name,
-    to: `/${ghRepoContentsData.path}`,
-    downloadUrl: ghRepoContentsData.download_url,
-  }
+  return ghRepoContentsData
 }

@@ -1,7 +1,6 @@
+import type { GhRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
+
 export type FileExtension = `.${string}`
 
-export type CDNFile = {
-  name: string
-  to: string
-  downloadUrl: string | null
-}
+type ExtractArrayTypeFromUnion<T> = T extends Array<infer U> ? U : T
+export type CDNFile = ExtractArrayTypeFromUnion<GhRepoContentsResponseData>

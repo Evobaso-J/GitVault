@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to="`/file${to}`"
+    :to="`/file/${to}`"
   >
     <UCard
       :ui="{

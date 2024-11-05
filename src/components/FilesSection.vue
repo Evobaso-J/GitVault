@@ -11,8 +11,8 @@
       >
         <FileCard
           :title="file.name"
-          :to="file.to"
-          :download-url="file.downloadUrl"
+          :to="file.path"
+          :download-url="file.download_url"
         />
       </div>
     </div>
