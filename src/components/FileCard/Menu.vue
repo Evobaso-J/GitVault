@@ -60,7 +60,7 @@ const items = computed<DropdownItem[][]>(() => {
         click: (e: Event) => {
           e.stopPropagation()
         },
-        to: props.to,
+        to: `/file${props.to}`,
         target: '_blank',
       },
     ],

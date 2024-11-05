@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import type { CDNFile } from '~/resources/CDNFiles'
-import { parseGhRepoContentsToCDNFile } from '~/resources/CDNFiles/parse'
+import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
-import { parseGhRepoContentsToCDNFolder } from '~/resources/CDNFolders/parse'
+import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
 
 const route = useRoute()
 
@@ -30,6 +30,6 @@ const { data } = await useFetch('/api/ghRepoContents', {
   },
 })
 
-const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolder(data.value ?? []))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFile(data.value ?? []))
+const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value))
 </script>
