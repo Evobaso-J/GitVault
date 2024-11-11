@@ -18,7 +18,7 @@ const queryPath = computed(() => {
   if (Array.isArray(route.params.path)) return route.params.path.join('/')
   return route.params.path
 })
-const { data: file } = await useFetch('/api/ghRepoContents', {
+const { data: file } = await useFetch('/api/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath.value,
