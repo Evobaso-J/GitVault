@@ -12,8 +12,6 @@
 <script setup lang='ts'>
 import type { BreadcrumbLink } from '#ui/types'
 
-defineComponent({ name: 'DefaultLayout' })
-
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
   const linksFromRoute = route.fullPath.split('/').filter(Boolean).map((path, index, array) => ({
