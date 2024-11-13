@@ -1,7 +1,26 @@
 <template>
-  <component
-    :is="filePreviewComponent"
-    v-if="filePreviewComponent"
+  <FilePreviewCode
+    v-if="codeFileExtensions.includes(fileExtension)"
+    :source="props.source"
+  />
+  <FilePreviewText
+    v-else-if="textFileExtensions.includes(fileExtension)"
+    :source="props.source"
+  />
+  <FilePreviewImage
+    v-else-if="imageFileExtensions.includes(fileExtension)"
+    :source="props.source"
+  />
+  <FilePreviewVideo
+    v-else-if="videoFileExtensions.includes(fileExtension)"
+    :source="props.source"
+  />
+  <FilePreviewDocument
+    v-else-if="documentFileExtensions.includes(fileExtension)"
+    :source="props.source"
+  />
+  <FilePreviewFallback
+    v-else
     :source="props.source"
   />
 </template>
@@ -16,13 +35,5 @@ export type FilePreviewProps = {
 }
 const props = defineProps<FilePreviewProps>()
 
-const filePreviewComponent = computed(() => {
-  const extension = getFileExtension(props.source.name)
-  if (codeFileExtensions.includes(extension)) return resolveComponent('FilePreviewCode')
-  if (textFileExtensions.includes(extension)) return resolveComponent('FilePreviewText')
-  if (imageFileExtensions.includes(extension)) return resolveComponent('FilePreviewImage')
-  if (videoFileExtensions.includes(extension)) return resolveComponent('FilePreviewVideo')
-  if (documentFileExtensions.includes(extension)) return resolveComponent('FilePreviewDocument')
-  return resolveComponent('FilePreviewFallback')
-})
+const fileExtension = computed(() => getFileExtension(props.source.name))
 </script>
