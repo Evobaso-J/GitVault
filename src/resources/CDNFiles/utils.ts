@@ -3,7 +3,7 @@ import type { NuxtLinkProps } from '#app'
 
 export const getFileExtension = (fileName: string): FileExtension => `.${fileName.split('.').pop()}`
 
-export const codeFileExtensions: FileExtension[] = ['.js', '.ts', '.jsx', '.tsx', '.vue', '.json', '.html', '.css', '.yaml', '.yml'] as const
+export const codeFileExtensions: FileExtension[] = ['.py', '.js', '.ts', '.jsx', '.tsx', '.vue', '.json', '.html', '.css', '.yaml', '.yml', '.gitignore'] as const
 export const textFileExtensions: FileExtension[] = ['.txt', '.md', '.rtf'] as const
 export const imageFileExtensions: FileExtension[] = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'] as const
 export const videoFileExtensions: FileExtension[] = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.wmv', '.flv', '.mkv'] as const
