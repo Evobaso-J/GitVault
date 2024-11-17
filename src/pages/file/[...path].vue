@@ -1,33 +1,8 @@
 <template>
-  <div>
-    <details>
-      <summary>PATH</summary>
-      <pre>{{ file }}</pre>
-      <a
-        v-if="file?.download_url"
-        :href="file.download_url"
-        target="_blank"
-      >DOWNLOAD URL</a>
-    </details>
-    <details>
-      <summary>CONTENT</summary>
-      <img
-        v-if="file?.content"
-        :src="`data:image/gif;base64,${file.content}`"
-      >
-    </details>
-    <details>
-      <summary>CONTENT FROM DOWNLOAD URL</summary>
-      <img
-        v-if="file?.download_url"
-        :src="file.download_url"
-      >
-    </details>
-    <FilePreview
-      v-if="file"
-      :source="file"
-    />
-  </div>
+  <FilePreview
+    v-if="file"
+    :source="file"
+  />
 </template>
 
 <script setup lang="ts">
