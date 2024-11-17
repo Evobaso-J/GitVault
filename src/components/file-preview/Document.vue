@@ -10,21 +10,29 @@
       {{ source.name }}
     </template>
     <div class="h-[65vh] overflow-scroll">
-      <VuePdfEmbed
-        v-if="source.download_url"
-        :source="source.download_url"
+      <ClientOnly
+        fallback-tag="span"
+        fallback="Loading PDF..."
       >
-        <template #after-page>
-          <div class="mb-2" />
-        </template>
-      </VuePdfEmbed>
+        <VuePdfEmbed
+          v-if="source.download_url"
+          :source="source.download_url"
+        >
+          <template #after-page>
+            <div class="mb-2" />
+          </template>
+        </VuePdfEmbed>
+      </ClientOnly>
     </div>
   </UCard>
 </template>
 
 <script setup lang='ts'>
-import VuePdfEmbed from 'vue-pdf-embed'
 import type { FilePreviewProps } from './index.vue'
+
+// Import component asynchronously to prevent SSR issues
+// https://github.com/hrynko/vue-pdf-embed?tab=readme-ov-file#server-side-rendering
+const VuePdfEmbed = defineAsyncComponent(() => import('vue-pdf-embed'))
 
 defineComponent({ name: 'DocumentFilePreview' })
 type DocumentFilePreviewProps = FilePreviewProps
