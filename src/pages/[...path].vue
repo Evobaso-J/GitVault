@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { useInterval } from '@vueuse/core'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
@@ -23,11 +24,16 @@ const queryPath = computed(() => {
   if (Array.isArray(route.params.path)) return route.params.path.join('/')
   return route.params.path
 })
+
+const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
+
 const { data } = await useFetch('/api/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath.value,
   },
+  // Refetch every 5 minutes to update the download_url permission token
+  watch: [downloadUrlTokenDuration],
 })
 
 const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
