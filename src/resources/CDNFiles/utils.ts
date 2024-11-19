@@ -1,5 +1,6 @@
 import type { FileExtension } from '.'
 import type { NuxtLinkProps } from '#app'
+import { DownloadError } from '~/errors'
 
 export const getFileExtension = (fileName: string): FileExtension => `.${fileName.split('.').pop()}`
 
@@ -18,8 +19,22 @@ export const getIconFromFileName = (fileName: string): string => {
   return 'i-mdi-file-document'
 }
 
-export const downloadFile = async (url: string, fileName: string) => {
-  const response = await fetch(url)
+export const downloadFile = async (url: string, fileName: string): Promise<Error | DownloadError | undefined> => {
+  let response: Response
+  try {
+    response = await fetch(url)
+  }
+  catch (error: unknown) {
+    if (error instanceof Error) {
+      return new DownloadError({
+        message: error.message,
+        name: 'DOWNLOAD_FAILED',
+        statusCode: 404,
+        cause: error.cause,
+      })
+    }
+    return new Error()
+  }
   const blob = await response.blob()
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)

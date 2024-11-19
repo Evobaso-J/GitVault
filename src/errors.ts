@@ -23,3 +23,5 @@ export class BaseError<T extends string> extends Error {
     this.statusCode = statusCode
   }
 }
+
+export class DownloadError extends BaseError<'DOWNLOAD_FAILED'> {}
