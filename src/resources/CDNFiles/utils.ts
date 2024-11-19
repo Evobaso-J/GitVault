@@ -18,13 +18,16 @@ export const getIconFromFileName = (fileName: string): string => {
   return 'i-mdi-file-document'
 }
 
-export const downloadFile = (url: string, fileName: string) => {
+export const downloadFile = async (url: string, fileName: string) => {
+  const response = await fetch(url)
+  const blob = await response.blob()
   const link = document.createElement('a')
-  link.href = url
+  link.href = URL.createObjectURL(blob)
   link.download = fileName
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
+  URL.revokeObjectURL(link.href)
 }
 
 export const getPathFromNuxtLinkTo = (nuxtLinkToProp: NuxtLinkProps['to']): string => {
