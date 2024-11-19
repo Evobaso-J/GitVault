@@ -2,6 +2,11 @@
   "copied": "Copied!",
   "copyLink": "Copy link",
   "download": "Download",
+  "file-preview": {
+    "fallback": {
+      "description": "This file type is not supported for preview."
+    }
+  },
   "files": "Files",
   "folders": "Folders",
   "openInNewTab": "Open in a new tab"
