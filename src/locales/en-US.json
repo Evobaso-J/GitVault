@@ -9,5 +9,7 @@
   },
   "files": "Files",
   "folders": "Folders",
-  "openInNewTab": "Open in a new tab"
+  "newFolder": "Create new folder",
+  "openInNewTab": "Open in a new tab",
+  "uploadFile": "Upload file"
 }

@@ -1,16 +1,28 @@
 <template>
   <UContainer>
-    <UBreadcrumb
-      :links="links"
-      class="my-6"
-    />
+    <div class="flex gap-1 my-6 items-center">
+      <UBreadcrumb
+        :links="links"
+      />
+      <UDropdown
+        :items="dropdownItems"
+        :popper="{ placement: 'bottom-start' }"
+      >
+        <UButton
+          :ui="{ rounded: 'rounded-full' }"
+          variant="ghost"
+          size="xs"
+          icon="i-heroicons-chevron-down-20-solid"
+        />
+      </UDropdown>
+    </div>
 
     <slot />
   </UContainer>
 </template>
 
 <script setup lang='ts'>
-import type { BreadcrumbLink } from '#ui/types'
+import type { BreadcrumbLink, DropdownItem } from '#ui/types'
 
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
@@ -24,4 +36,21 @@ const links = computed<BreadcrumbLink[]>(() => {
     to: '/',
   }, ...linksFromRoute]
 })
+
+const { t } = useI18n()
+const { open } = useUploadFile({
+  multiple: false,
+})
+
+const dropdownItems: DropdownItem[][] = [
+  [{
+    label: t('newFolder'),
+    icon: 'i-mdi-folder-plus',
+  }],
+  [{
+    label: t('uploadFile'),
+    icon: 'i-mdi-upload',
+    click: open,
+  }],
+]
 </script>
