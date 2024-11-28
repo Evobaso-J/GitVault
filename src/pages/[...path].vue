@@ -18,12 +18,7 @@ import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
 import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
 
-const route = useRoute()
-
-const queryPath = computed(() => {
-  if (Array.isArray(route.params.path)) return route.params.path.join('/')
-  return route.params.path
-})
+const { queryPath } = useRouteQueryPath()
 
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 

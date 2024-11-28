@@ -13,13 +13,7 @@ definePageMeta({
   layout: 'single-file',
 })
 
-const route = useRoute()
-
-const queryPath = computed(() => {
-  if (Array.isArray(route.params.path)) return route.params.path.join('/')
-  return route.params.path
-})
-
+const { queryPath } = useRouteQueryPath()
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 
 const { data: file } = await useFetch('/api/gh-repo-contents', {
