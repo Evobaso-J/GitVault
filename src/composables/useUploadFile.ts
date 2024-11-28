@@ -7,7 +7,18 @@ const convertFileToBase64 = async (file: File) => {
   return btoa(binaryString)
 }
 
-export const useUploadFile = (options?: UseFileDialogOptions) => {
+interface UseUploadFileOptions extends UseFileDialogOptions {
+  /**
+   * Input the path and sha of the file to be replaced
+   * @default undefined
+   */
+  replace?: {
+    path: string
+    sha: string
+  }
+}
+
+export const useUploadFile = (options?: UseUploadFileOptions) => {
   const { queryPath } = useRouteQueryPath()
 
   const { onChange, reset, ...rest } = useFileDialog({
@@ -20,9 +31,9 @@ export const useUploadFile = (options?: UseFileDialogOptions) => {
     const body: GhRepoContentsRequestParams = {
       content: await convertFileToBase64(files[0]),
       message: 'Upload file',
-      // TODO: add safety for the sha option when replacing a file
+      sha: options?.replace?.sha,
     }
-    const path = (queryPath.value ?? '').split('/').concat(fileName).join('/')
+    const path = options?.replace?.path ?? (queryPath.value ?? '').split('/').concat(fileName).join('/')
     $fetch('/api/gh-repo-contents', {
       method: 'PUT',
       query: {
@@ -32,5 +43,5 @@ export const useUploadFile = (options?: UseFileDialogOptions) => {
     })
     reset()
   })
-  return { onChange, ...rest }
+  return { onChange, reset, ...rest }
 }
