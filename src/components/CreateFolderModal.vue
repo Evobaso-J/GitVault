@@ -62,5 +62,6 @@ const { createFolder } = useCreateFolder()
 const save = async () => {
   emit('create-folder', state.name)
   await createFolder(state.name)
+  state.name = ''
 }
 </script>

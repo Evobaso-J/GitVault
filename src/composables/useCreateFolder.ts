@@ -33,8 +33,12 @@ export const useCreateFolder = () => {
       refreshNuxtData()
     }
     catch (error) {
+      let errorMessage = t('errorMessage')
+      if (error instanceof Error && 'statusMessage' in error && typeof error.statusMessage === 'string') {
+        errorMessage = error.statusMessage
+      }
       toast.update(toastId, {
-        title: t('errorMessage'),
+        title: errorMessage,
         color: 'red',
         timeout: 3000,
         icon: 'i-mdi-alert',
