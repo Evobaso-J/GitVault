@@ -1,4 +1,5 @@
 import { useFileDialog, type UseFileDialogOptions } from '@vueuse/core'
+import { $putFile } from '~/resources/CDNFiles/api'
 import type { GhRepoContentsRequestParams } from '~~/server/resources/gitHubRepoContents'
 
 const convertFileToBase64 = async (file: File) => {
@@ -36,20 +37,16 @@ export const useUploadFile = (options?: UseUploadFileOptions) => {
   onChange(async (files) => {
     if (!files?.[0]) return
     const fileName = files[0].name
+
+    const path = options?.replace?.path ?? createFilePath(queryPath.value, fileName)
     const body: GhRepoContentsRequestParams = {
       content: await convertFileToBase64(files[0]),
       message: 'Upload file',
       sha: options?.replace?.sha,
     }
-    const path = options?.replace?.path ?? createFilePath(queryPath.value, fileName)
+
     try {
-      await $fetch('/api/gh-repo-contents', {
-        method: 'PUT',
-        query: {
-          path,
-        },
-        body,
-      })
+      await $putFile({ path, body })
       toast.add({
         title: t('successMessage'),
         color: 'green',
