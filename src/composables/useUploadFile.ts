@@ -51,6 +51,7 @@ export const useUploadFile = (options?: UseUploadFileOptions) => {
         title: t('successMessage'),
         color: 'green',
       })
+      refreshNuxtData()
     }
     catch (error) {
       toast.add({
