@@ -41,11 +41,13 @@ const { t } = useI18n()
 const { open } = useUploadFile({
   multiple: false,
 })
+const { createFolder } = useCreateFolder()
 
 const dropdownItems: DropdownItem[][] = [
   [{
     label: t('newFolder'),
     icon: 'i-mdi-folder-plus',
+    click: createFolder,
   }],
   [{
     label: t('uploadFile'),
