@@ -7,6 +7,11 @@ const convertFileToBase64 = async (file: File) => {
   return btoa(binaryString)
 }
 
+const createFilePath = (queryPath: string | undefined, fileName: string) => {
+  if (!queryPath || queryPath === '') return fileName
+  return queryPath.split('/').concat(fileName).join('/')
+}
+
 interface UseUploadFileOptions extends UseFileDialogOptions {
   /**
    * Input the path and sha of the file to be replaced
@@ -36,7 +41,7 @@ export const useUploadFile = (options?: UseUploadFileOptions) => {
       message: 'Upload file',
       sha: options?.replace?.sha,
     }
-    const path = options?.replace?.path ?? (queryPath.value ?? '').split('/').concat(fileName).join('/')
+    const path = options?.replace?.path ?? createFilePath(queryPath.value, fileName)
     try {
       await $fetch('/api/gh-repo-contents', {
         method: 'PUT',
