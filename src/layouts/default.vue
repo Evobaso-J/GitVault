@@ -18,12 +18,18 @@
     </div>
 
     <slot />
+    <CreateFolderModal
+      v-model="isModalOpen"
+      @create-folder="closeModal"
+      @cancel="closeModal"
+    />
   </UContainer>
 </template>
 
 <script setup lang='ts'>
 import type { BreadcrumbLink, DropdownItem } from '#ui/types'
 
+const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
   const linksFromRoute = route.fullPath.split('/').filter(Boolean).map((path, index, array) => ({
@@ -32,22 +38,24 @@ const links = computed<BreadcrumbLink[]>(() => {
   }))
 
   return [{
-    label: 'Home',
+    label: t('home'),
     to: '/',
   }, ...linksFromRoute]
 })
 
-const { t } = useI18n()
+const isModalOpen = ref(false)
+const closeModal = () => isModalOpen.value = false
+const openModal = () => isModalOpen.value = true
+
 const { open } = useUploadFile({
   multiple: false,
 })
-const { createFolder } = useCreateFolder()
 
 const dropdownItems: DropdownItem[][] = [
   [{
     label: t('newFolder'),
     icon: 'i-mdi-folder-plus',
-    click: createFolder,
+    click: openModal,
   }],
   [{
     label: t('uploadFile'),
