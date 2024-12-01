@@ -11,8 +11,8 @@ export const useCreateFolder = () => {
   const toast = useToast()
   const { t } = useI18n()
 
-  const createFolder = async () => {
-    const folderName = 'Wollan/.gitkeep'
+  const createFolder = async (name: string) => {
+    const folderName = `${name}/.gitkeep`
     const path = createFilePath(queryPath.value, folderName)
 
     const toastId = `folder-${path}`
