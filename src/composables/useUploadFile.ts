@@ -21,6 +21,9 @@ interface UseUploadFileOptions extends UseFileDialogOptions {
 export const useUploadFile = (options?: UseUploadFileOptions) => {
   const { queryPath } = useRouteQueryPath()
 
+  const toast = useToast()
+  const { t } = useI18n()
+
   const { onChange, reset, ...rest } = useFileDialog({
     ...options,
   })
@@ -34,14 +37,28 @@ export const useUploadFile = (options?: UseUploadFileOptions) => {
       sha: options?.replace?.sha,
     }
     const path = options?.replace?.path ?? (queryPath.value ?? '').split('/').concat(fileName).join('/')
-    $fetch('/api/gh-repo-contents', {
-      method: 'PUT',
-      query: {
-        path,
-      },
-      body,
-    })
-    reset()
+    try {
+      await $fetch('/api/gh-repo-contents', {
+        method: 'PUT',
+        query: {
+          path,
+        },
+        body,
+      })
+      toast.add({
+        title: t('successMessage'),
+        color: 'green',
+      })
+    }
+    catch (error) {
+      toast.add({
+        title: t('errorMessage'),
+        color: 'red',
+      })
+    }
+    finally {
+      reset()
+    }
   })
   return { onChange, reset, ...rest }
 }

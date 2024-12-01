@@ -2,6 +2,7 @@
   "copied": "Copied!",
   "copyLink": "Copy link",
   "download": "Download",
+  "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
     "fallback": {
       "description": "This file type is not supported for preview."
@@ -11,5 +12,6 @@
   "folders": "Folders",
   "newFolder": "Create new folder",
   "openInNewTab": "Open in a new tab",
+  "successMessage": "Operation successful!",
   "uploadFile": "Upload file"
 }
