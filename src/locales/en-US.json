@@ -12,6 +12,7 @@
   "folders": "Folders",
   "newFolder": "Create new folder",
   "openInNewTab": "Open in a new tab",
+  "operationInProgress": "Operation in progress...",
   "successMessage": "Operation successful!",
   "uploadFile": "Upload file"
 }

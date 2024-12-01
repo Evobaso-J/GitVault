@@ -15,18 +15,29 @@ export const useCreateFolder = () => {
     const folderName = 'Wollan/.gitkeep'
     const path = createFilePath(queryPath.value, folderName)
 
+    const toastId = `folder-${path}`
+    toast.add({
+      id: toastId,
+      title: t('operationInProgress'),
+      timeout: 0,
+      icon: 'i-mdi-loading animate-spin',
+    })
     try {
       await $createFolder(path)
-      toast.add({
+      toast.update(toastId, {
         title: t('successMessage'),
         color: 'green',
+        timeout: 3000,
+        icon: 'i-mdi-check',
       })
       refreshNuxtData()
     }
     catch (error) {
-      toast.add({
+      toast.update(toastId, {
         title: t('errorMessage'),
         color: 'red',
+        timeout: 3000,
+        icon: 'i-mdi-alert',
       })
     }
   }

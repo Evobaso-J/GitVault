@@ -44,19 +44,29 @@ export const useUploadFile = (options?: UseUploadFileOptions) => {
       message: 'Upload file',
       sha: options?.replace?.sha,
     }
-
+    const toastId = `uploading-${path}`
+    toast.add({
+      id: toastId,
+      title: t('operationInProgress'),
+      timeout: 0,
+      icon: 'i-mdi-loading animate-spin',
+    })
     try {
       await $putFile({ path, body })
-      toast.add({
+      toast.update(toastId, {
         title: t('successMessage'),
         color: 'green',
+        timeout: 3000,
+        icon: 'i-mdi-check',
       })
       refreshNuxtData()
     }
     catch (error) {
-      toast.add({
+      toast.update(toastId, {
         title: t('errorMessage'),
         color: 'red',
+        timeout: 3000,
+        icon: 'i-mdi-alert',
       })
     }
     finally {
