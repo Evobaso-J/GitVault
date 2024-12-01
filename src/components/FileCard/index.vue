@@ -1,6 +1,7 @@
 <template>
   <ULink
     :to="`/file/${to}`"
+    target="_blank"
   >
     <UCard
       :ui="{
