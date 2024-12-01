@@ -49,10 +49,11 @@ type FallbackFilePreviewProps = FilePreviewProps
 
 const props = defineProps<FallbackFilePreviewProps>()
 
+const { t } = useI18n()
 const buttons: { icon: string, label: string, action?: () => void }[] = [
   {
     icon: 'i-mdi-github',
-    label: 'View on GitHub',
+    label: t('viewOnGitHub'),
     action: () => {
       if (!props.source.git_url) return
       window.open(props.source._links.html ?? '', '_blank')
@@ -60,12 +61,12 @@ const buttons: { icon: string, label: string, action?: () => void }[] = [
   },
   {
     icon: 'i-mdi-text',
-    label: 'Show as plain text',
+    label: t('showAsText'),
     action: () => isModalOpen.value = true,
   },
   {
     icon: 'i-mdi-download',
-    label: 'Download',
+    label: t('download'),
     action: () => {
       if (!props.source.download_url) return
       downloadFile(props.source.download_url, props.source.name)

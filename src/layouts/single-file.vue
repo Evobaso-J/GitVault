@@ -12,6 +12,7 @@
 <script setup lang='ts'>
 import type { BreadcrumbLink } from '#ui/types'
 
+const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
   const linksFromRoute = route.fullPath.split('/')
@@ -22,7 +23,7 @@ const links = computed<BreadcrumbLink[]>(() => {
     }))
 
   return [{
-    label: 'Home',
+    label: t('home'),
     to: '/',
   }, ...linksFromRoute]
 })

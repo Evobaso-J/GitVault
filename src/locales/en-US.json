@@ -1,6 +1,9 @@
 {
+  "cancel": "Cancel",
   "copied": "Copied!",
   "copyLink": "Copy link",
+  "create": "Create",
+  "createFolder": "Create folder",
   "download": "Download",
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
@@ -10,9 +13,15 @@
   },
   "files": "Files",
   "folders": "Folders",
+  "home": "Home",
   "newFolder": "Create new folder",
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
+  "showAsText": "Show as plain text",
   "successMessage": "Operation successful!",
-  "uploadFile": "Upload file"
+  "uploadFile": "Upload file",
+  "validationError": {
+    "noSlashInFolderName": "Folder name cannot contain \"/\""
+  },
+  "viewOnGitHub": "View on GitHub"
 }
