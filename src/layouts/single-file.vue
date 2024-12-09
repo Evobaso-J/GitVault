@@ -18,7 +18,7 @@ const links = computed<BreadcrumbLink[]>(() => {
   const linksFromRoute = route.fullPath.split('/')
     .filter(pathSection => !!pathSection && pathSection !== 'file')
     .map((path, index, array) => ({
-      label: path,
+      label: decodeURIComponent(path),
       to: '/' + array.slice(0, index + 1).join('/'),
     }))
 
