@@ -16,9 +16,10 @@ import { useClipboard } from '@vueuse/core'
 import type { FileCardHeaderProps } from './Header.vue'
 import type { DropdownItem } from '#ui/types'
 import { downloadFile, getPathFromNuxtLinkTo } from '~/resources/CDNFiles/utils'
+import type { UseUploadFileOptions } from '~/composables/useUploadFile'
 
 defineComponent({ name: 'FileCardMenu' })
-type FileCardMenuProps = FileCardHeaderProps
+interface FileCardMenuProps extends FileCardHeaderProps {}
 const props = defineProps<FileCardMenuProps>()
 
 const { copied, copy } = useClipboard()
@@ -30,6 +31,15 @@ const copyPathToClipboard = () => {
   const fullPath = new URL(routePath, origin)
   copy(fullPath.toString())
 }
+
+const uploadFileOptions = computed<UseUploadFileOptions>(() => ({
+  multiple: false,
+  replace: {
+    path: getPathFromNuxtLinkTo(props.to),
+    sha: props.sha,
+  },
+}))
+const { open: replaceFile } = useUploadFile(uploadFileOptions)
 
 const items = computed<DropdownItem[][]>(() => {
   const copyItem: DropdownItem = copied.value
@@ -66,12 +76,22 @@ const items = computed<DropdownItem[][]>(() => {
       {
         label: t('download'),
         icon: 'i-mdi-download',
-        slot: 'download',
         disabled: !props.downloadUrl,
         click: (e: Event) => {
           e.stopPropagation()
           e.preventDefault()
           return downloadFile(props.downloadUrl!, props.title)
+        },
+      },
+    ],
+    [
+      {
+        label: t('replace'),
+        icon: 'i-mdi-autorenew',
+        click: (e: Event) => {
+          e.stopPropagation()
+          e.preventDefault()
+          replaceFile()
         },
       },
     ],

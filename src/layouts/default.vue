@@ -47,9 +47,9 @@ const isModalOpen = ref(false)
 const closeModal = () => isModalOpen.value = false
 const openModal = () => isModalOpen.value = true
 
-const { open } = useUploadFile({
+const { open } = useUploadFile(ref({
   multiple: false,
-})
+}))
 
 const dropdownItems: DropdownItem[][] = [
   [{

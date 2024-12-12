@@ -13,7 +13,7 @@ const createFilePath = (queryPath: string | undefined, fileName: string) => {
   return queryPath.split('/').concat(fileName).join('/')
 }
 
-interface UseUploadFileOptions extends UseFileDialogOptions {
+export interface UseUploadFileOptions extends UseFileDialogOptions {
   /**
    * Input the path and sha of the file to be replaced
    * @default undefined
@@ -24,25 +24,25 @@ interface UseUploadFileOptions extends UseFileDialogOptions {
   }
 }
 
-export const useUploadFile = (options?: UseUploadFileOptions) => {
+export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
   const { queryPath } = useRouteQueryPath()
 
   const toast = useToast()
   const { t } = useI18n()
 
   const { onChange, reset, ...rest } = useFileDialog({
-    ...options,
+    ...options?.value,
   })
 
   onChange(async (files) => {
     if (!files?.[0]) return
     const fileName = files[0].name
 
-    const path = options?.replace?.path ?? createFilePath(queryPath.value, fileName)
+    const path = options?.value?.replace?.path ?? createFilePath(queryPath.value, fileName)
     const body: GhRepoContentsRequestParams = {
       content: await convertFileToBase64(files[0]),
       message: 'Upload file',
-      sha: options?.replace?.sha,
+      sha: options?.value?.replace?.sha,
     }
     const toastId = `uploading-${path}`
     toast.add({

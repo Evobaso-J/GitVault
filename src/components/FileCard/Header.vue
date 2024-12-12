@@ -10,6 +10,7 @@
       :to
       :title
       :download-url="downloadUrl"
+      :sha
     />
   </span>
 </template>
@@ -18,6 +19,6 @@
 import type { FileCardProps } from './index.vue'
 
 defineComponent({ name: 'FileCardHeader' })
-export type FileCardHeaderProps = FileCardProps
+export interface FileCardHeaderProps extends FileCardProps {}
 defineProps<FileCardHeaderProps>()
 </script>

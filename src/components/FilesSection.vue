@@ -13,6 +13,7 @@
           :title="file.name"
           :to="file.path"
           :download-url="file.download_url"
+          :sha="file.sha"
         />
       </div>
     </div>

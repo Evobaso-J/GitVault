@@ -17,6 +17,7 @@
         :title
         :to
         :download-url="downloadUrl"
+        :sha
         class="mb-2 px-4"
       />
       <FileCardPreview
@@ -31,10 +32,12 @@
 import type { NuxtLinkProps } from '#app'
 
 defineComponent({ name: 'FileCard' })
-export type FileCardProps = {
+
+export interface FileCardProps {
   title: string
-  to: NuxtLinkProps['to']
+  to: Exclude<NuxtLinkProps['to'], undefined>
   downloadUrl: string | null
+  sha: string
 }
 
 defineProps<FileCardProps>()
