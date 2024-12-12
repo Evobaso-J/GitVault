@@ -10,6 +10,7 @@ const gitUserSchema: z.ZodType<GhRepoContentsRequestParams['author']> = z.object
 const fileSchemaPut: z.ZodType<GhRepoContentsRequestParams> = z.object({
   content: z.string(),
   message: z.string(),
+  sha: z.string().optional(),
   author: gitUserSchema.optional(),
   branch: z.string().optional(),
   committer: gitUserSchema.optional(),
