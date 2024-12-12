@@ -17,7 +17,12 @@
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
     "fallback": {
-      "description": "This file type is not supported for preview."
+    }
+  },
+  "filePreview": {
+    "fallback": {
+      "description": "You might even try to view it as plain text, if you don't fear the consequences",
+      "title": "This file type is not supported for preview."
     }
   },
   "files": "Files",

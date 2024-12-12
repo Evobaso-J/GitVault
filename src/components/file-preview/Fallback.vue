@@ -1,20 +1,9 @@
 <template>
-  <div class="flex flex-col gap-4">
-    <UAlert
-      icon="i-mdi-alert"
-      color="yellow"
-      variant="subtle"
-      :title="source.name"
-      :description="$t('file-preview.fallback.description')"
-    />
-    <UCard
-      :ui="{
-        background: 'bg-gray-800 dark:bg-gray-800',
-        body: {
-          base: 'h-full flex flex-col gap-4 justify-center items-center',
-        },
-      }"
-      class="h-[80vh]"
+  <div class="flex justify-center items-center">
+    <EmptySectionCard
+      :title="$t('filePreview.fallback.title')"
+      :description="$t('filePreview.fallback.description')"
+      icon="i-mdi-file-document-remove"
     >
       <div
         class="flex flex-col gap-4 justify-center items-center"
@@ -36,7 +25,7 @@
           <FilePreviewText :source="source" />
         </UModal>
       </div>
-    </UCard>
+    </EmptySectionCard>
   </div>
 </template>
 
@@ -60,17 +49,17 @@ const buttons: { icon: string, label: string, action?: () => void }[] = [
     },
   },
   {
-    icon: 'i-mdi-text',
-    label: t('showAsText'),
-    action: () => isModalOpen.value = true,
-  },
-  {
     icon: 'i-mdi-download',
     label: t('download'),
     action: () => {
       if (!props.source.download_url) return
       downloadFile(props.source.download_url, props.source.name)
     },
+  },
+  {
+    icon: 'i-mdi-text',
+    label: t('showAsText'),
+    action: () => isModalOpen.value = true,
   },
 ]
 

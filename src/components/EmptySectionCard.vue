@@ -1,6 +1,6 @@
 <template>
   <UCard
-    class="max-w-lg"
+    class="max-w-xl"
     :ui="{
       body: {
         base: 'flex flex-col items-center justify-center gap-4',
