@@ -1,0 +1,28 @@
+<template>
+  <UCard
+    class="max-w-lg"
+    :ui="{
+      body: {
+        base: 'flex flex-col items-center justify-center gap-4',
+      },
+    }"
+  >
+    <UIcon
+      class="size-56"
+      :name="icon"
+    />
+    <span class="font-bold text-2xl text-center">{{ title }}</span>
+    <span class="font-extralight max-w-md text-center">{{ description }}</span>
+    <slot />
+  </UCard>
+</template>
+
+<script setup lang='ts'>
+defineComponent({ name: 'EmptySectionCard' })
+type EmptySectionCardProps = {
+  icon: string
+  title: string
+  description: string
+}
+defineProps<EmptySectionCardProps>()
+</script>

@@ -8,7 +8,12 @@
   "copyLink": "Copy link",
   "create": "Create",
   "createFolder": "Create folder",
+  "deleteFolder": "Delete folder",
   "download": "Download",
+  "emptyFolder": {
+    "description": "Why not trying to put it to good use?\nI didn't make this application for you to leave empty folders around, so please",
+    "title": "There's nothing in this folder!"
+  },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
     "fallback": {
