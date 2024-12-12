@@ -32,7 +32,7 @@ import type { BreadcrumbLink, DropdownItem } from '#ui/types'
 const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
-  const linksFromRoute = route.fullPath.split('/').filter(Boolean).map((path, index, array) => ({
+  const linksFromRoute = route.path.split('/').filter(Boolean).map((path, index, array) => ({
     label: decodeURIComponent(path),
     to: '/' + array.slice(0, index + 1).join('/'),
   }))

@@ -15,7 +15,7 @@ import type { BreadcrumbLink } from '#ui/types'
 const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
-  const linksFromRoute = route.fullPath.split('/')
+  const linksFromRoute = route.path.split('/')
     .filter(pathSection => !!pathSection && pathSection !== 'file')
     .map((path, index, array) => ({
       label: decodeURIComponent(path),
