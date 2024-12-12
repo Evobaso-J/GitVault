@@ -1,29 +1,32 @@
 <template>
-  <UContainer>
-    <div class="flex gap-1 my-6 items-center">
-      <UBreadcrumb
-        :links="links"
-      />
-      <UDropdown
-        :items="dropdownItems"
-        :popper="{ placement: 'bottom-start' }"
-      >
-        <UButton
-          :ui="{ rounded: 'rounded-full' }"
-          variant="ghost"
-          size="xs"
-          icon="i-heroicons-chevron-down-20-solid"
+  <div>
+    <AppToolbar v-model="search" />
+    <UContainer>
+      <div class="flex gap-1 my-6 items-center">
+        <UBreadcrumb
+          :links="links"
         />
-      </UDropdown>
-    </div>
+        <UDropdown
+          :items="dropdownItems"
+          :popper="{ placement: 'bottom-start' }"
+        >
+          <UButton
+            :ui="{ rounded: 'rounded-full' }"
+            variant="ghost"
+            size="xs"
+            icon="i-heroicons-chevron-down-20-solid"
+          />
+        </UDropdown>
+      </div>
 
-    <slot />
-    <CreateFolderModal
-      v-model="isModalOpen"
-      @create-folder="closeModal"
-      @cancel="closeModal"
-    />
-  </UContainer>
+      <slot />
+      <CreateFolderModal
+        v-model="isModalOpen"
+        @create-folder="closeModal"
+        @cancel="closeModal"
+      />
+    </UContainer>
+  </div>
 </template>
 
 <script setup lang='ts'>
@@ -63,4 +66,15 @@ const dropdownItems: DropdownItem[][] = [
     click: open,
   }],
 ]
+
+const search = ref<string>()
+const router = useRouter()
+watch(search, (value) => {
+  if (value) {
+    router.replace({ query: { ...route.query, search: value } })
+  }
+  else {
+    router.replace({ query: { ...route.query, search: undefined } })
+  }
+})
 </script>

@@ -11,8 +11,8 @@
   "deleteFolder": "Delete folder",
   "download": "Download",
   "emptyFolder": {
-    "description": "Why not trying to put it to good use?\nI didn't make this application for you to leave empty folders around, so please",
-    "title": "There's nothing in this folder!"
+    "description": "Maybe you searched too deep? \nIf that's the case try cleaning the filters, otherwise...",
+    "title": "There's nothing to see here!"
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
@@ -22,7 +22,7 @@
   "filePreview": {
     "fallback": {
       "description": "You might even try to view it as plain text, if you don't fear the consequences",
-      "title": "This file type is not supported for preview."
+      "title": "This file type is not supported for preview"
     }
   },
   "files": "Files",
@@ -32,6 +32,7 @@
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
   "replace": "Replace",
+  "search": "Search...",
   "showAsText": "Show as plain text",
   "successMessage": "Operation successful!",
   "uploadFile": "Upload file",

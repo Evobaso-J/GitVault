@@ -55,8 +55,20 @@ const { data } = await useFetch('/api/gh-repo-contents', {
   watch: [downloadUrlTokenDuration],
 })
 
-const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => file.name !== '.gitkeep'))
+const route = useRoute()
+const searchFilterCallback = (file: CDNFile | CDNFolder) => {
+  let searchString = route.query?.search ?? ''
+  if (Array.isArray(searchString)) {
+    searchString = ''
+  }
+  else {
+    searchString = searchString.toLowerCase()
+  }
+  return file.name.toLowerCase().includes(searchString)
+}
+
+const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value).filter(searchFilterCallback))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => file.name !== '.gitkeep' && searchFilterCallback(file)))
 
 const { open } = useUploadFile(ref({ multiple: false }))
 </script>
