@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang='ts'>
+const { t } = useI18n()
 useHead({
-  titleTemplate: 'WeRoad CDN • %s',
+  titleTemplate: t('app.titleTemplate'),
 })
 </script>
 

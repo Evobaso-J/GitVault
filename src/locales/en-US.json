@@ -1,4 +1,8 @@
 {
+  "app": {
+    "name": "GitDrive",
+    "titleTemplate": "%s • @:app.name"
+  },
   "cancel": "Cancel",
   "copied": "Copied!",
   "copyLink": "Copy link",

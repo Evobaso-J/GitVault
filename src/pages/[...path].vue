@@ -33,4 +33,9 @@ const { data } = await useFetch('/api/gh-repo-contents', {
 
 const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
 const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => file.name !== '.gitkeep'))
+
+const { t } = useI18n()
+useHead({
+  title: t('folders'),
+})
 </script>

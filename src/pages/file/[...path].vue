@@ -25,4 +25,8 @@ const { data: file } = await useFetch('/api/gh-repo-contents', {
   // Refetch every 5 minutes to update the download_url permission token
   watch: [downloadUrlTokenDuration],
 })
+
+useHead({
+  title: file.value?.name,
+})
 </script>
