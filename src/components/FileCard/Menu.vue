@@ -31,11 +31,6 @@ const copyPathToClipboard = () => {
   copy(fullPath.toString())
 }
 
-defineShortcuts({
-  meta_c: copyPathToClipboard,
-})
-const { metaSymbol } = useShortcuts()
-
 const items = computed<DropdownItem[][]>(() => {
   const copyItem: DropdownItem = copied.value
     ? {
@@ -46,7 +41,6 @@ const items = computed<DropdownItem[][]>(() => {
     : {
         label: t('copyLink'),
         icon: 'i-mdi-content-copy',
-        shortcuts: [metaSymbol.value, 'C'],
         click: (e: Event) => {
           e.preventDefault()
           e.stopPropagation()
