@@ -1,36 +1,34 @@
 <template>
   <div>
-    <AppToolbar v-model="search" />
+    <AppToolbar
+      v-model="search"
+    />
     <UContainer>
       <div class="flex gap-1 my-6 items-center">
         <UBreadcrumb
           :links="links"
         />
-        <UDropdown
-          :items="dropdownItems"
+        <CreateItemsDropdown
           :popper="{ placement: 'bottom-start' }"
         >
-          <UButton
-            :ui="{ rounded: 'rounded-full' }"
-            variant="ghost"
-            size="xs"
-            icon="i-heroicons-chevron-down-20-solid"
-          />
-        </UDropdown>
+          <template #activator>
+            <UButton
+              :ui="{ rounded: 'rounded-full' }"
+              variant="ghost"
+              size="xs"
+              icon="i-heroicons-chevron-down-20-solid"
+            />
+          </template>
+        </CreateItemsDropdown>
       </div>
 
       <slot />
-      <CreateFolderModal
-        v-model="isModalOpen"
-        @create-folder="closeModal"
-        @cancel="closeModal"
-      />
     </UContainer>
   </div>
 </template>
 
 <script setup lang='ts'>
-import type { BreadcrumbLink, DropdownItem } from '#ui/types'
+import type { BreadcrumbLink } from '#ui/types'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -45,27 +43,6 @@ const links = computed<BreadcrumbLink[]>(() => {
     to: '/',
   }, ...linksFromRoute]
 })
-
-const isModalOpen = ref(false)
-const closeModal = () => isModalOpen.value = false
-const openModal = () => isModalOpen.value = true
-
-const { open } = useUploadFile(ref({
-  multiple: false,
-}))
-
-const dropdownItems: DropdownItem[][] = [
-  [{
-    label: t('newFolder'),
-    icon: 'i-mdi-folder-plus',
-    click: openModal,
-  }],
-  [{
-    label: t('uploadFile'),
-    icon: 'i-mdi-upload',
-    click: open,
-  }],
-]
 
 const search = ref<string>()
 const router = useRouter()
