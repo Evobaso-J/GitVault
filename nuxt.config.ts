@@ -6,7 +6,12 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxt/image'],
+
+  image: {
+    inject: true,
+  },
+
   eslint: {
     config: {
       stylistic: true,

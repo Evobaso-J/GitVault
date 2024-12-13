@@ -1,8 +1,19 @@
 <template>
-  <UIcon
-    class="size-10"
-    name="i-mdi-folder"
-  />
+  <NuxtLink
+    to="/"
+    class="flex items-center cursor-pointer flex-col justify-center"
+  >
+    <NuxtImg
+      src="/images/logo.png"
+      alt="Logo"
+      width="40"
+    />
+    <h1
+      class="text-sm font-semibold"
+    >
+      {{ $t('app.name') }}
+    </h1>
+  </NuxtLink>
 </template>
 
 <script setup lang='ts'>
