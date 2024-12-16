@@ -41,4 +41,6 @@
 defineComponent({ name: 'AppToolbar' })
 
 const search = defineModel<string | undefined>(undefined)
+
+const { foundItems } = useSearch(search)
 </script>
