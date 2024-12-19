@@ -1,8 +1,6 @@
 <template>
   <div class="mb-6">
-    <AppToolbar
-      v-model="search"
-    />
+    <AppToolbar />
     <UContainer>
       <div class="flex gap-1 my-6 items-center">
         <UBreadcrumb
@@ -42,16 +40,5 @@ const links = computed<BreadcrumbLink[]>(() => {
     label: t('home'),
     to: '/',
   }, ...linksFromRoute]
-})
-
-const search = ref<string>()
-const router = useRouter()
-watch(search, (value) => {
-  if (value) {
-    router.replace({ query: { ...route.query, search: value } })
-  }
-  else {
-    router.replace({ query: { ...route.query, search: undefined } })
-  }
 })
 </script>

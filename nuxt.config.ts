@@ -32,5 +32,6 @@ export default defineNuxtConfig({
     ghToken: '',
     ghRepoOwner: '',
     ghRepoName: '',
+    ghDefaultBranch: 'main',
   },
 })
