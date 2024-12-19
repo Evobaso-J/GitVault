@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import { useInterval } from '@vueuse/core'
 import EmptySectionCard from '~/components/EmptySectionCard.vue'
+import { isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
@@ -68,7 +69,7 @@ const searchFilterCallback = (file: CDNFile | CDNFolder) => {
 }
 
 const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value).filter(searchFilterCallback))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => file.name !== '.gitkeep' && searchFilterCallback(file)))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name) && searchFilterCallback(file)))
 
 const { open } = useUploadFile(ref({ multiple: false }))
 </script>
