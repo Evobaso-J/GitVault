@@ -7,7 +7,6 @@
     :placeholder="$t('search')"
     size="xl"
     icon="i-mdi-magnify"
-    class="w-1/2"
     :ui="{
       icon: { trailing: { pointer: '' } },
     }"

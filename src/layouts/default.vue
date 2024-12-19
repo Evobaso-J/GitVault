@@ -22,6 +22,18 @@
 
       <slot />
     </UContainer>
+    <CreateItemsDropdown
+      class="fixed bottom-6 right-6 md:hidden"
+      :popper="{ placement: 'top-end' }"
+    >
+      <template #activator>
+        <UButton
+          icon="i-mdi-plus"
+          :label="$t('create')"
+          size="xl"
+        />
+      </template>
+    </CreateItemsDropdown>
   </div>
 </template>
 
