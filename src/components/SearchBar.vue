@@ -28,14 +28,17 @@
       </ULink>
     </template>
     <template #trailing>
-      <UButton
-        v-show="!!search"
-        class="text-gray-500"
-        variant="link"
-        icon="i-heroicons-x-mark-20-solid"
-        :padded="false"
-        @click="search = ''"
-      />
+      <!-- ClientOnly to prevent weird hydration problems -->
+      <ClientOnly>
+        <UButton
+          v-show="!!search"
+          class="text-gray-500"
+          variant="link"
+          icon="i-heroicons-x-mark-20-solid"
+          :padded="false"
+          @click="search = ''"
+        />
+      </ClientOnly>
     </template>
   </UInputMenu>
 </template>
