@@ -1,0 +1,70 @@
+<template>
+  <UInputMenu
+    v-model:query="search"
+    :options="files"
+    option-attribute="path"
+    by="path"
+    :placeholder="$t('search')"
+    size="xl"
+    icon="i-mdi-magnify"
+    class="w-1/2"
+    :ui="{
+      icon: { trailing: { pointer: '' } },
+    }"
+    :ui-menu="{
+      option: { container: 'flex items-center gap-1.5 min-w-0 w-full' },
+    }"
+    @update:model-value="goToElement"
+  >
+    <template #option="{ option }">
+      <ULink
+        class="flex gap-2 w-full truncate"
+        :to="option.path"
+      >
+        <UIcon
+          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document'"
+        />
+        {{ option.path }}
+      </ULink>
+    </template>
+    <template #trailing>
+      <UButton
+        v-show="!!search"
+        class="text-gray-500"
+        variant="link"
+        icon="i-heroicons-x-mark-20-solid"
+        :padded="false"
+        @click="search = ''"
+      />
+    </template>
+  </UInputMenu>
+</template>
+
+<script setup lang='ts'>
+import { isFileExcluded } from '~/config'
+import type { GhRepoTreeResponseData } from '~~/server/resources/gitHubRepoTree'
+
+defineComponent({ name: 'SearchBar' })
+
+const search = ref<string>()
+
+const { data } = useFetch('/api/gh-repo-tree', {
+  query: {
+    recursive: 5,
+  },
+})
+
+const files = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
+  .filter(treeItem => !isFileExcluded(treeItem.path ?? ''))
+  || [])
+
+/**
+ * Workaround to navigate to the selected element.
+ * Currently impossible with anchor tags.
+ */
+const goToElement = (treeItem: GhRepoTreeResponseData['tree'][number]) => {
+  const target = treeItem.type === 'tree' ? '_self' : '_blank'
+  const path = treeItem.type === 'tree' ? treeItem.path : `/file/${treeItem.path}`
+  navigateTo(path, { open: { target } })
+}
+</script>
