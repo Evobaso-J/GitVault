@@ -50,7 +50,7 @@ const items = computed<DropdownItem[][]>(() => {
       }
     : {
         label: t('copyLink'),
-        icon: 'i-mdi-content-copy',
+        icon: 'i-mdi-link-variant',
         click: (e: Event) => {
           e.preventDefault()
           e.stopPropagation()
@@ -75,7 +75,7 @@ const items = computed<DropdownItem[][]>(() => {
     [
       {
         label: t('download'),
-        icon: 'i-mdi-download',
+        icon: 'i-mdi-download-outline',
         disabled: !props.downloadUrl,
         click: (e: Event) => {
           e.stopPropagation()

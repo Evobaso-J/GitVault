@@ -15,11 +15,12 @@
       <EmptySectionCard
         :title="$t('emptyFolder.title')"
         :description="$t('emptyFolder.description')"
-        icon="i-mdi-cloud-question"
+        icon="i-mdi-cloud-question-outline"
       >
         <UButton
           block
-          icon="i-mdi-upload"
+          variant="outline"
+          icon="i-mdi-upload-outline"
           size="xl"
           :label="$t('uploadFile')"
           @click="open"

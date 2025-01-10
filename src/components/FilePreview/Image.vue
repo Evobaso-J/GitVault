@@ -2,13 +2,15 @@
   <UCard
     :ui="{
       // UCard Config: https://ui.nuxt.com/components/card#config
-      background: 'bg-gray-700',
+      body: {
+        background: 'bg-neutral-100 dark:bg-neutral-800',
+      },
+      footer: {
+        base: 'text-sm text-neutral-500 dark:text-neutral-400',
+      },
     }"
-    class="text-white overflow-x-hidden"
+    class="overflow-x-hidden"
   >
-    <template #header>
-      {{ source.name }}
-    </template>
     <div class="h-[65vh] flex justify-center items-center">
       <img
         v-if="source?.download_url"
@@ -16,6 +18,9 @@
         :src="source.download_url"
       >
     </div>
+    <template #footer>
+      {{ source.name }}
+    </template>
   </UCard>
 </template>
 

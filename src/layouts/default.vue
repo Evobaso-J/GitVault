@@ -1,26 +1,31 @@
 <template>
-  <div class="mb-6">
-    <AppToolbar />
-    <UContainer>
-      <div class="flex gap-1 my-6 items-center">
-        <UBreadcrumb
-          :links="links"
-        />
-        <CreateItemsDropdown
-          :popper="{ placement: 'bottom-start' }"
-        >
-          <template #activator>
-            <UButton
-              :ui="{ rounded: 'rounded-full' }"
-              variant="ghost"
-              size="xs"
-              icon="i-heroicons-chevron-down-20-solid"
-            />
-          </template>
-        </CreateItemsDropdown>
+  <div class="flex flex-col h-screen">
+    <AppToolbar class="w-full" />
+    <div>
+      <UContainer>
+        <div class="flex gap-3 mt-6 py-3 items-center border-y dark:border-gray-700 px-2 -mx-2">
+          <UBreadcrumb
+            :links="links"
+          />
+          <CreateItemsDropdown
+            :popper="{ placement: 'bottom-start' }"
+          >
+            <template #activator>
+              <UButton
+                :ui="{ rounded: 'rounded-lg' }"
+                variant="soft"
+                size="xs"
+                icon="i-mdi-plus"
+              />
+            </template>
+          </CreateItemsDropdown>
+        </div>
+      </UContainer>
+    </div>
+    <UContainer class="flex-1 overflow-auto w-full">
+      <div class="mb-6 pt-6">
+        <slot />
       </div>
-
-      <slot />
     </UContainer>
     <CreateItemsDropdown
       class="fixed bottom-6 right-6 md:hidden"

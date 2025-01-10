@@ -6,7 +6,12 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxt/image'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    '@nuxtjs/i18n',
+    '@nuxt/image',
+  ],
 
   image: {
     inject: true,
@@ -25,7 +30,7 @@ export default defineNuxtConfig({
 
   srcDir: 'src/',
   serverDir: 'server/',
-  ssr: true,
+  ssr: false,
   compatibilityDate: '2024-07-04',
 
   runtimeConfig: {

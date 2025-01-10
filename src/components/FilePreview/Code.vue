@@ -2,15 +2,20 @@
   <UCard
     :ui="{
       // UCard Config: https://ui.nuxt.com/components/card#config
-      background: 'bg-gray-700',
+      body: {
+        background: 'bg-neutral-100 dark:bg-neutral-800',
+      },
+      footer: {
+        base: 'text-sm text-neutral-500 dark:text-neutral-400',
+      },
     }"
-    class="text-white overflow-x-hidden"
+    class="overflow-x-hidden"
   >
-    <template #header>
-      {{ source.name }}
-    </template>
     <!-- DO NOT PLACE THE PRE TAG IN MORE THAN ONE LINE -->
     <pre class="h-[65vh] overflow-scroll">{{ parsedContent }}</pre>
+    <template #footer>
+      {{ source.name }}
+    </template>
   </UCard>
 </template>
 

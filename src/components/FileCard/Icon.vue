@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <UIcon
-      :name="fileIcon"
-      class="text-gray-500 text-8xl"
-      :class="{
-        'w-6 h-6': size==='md',
-        'text-8xl': size === 'lg',
-      }"
-    />
-  </div>
+  <UIcon
+    :name="fileIcon"
+    class="text-gray-500 text-8xl"
+    :class="{
+      'w-6 h-6': size==='md',
+      'text-8xl': size === 'lg',
+    }"
+  />
 </template>
 
 <script setup lang='ts'>

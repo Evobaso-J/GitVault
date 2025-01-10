@@ -3,7 +3,7 @@
     <FileCardIcon
       :title
     />
-    <span class="text-sm truncate flex-1">
+    <span class="text-sm truncate flex-1 font-semibold">
       {{ title }}
     </span>
     <FileCardMenu

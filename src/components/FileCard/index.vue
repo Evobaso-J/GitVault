@@ -11,7 +11,7 @@
         },
         ring: 'hover:ring-gray-400 dark:hover:ring-gray-500',
       }"
-      class="min-w-56 min-h-48"
+      class="min-h-48"
     >
       <FileCardHeader
         :title

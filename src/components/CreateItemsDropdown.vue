@@ -37,12 +37,12 @@ const { t } = useI18n()
 const dropdownItems: DropdownItem[][] = [
   [{
     label: t('newFolder'),
-    icon: 'i-mdi-folder-plus',
+    icon: 'i-mdi-folder-plus-outline',
     click: openModal,
   }],
   [{
     label: t('uploadFile'),
-    icon: 'i-mdi-upload',
+    icon: 'i-mdi-upload-outline',
     click: open,
   }],
 ]

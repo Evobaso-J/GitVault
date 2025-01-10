@@ -2,8 +2,9 @@
   <UCard
     class="max-w-xl"
     :ui="{
+      background: 'bg-neutral-50 dark:bg-gray-800',
       body: {
-        base: 'flex flex-col items-center justify-center gap-4',
+        base: 'flex flex-col items-center justify-center gap-4 text-neutral-700',
       },
     }"
   >
@@ -11,7 +12,7 @@
       class="size-56"
       :name="icon"
     />
-    <span class="font-bold text-2xl text-center">{{ title }}</span>
+    <span class="font-medium text-2xl text-center">{{ title }}</span>
     <span class="font-extralight max-w-md text-center">{{ description }}</span>
     <slot />
   </UCard>
