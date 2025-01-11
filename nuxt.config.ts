@@ -39,4 +39,8 @@ export default defineNuxtConfig({
     ghRepoName: '',
     ghDefaultBranch: 'main',
   },
+
+  colorMode: {
+    preference: 'light',
+  },
 })
