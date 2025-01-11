@@ -3,17 +3,17 @@
     <EmptySectionCard
       :title="$t('filePreview.fallback.title')"
       :description="$t('filePreview.fallback.description')"
-      icon="i-mdi-file-document-remove"
+      icon="i-mdi-file-document-remove-outline"
     >
       <div
-        class="flex flex-col gap-4 justify-center items-center"
+        class="flex flex-col gap-4 justify-center items-center w-full"
       >
         <UButton
           v-for="{ label, icon, action } in buttons"
           :key="label"
           block
           :icon="icon"
-          variant="solid"
+          variant="outline"
           size="xl"
           :label="label"
           @click="action"
@@ -49,7 +49,7 @@ const buttons: { icon: string, label: string, action?: () => void }[] = [
     },
   },
   {
-    icon: 'i-mdi-download',
+    icon: 'i-mdi-download-outline',
     label: t('download'),
     action: () => {
       if (!props.source.download_url) return

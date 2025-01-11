@@ -12,11 +12,11 @@ export const documentFileExtensions: FileExtension[] = ['.pdf'] as const
 
 export const getIconFromFileName = (fileName: string): string => {
   const fileExtension = getFileExtension(fileName)
-  if (documentFileExtensions.includes(fileExtension)) return 'i-mdi-file-pdf'
-  if (codeFileExtensions.includes(fileExtension)) return 'i-mdi-file-code'
-  if (imageFileExtensions.includes(fileExtension)) return 'i-mdi-file-image'
-  if (videoFileExtensions.includes(fileExtension)) return 'i-mdi-file-video'
-  return 'i-mdi-file-document'
+  if (documentFileExtensions.includes(fileExtension)) return 'i-mdi-file-pdf-box-outline'
+  if (codeFileExtensions.includes(fileExtension)) return 'i-material-symbols-code-blocks-outline-rounded'
+  if (imageFileExtensions.includes(fileExtension)) return 'i-mdi-image-outline'
+  if (videoFileExtensions.includes(fileExtension)) return 'i-material-symbols-videocam-outline-rounded'
+  return 'i-mdi-note-text-outline'
 }
 
 export const downloadFile = async (url: string, fileName: string): Promise<Error | DownloadError | undefined> => {
