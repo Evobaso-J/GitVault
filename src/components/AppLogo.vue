@@ -1,18 +1,13 @@
 <template>
   <NuxtLink
     to="/"
-    class="flex items-center cursor-pointer flex-col justify-center"
+    class="cursor-pointer"
   >
     <NuxtImg
-      src="/images/logo.png"
+      src="/images/logo.svg"
       alt="Logo"
       width="40"
     />
-    <h1
-      class="text-sm font-semibold"
-    >
-      {{ $t('app.name') }}
-    </h1>
   </NuxtLink>
 </template>
 
