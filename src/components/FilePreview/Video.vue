@@ -16,6 +16,7 @@
         v-if="source?.download_url"
         class="max-h-full"
         :src="source.download_url"
+        controls
       />
     </div>
     <template #footer>
