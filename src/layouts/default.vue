@@ -23,7 +23,7 @@
       </UContainer>
     </div>
     <UContainer class="flex-1 overflow-auto w-full">
-      <div class="mb-6 pt-6">
+      <div class="mb-12 pt-6">
         <slot />
       </div>
     </UContainer>
