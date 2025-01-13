@@ -1,22 +1,17 @@
-import type { FileExtension } from '.'
+import { EXTENSION_TO_CATEGORY_MAP, FILE_CATEGORY_ICONS, type FileCategory } from './extensions'
 import type { NuxtLinkProps } from '#app'
 import { DownloadError } from '~/errors'
 
-export const getFileExtension = (fileName: string): FileExtension => `.${fileName.split('.').pop()}`
-
-export const codeFileExtensions: FileExtension[] = ['.py', '.js', '.ts', '.jsx', '.tsx', '.vue', '.json', '.html', '.css', '.yaml', '.yml', '.gitignore'] as const
-export const textFileExtensions: FileExtension[] = ['.txt', '.md', '.rtf'] as const
-export const imageFileExtensions: FileExtension[] = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'] as const
-export const videoFileExtensions: FileExtension[] = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.wmv', '.flv', '.mkv'] as const
-export const documentFileExtensions: FileExtension[] = ['.pdf'] as const
+export const getFileExtension = (fileName: string): string => fileName.split('.').pop() ?? ''
+export const getFileCategory = (fileName: string): FileCategory | 'unsupported' => {
+  const fileExtension = getFileExtension(fileName)
+  return EXTENSION_TO_CATEGORY_MAP[fileExtension as keyof typeof EXTENSION_TO_CATEGORY_MAP] ?? 'unsupported'
+}
 
 export const getIconFromFileName = (fileName: string): string => {
-  const fileExtension = getFileExtension(fileName)
-  if (documentFileExtensions.includes(fileExtension)) return 'i-mdi-file-pdf-box-outline'
-  if (codeFileExtensions.includes(fileExtension)) return 'i-material-symbols-code-blocks-outline-rounded'
-  if (imageFileExtensions.includes(fileExtension)) return 'i-mdi-image-outline'
-  if (videoFileExtensions.includes(fileExtension)) return 'i-material-symbols-videocam-outline-rounded'
-  return 'i-mdi-note-text-outline'
+  const fileCategory = getFileCategory(fileName)
+  if (fileCategory === 'unsupported') return 'i-material-symbols-help-center-outline-rounded'
+  return FILE_CATEGORY_ICONS[fileCategory]
 }
 
 export const downloadFile = async (url: string, fileName: string): Promise<Error | DownloadError | undefined> => {

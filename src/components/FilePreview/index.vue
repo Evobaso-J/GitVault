@@ -1,22 +1,22 @@
 <template>
   <FilePreviewCode
-    v-if="codeFileExtensions.includes(fileExtension)"
+    v-if="fileCategory === 'code'"
     :source="props.source"
   />
   <FilePreviewText
-    v-else-if="textFileExtensions.includes(fileExtension)"
+    v-else-if="fileCategory === 'text'"
     :source="props.source"
   />
   <FilePreviewImage
-    v-else-if="imageFileExtensions.includes(fileExtension)"
+    v-else-if="fileCategory === 'image'"
     :source="props.source"
   />
   <FilePreviewVideo
-    v-else-if="videoFileExtensions.includes(fileExtension)"
+    v-else-if="fileCategory === 'video'"
     :source="props.source"
   />
   <FilePreviewPdf
-    v-else-if="documentFileExtensions.includes(fileExtension)"
+    v-else-if="fileCategory === 'pdf'"
     :source="props.source"
   />
   <FilePreviewFallback
@@ -27,7 +27,7 @@
 
 <script setup lang='ts'>
 import type { CDNFile } from '~/resources/CDNFiles'
-import { codeFileExtensions, documentFileExtensions, getFileExtension, imageFileExtensions, textFileExtensions, videoFileExtensions } from '~/resources/CDNFiles/utils'
+import { getFileCategory } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FilePreview' })
 export type FilePreviewProps = {
@@ -35,5 +35,5 @@ export type FilePreviewProps = {
 }
 const props = defineProps<FilePreviewProps>()
 
-const fileExtension = computed(() => getFileExtension(props.source.name))
+const fileCategory = computed(() => getFileCategory(props.source.name))
 </script>
