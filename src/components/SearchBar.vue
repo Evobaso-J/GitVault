@@ -55,7 +55,7 @@ const { data } = useFetch('/api/gh-repo-tree', {
 })
 
 const filesAndFolders = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
-  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.includes(search.value ?? '')).slice(0, 10)
+  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.toLowerCase().includes(search.value?.toLowerCase() ?? '')).slice(0, 10)
   || [])
 
 /**
