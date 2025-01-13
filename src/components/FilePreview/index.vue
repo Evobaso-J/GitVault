@@ -15,7 +15,7 @@
     v-else-if="videoFileExtensions.includes(fileExtension)"
     :source="props.source"
   />
-  <FilePreviewDocument
+  <FilePreviewPdf
     v-else-if="documentFileExtensions.includes(fileExtension)"
     :source="props.source"
   />
