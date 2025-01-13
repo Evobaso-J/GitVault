@@ -1,7 +1,7 @@
 <template>
   <UInputMenu
     v-model:query="search"
-    :options="files"
+    :options="filesAndFolders"
     option-attribute="path"
     by="path"
     :placeholder="$t('search')"
@@ -56,8 +56,8 @@ const { data } = useFetch('/api/gh-repo-tree', {
   },
 })
 
-const files = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
-  .filter(treeItem => !isFileExcluded(treeItem.path ?? ''))
+const filesAndFolders = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
+  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.includes(search.value ?? '')).slice(0, 10)
   || [])
 
 /**
