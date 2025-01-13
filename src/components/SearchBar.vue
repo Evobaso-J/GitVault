@@ -1,7 +1,7 @@
 <template>
   <UInputMenu
     v-model:query="search"
-    :options="files"
+    :options="filesAndFolders"
     option-attribute="path"
     by="path"
     :placeholder="$t('search')"
@@ -17,27 +17,25 @@
   >
     <template #option="{ option }">
       <ULink
-        class="flex gap-2 w-full truncate"
+        class="flex gap-2 w-full truncate items-center"
         :to="option.path"
       >
         <UIcon
-          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document'"
+          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document-outline'"
+          class="text-primary"
         />
         {{ option.path }}
       </ULink>
     </template>
     <template #trailing>
-      <!-- ClientOnly to prevent weird hydration problems -->
-      <ClientOnly>
-        <UButton
-          v-show="!!search"
-          class="text-gray-500"
-          variant="link"
-          icon="i-heroicons-x-mark-20-solid"
-          :padded="false"
-          @click="search = ''"
-        />
-      </ClientOnly>
+      <UButton
+        v-show="!!search"
+        class="text-gray-500"
+        variant="link"
+        icon="i-heroicons-x-mark-20-solid"
+        :padded="false"
+        @click="search = ''"
+      />
     </template>
   </UInputMenu>
 </template>
@@ -56,8 +54,8 @@ const { data } = useFetch('/api/gh-repo-tree', {
   },
 })
 
-const files = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
-  .filter(treeItem => !isFileExcluded(treeItem.path ?? ''))
+const filesAndFolders = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
+  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.toLowerCase().includes(search.value?.toLowerCase() ?? '')).slice(0, 10)
   || [])
 
 /**
