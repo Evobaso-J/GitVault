@@ -17,11 +17,12 @@
   >
     <template #option="{ option }">
       <ULink
-        class="flex gap-2 w-full truncate"
+        class="flex gap-2 w-full truncate items-center"
         :to="option.path"
       >
         <UIcon
-          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document'"
+          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document-outline'"
+          class="text-primary"
         />
         {{ option.path }}
       </ULink>
