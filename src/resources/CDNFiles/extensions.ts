@@ -270,7 +270,7 @@ export type SupportedFileExtensions = keyof ExtensionsToCategory
 
 export const FILE_CATEGORY_ICONS: Record<keyof FileExtensionCategories, string> = {
   archive: 'i-material-symbols-folder-zip-outline-rounded',
-  audio: 'i-material-symbols-music-video-outline-rounded',
+  audio: 'i-mdi-music-box-outline',
   book: 'i-material-symbols-menu-book-outline-rounded',
   code: 'i-material-symbols-code-blocks-outline-rounded',
   exec: 'i-material-symbols-settings-applications-outline-rounded',
