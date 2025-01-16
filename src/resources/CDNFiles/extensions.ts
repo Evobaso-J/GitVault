@@ -140,6 +140,8 @@ export const FILE_EXTENSION_CATEGORIES = {
     'wasm',
     'xcodeproj',
     'xml',
+    'yml',
+    'yaml',
     'zsh',
   ],
   exec: [
