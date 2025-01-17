@@ -19,8 +19,8 @@ const fileSchemaPut: z.ZodType<GhRepoContentsRequestParams> = z.object({
 export default defineEventHandler<{ body: GhRepoContentsRequestParams, query: Record<string, string> }, Promise<GhRepoContentsResponseData>>(async (event) => {
   const query = getQuery(event)
   const body = await readValidatedBody<GhRepoContentsRequestParams>(event, data => fileSchemaPut.parse(data))
-  const { ghToken, ghRepoOwner, ghRepoName } = useRuntimeConfig(event)
-  return await $fetch<GhRepoContentsResponseData>(`https://api.github.com/repos/${ghRepoOwner}/${ghRepoName}/contents/${query.path}`, {
+  const { ghToken, public: { ghRepoOwner } } = useRuntimeConfig(event)
+  return await $fetch<GhRepoContentsResponseData>(`https://api.github.com/repos/${ghRepoOwner}/${query.repo}/contents/${query.path}`, {
     method: 'PUT',
     body,
     headers: {

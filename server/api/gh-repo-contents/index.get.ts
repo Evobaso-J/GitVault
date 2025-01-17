@@ -2,8 +2,8 @@ import type { GhRepoContentsResponseData } from '~~/server/resources/gitHubRepoC
 
 export default defineEventHandler(async (event): Promise<GhRepoContentsResponseData> => {
   const query = getQuery(event)
-  const { ghToken, ghRepoOwner, ghRepoName } = useRuntimeConfig(event)
-  return await $fetch(`https://api.github.com/repos/${ghRepoOwner}/${ghRepoName}/contents/${query.path}`, {
+  const { ghToken, public: { ghRepoOwner } } = useRuntimeConfig(event)
+  return await $fetch(`https://api.github.com/repos/${ghRepoOwner}/${query.repo}/contents/${query.path}`, {
     query,
     headers: {
       'Authorization': `Bearer ${ghToken}`,
