@@ -48,11 +48,11 @@ defineComponent({ name: 'SearchBar' })
 
 const search = ref<string>()
 
-const route = useRoute()
+const { params: { repo } } = useRoute()
 const { data } = useFetch('/api/gh-repo-tree', {
   query: {
     recursive: 5,
-    repo: route.params.repo,
+    repo,
   },
 })
 
