@@ -1,9 +1,8 @@
-import type { Repository } from '~/composables/useRepository'
 import type { GhRepoContentsRequestParams } from '~~/server/resources/gitHubRepoContents'
 
 type PutFilePayload = {
   path: string
-  repo: Repository
+  repo: string
   body: GhRepoContentsRequestParams
 }
 

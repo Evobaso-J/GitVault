@@ -33,10 +33,10 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
   const { onChange, reset, ...rest } = useFileDialog({
     ...options?.value,
   })
+  const { params: { repo } } = useRoute()
 
   onChange(async (files) => {
-    const { activeRepository } = useRepository()
-    if (!files?.[0] || !activeRepository.value) return
+    if (!files?.[0] || !repo || Array.isArray(repo)) return
     const fileName = files[0].name
 
     const path = options?.value?.replace?.path ?? createFilePath(queryPath.value, fileName)
@@ -57,7 +57,7 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
     })
 
     try {
-      await $putFile({ path, body, repo: activeRepository.value })
+      await $putFile({ path, body, repo })
       toast.update(toastId, {
         title: t('successMessage'),
         color: 'green',

@@ -2,7 +2,7 @@ import { $putFile } from '../CDNFiles/api'
 
 type CreateFolderPayload = {
   path: string
-  repo: Repository
+  repo: string
 }
 
 export const $createFolder = ({ path, repo }: CreateFolderPayload) => $putFile({
