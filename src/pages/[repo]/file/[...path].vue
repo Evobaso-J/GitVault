@@ -15,15 +15,15 @@ definePageMeta({
 
 const { queryPath } = useRouteQueryPath()
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
-const { activeRepository } = useRepository()
+const { params: { repo } } = useRoute()
 
 const { data: file } = await useFetch('/api/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath,
-    repo: activeRepository,
+    repo,
   },
-  transform: parseGhRepoContentsToCDNFile,
+  transform: data => parseGhRepoContentsToCDNFile(data),
   // Refetch every 5 minutes to update the download_url permission token
   watch: [downloadUrlTokenDuration],
 })

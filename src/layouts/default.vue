@@ -48,14 +48,16 @@ import type { BreadcrumbLink } from '#ui/types'
 const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
-  const linksFromRoute = route.path.split('/').filter(Boolean).map((path, index, array) => ({
-    label: decodeURIComponent(path),
-    to: '/' + array.slice(0, index + 1).join('/'),
-  }))
+  const linksFromRoute = route.path.split('/')
+    .filter(pathSection => !!pathSection && pathSection !== route.params.repo)
+    .map((path, index, array) => ({
+      label: decodeURIComponent(path),
+      to: `/${route.params.repo}/${array.slice(0, index + 1).join('/')}`,
+    }))
 
   return [{
     label: t('home'),
-    to: '/',
+    to: `/${route.params.repo}`,
   }, ...linksFromRoute]
 })
 </script>

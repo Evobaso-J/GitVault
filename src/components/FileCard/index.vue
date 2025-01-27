@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to="`/file/${to}`"
+    :to="`/${$route.params.repo}/file/${to}`"
     target="_blank"
   >
     <UCard

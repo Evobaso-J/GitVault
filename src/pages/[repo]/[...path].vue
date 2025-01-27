@@ -45,35 +45,22 @@ useHead({
 })
 
 const { queryPath } = useRouteQueryPath()
+const { params: { repo } } = useRoute()
 
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
-
-const { activeRepository } = useRepository()
 
 const { data } = await useFetch('/api/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath,
-    repo: activeRepository,
+    repo,
   },
   // Refetch every 5 minutes to update the download_url permission token
   watch: [downloadUrlTokenDuration],
 })
 
-const route = useRoute()
-const searchFilterCallback = (file: CDNFile | CDNFolder) => {
-  let searchString = route.query?.search ?? ''
-  if (Array.isArray(searchString)) {
-    searchString = ''
-  }
-  else {
-    searchString = searchString.toLowerCase()
-  }
-  return file.name.toLowerCase().includes(searchString)
-}
-
-const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value).filter(searchFilterCallback))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name) && searchFilterCallback(file)))
+const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name)))
 
 const { open } = useUploadFile(ref({ multiple: false }))
 </script>
