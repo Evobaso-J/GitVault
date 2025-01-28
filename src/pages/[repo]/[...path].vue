@@ -84,16 +84,13 @@ const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value
 
 const { open } = useUploadFile(ref({ multiple: false }))
 
-const router = useRouter()
 const { repositoryNames } = useRepository()
 const repoSelectorOptions = computed<DropdownItem[][]>(() =>
   [repositoryNames.value.map<DropdownItem>(repoName =>
     ({ label: repoName,
       value: repoName,
       click: async () => {
-        console.log('NAVIGATE CALLED')
-        await router.replace(`/${repoName}`)
-        console.log('navigated')
+        await navigateTo(`/${repoName}`)
       },
     }))])
 </script>
