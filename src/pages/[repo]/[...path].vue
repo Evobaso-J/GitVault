@@ -1,5 +1,22 @@
 <template>
   <div class="flex flex-col gap-6">
+    <div class="text-lg flex items-center gap-2">
+      {{ $route.params.repo }}
+      <UDropdown
+        :items="repoSelectorOptions"
+        :popper="{ placement: 'bottom-start' }"
+        :ui="{
+          height: 'max-h-60',
+        }"
+      >
+        <UButton
+          :ui="{ rounded: 'rounded-lg' }"
+          variant="soft"
+          size="xs"
+          icon="i-mdi-chevron-down"
+        />
+      </UDropdown>
+    </div>
     <FoldersSection
       v-if="folders.length"
       :folders="folders"
@@ -32,12 +49,15 @@
 
 <script setup lang="ts">
 import { useInterval } from '@vueuse/core'
+import type { DropdownItem } from '#ui/types'
 import EmptySectionCard from '~/components/EmptySectionCard.vue'
+import { useRepository } from '~/composables/useRepository'
 import { isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
 import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
+import type { _height } from '#tailwind-config/theme'
 
 const { t } = useI18n()
 useHead({
@@ -63,4 +83,17 @@ const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data
 const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name)))
 
 const { open } = useUploadFile(ref({ multiple: false }))
+
+const router = useRouter()
+const { repositoryNames } = useRepository()
+const repoSelectorOptions = computed<DropdownItem[][]>(() =>
+  [repositoryNames.value.map<DropdownItem>(repoName =>
+    ({ label: repoName,
+      value: repoName,
+      click: async () => {
+        console.log('NAVIGATE CALLED')
+        await router.replace(`/${repoName}`)
+        console.log('navigated')
+      },
+    }))])
 </script>
