@@ -17,7 +17,7 @@ const { queryPath } = useRouteQueryPath()
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 const { params: { repo } } = useRoute()
 
-const { data: file } = await useFetch('/api/gh-repo-contents', {
+const { data: file } = await useFetch('/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath,

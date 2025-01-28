@@ -51,7 +51,7 @@ const route = useRoute()
 
 // Forces retrigger of the fetch when the route changes
 const routeRepo = computed(() => route.params.repo)
-const { data } = useFetch('/api/gh-repo-tree', {
+const { data } = useFetch('/gh-repo-tree', {
   query: {
     recursive: 5,
     repo: routeRepo,

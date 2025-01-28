@@ -7,7 +7,7 @@ type PutFilePayload = {
 }
 
 export const $putFile = ({ path, body, repo }: PutFilePayload) => {
-  return $fetch('/api/gh-repo-contents', {
+  return $fetch('/gh-repo-contents', {
     method: 'PUT',
     query: {
       path,
