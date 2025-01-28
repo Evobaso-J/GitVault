@@ -16,16 +16,15 @@
     @update:model-value="goToElement"
   >
     <template #option="{ option }">
-      <ULink
-        class="flex gap-2 w-full truncate items-center"
-        :to="option.path"
+      <div
+        class="flex gap-2 w-full truncate items-center cursor-pointer"
       >
         <UIcon
           :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document-outline'"
           class="text-primary"
         />
         {{ option.path }}
-      </ULink>
+      </div>
     </template>
     <template #trailing>
       <UButton
@@ -69,7 +68,7 @@ const filesAndFolders = computed<GhRepoTreeResponseData['tree']>(() => data.valu
  */
 const goToElement = (treeItem: GhRepoTreeResponseData['tree'][number]) => {
   const target = treeItem.type === 'tree' ? '_self' : '_blank'
-  const path = treeItem.type === 'tree' ? treeItem.path : `/file/${treeItem.path}`
+  const path = treeItem.type === 'tree' ? `/${routeRepo.value}/${treeItem.path}` : `/${routeRepo.value}/file/${treeItem.path}`
   navigateTo(path, { open: { target } })
 }
 </script>
