@@ -23,7 +23,7 @@ const { data: file } = await useFetch('/api/gh-repo-contents', {
     path: queryPath,
     repo,
   },
-  transform: data => parseGhRepoContentsToCDNFile(data),
+  transform: parseGhRepoContentsToCDNFile,
   // Refetch every 5 minutes to update the download_url permission token
   watch: [downloadUrlTokenDuration],
 })
