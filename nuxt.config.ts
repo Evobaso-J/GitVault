@@ -35,9 +35,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     ghToken: '',
-    ghRepoOwner: '',
-    ghRepoName: '',
-    ghDefaultBranch: 'main',
+    public: {
+      ghRepoOwner: '',
+      ghDefaultBranch: 'main',
+    },
   },
 
   colorMode: {

@@ -3,22 +3,25 @@
     <AppToolbar class="w-full" />
     <div>
       <UContainer>
-        <div class="flex gap-3 mt-6 py-3 items-center border-y dark:border-gray-700 px-2 -mx-2">
-          <UBreadcrumb
-            :links="links"
-          />
-          <CreateItemsDropdown
-            :popper="{ placement: 'bottom-start' }"
-          >
-            <template #activator>
-              <UButton
-                :ui="{ rounded: 'rounded-lg' }"
-                variant="soft"
-                size="xs"
-                icon="i-mdi-plus"
-              />
-            </template>
-          </CreateItemsDropdown>
+        <div class="flex gap-12 md:mt-6 py-3 items-center justify-between border-y dark:border-gray-700 px-2 -mx-2 overflow-x-auto">
+          <div class="flex items-center gap-2">
+            <UBreadcrumb
+              :links="links"
+            />
+            <CreateItemsDropdown
+              :popper="{ placement: 'bottom-start' }"
+            >
+              <template #activator>
+                <UButton
+                  :ui="{ rounded: 'rounded-lg' }"
+                  variant="soft"
+                  size="xs"
+                  icon="i-mdi-plus"
+                />
+              </template>
+            </CreateItemsDropdown>
+          </div>
+          <RepoSelector />
         </div>
       </UContainer>
     </div>
@@ -48,14 +51,16 @@ import type { BreadcrumbLink } from '#ui/types'
 const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbLink[]>(() => {
-  const linksFromRoute = route.path.split('/').filter(Boolean).map((path, index, array) => ({
-    label: decodeURIComponent(path),
-    to: '/' + array.slice(0, index + 1).join('/'),
-  }))
+  const linksFromRoute = route.path.split('/')
+    .filter(pathSection => !!pathSection && pathSection !== route.params.repo)
+    .map((path, index, array) => ({
+      label: decodeURIComponent(path),
+      to: `/${route.params.repo}/${array.slice(0, index + 1).join('/')}`,
+    }))
 
   return [{
     label: t('home'),
-    to: '/',
+    to: `/${route.params.repo}`,
   }, ...linksFromRoute]
 })
 </script>

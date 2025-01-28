@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to
+    :to="`/${$route.params.repo}/${to}`"
   >
     <UCard
       :ui="{

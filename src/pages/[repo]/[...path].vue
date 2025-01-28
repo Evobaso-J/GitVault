@@ -32,12 +32,14 @@
 
 <script setup lang="ts">
 import { useInterval } from '@vueuse/core'
+
 import EmptySectionCard from '~/components/EmptySectionCard.vue'
 import { isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
 import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
+import type { _height } from '#tailwind-config/theme'
 
 const { t } = useI18n()
 useHead({
@@ -45,32 +47,22 @@ useHead({
 })
 
 const { queryPath } = useRouteQueryPath()
+const { params: { repo } } = useRoute()
 
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 
 const { data } = await useFetch('/api/gh-repo-contents', {
   method: 'GET',
   query: {
-    path: queryPath.value,
+    path: queryPath,
+    repo,
   },
   // Refetch every 5 minutes to update the download_url permission token
   watch: [downloadUrlTokenDuration],
 })
 
-const route = useRoute()
-const searchFilterCallback = (file: CDNFile | CDNFolder) => {
-  let searchString = route.query?.search ?? ''
-  if (Array.isArray(searchString)) {
-    searchString = ''
-  }
-  else {
-    searchString = searchString.toLowerCase()
-  }
-  return file.name.toLowerCase().includes(searchString)
-}
-
-const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value).filter(searchFilterCallback))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name) && searchFilterCallback(file)))
+const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name)))
 
 const { open } = useUploadFile(ref({ multiple: false }))
 </script>

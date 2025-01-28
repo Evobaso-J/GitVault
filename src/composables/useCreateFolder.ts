@@ -12,6 +12,9 @@ export const useCreateFolder = () => {
   const { t } = useI18n()
 
   const createFolder = async (name: string) => {
+    const { params: { repo } } = useRoute()
+    if (!repo || Array.isArray(repo)) return
+
     const folderName = `${name}/.gitkeep`
     const path = createFilePath(queryPath.value, folderName)
 
@@ -26,7 +29,7 @@ export const useCreateFolder = () => {
       },
     })
     try {
-      await $createFolder(path)
+      await $createFolder({ path, repo })
       toast.update(toastId, {
         title: t('successMessage'),
         color: 'green',
