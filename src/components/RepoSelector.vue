@@ -10,7 +10,7 @@
       <UButton
         :ui="{ rounded: 'rounded-lg' }"
         variant="ghost"
-        :disabled="repoSelectorOptions[0].length === 0"
+        :disabled="repoSelectorOptions[0].length < 2"
         size="xs"
         :label="Array.isArray($route.params.repo) || !$route.params.repo ? '' : $route.params.repo"
         trailing-icon="i-material-symbols-home-storage-outline"
