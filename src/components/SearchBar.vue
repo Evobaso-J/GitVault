@@ -48,11 +48,14 @@ defineComponent({ name: 'SearchBar' })
 
 const search = ref<string>()
 
-const { params: { repo } } = useRoute()
+const route = useRoute()
+
+// Forces retrigger of the fetch when the route changes
+const routeRepo = computed(() => route.params.repo)
 const { data } = useFetch('/api/gh-repo-tree', {
   query: {
     recursive: 5,
-    repo,
+    repo: routeRepo,
   },
 })
 
