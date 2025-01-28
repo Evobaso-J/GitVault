@@ -3,7 +3,7 @@
     <AppToolbar class="w-full" />
     <div>
       <UContainer>
-        <div class="flex gap-3 mt-6 py-3 items-center border-y dark:border-gray-700 px-2 -mx-2">
+        <div class="flex gap-3 md:mt-6 py-3 items-center border-y dark:border-gray-700 px-2 -mx-2">
           <UBreadcrumb
             :links="links"
           />
