@@ -44,7 +44,10 @@ const items = [
     {
       label: 'Logout',
       icon: 'i-heroicons-arrow-left-on-rectangle',
-      click: clear,
+      click: async () => {
+        await clear()
+        navigateTo('/login')
+      },
     },
   ],
 ] satisfies DropdownItem[][]
