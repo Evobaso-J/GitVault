@@ -25,12 +25,9 @@ import type { DropdownItem } from '#ui/types'
 defineComponent({ name: 'RepoSelector' })
 
 const { data } = useFetch('/gh-user-repos')
-const config = useRuntimeConfig()
 const repositoryNames = computed(() => (
-  data.value
-    ?.filter(repo => repo.owner.login === config.public.ghRepoOwner)
-    .map(repo => repo.name)
-    ?? []))
+  data.value?.map(repo => repo.name)
+  ?? []))
 
 const repoSelectorOptions = computed<[DropdownItem[]]>(() =>
   [repositoryNames.value.map<DropdownItem>(repoName =>
