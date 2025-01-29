@@ -45,6 +45,9 @@ const { t } = useI18n()
 useHead({
   title: t('folders'),
 })
+definePageMeta({
+  middleware: 'auth',
+})
 
 const { queryPath } = useRouteQueryPath()
 const { params: { repo } } = useRoute()

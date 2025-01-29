@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxt/image',
+    'nuxt-auth-utils',
   ],
 
   image: {
@@ -38,6 +39,12 @@ export default defineNuxtConfig({
     public: {
       ghRepoOwner: '',
       ghDefaultBranch: 'main',
+    },
+    oauth: {
+      github: {
+        clientId: '',
+        clientSecret: '',
+      },
     },
   },
 
