@@ -6,7 +6,7 @@
     <NuxtImg
       src="/images/logo.svg"
       alt="Logo"
-      width="40"
+      :width="size"
     />
   </NuxtLink>
 </template>
@@ -15,6 +15,17 @@
 import { DEFAULT_REPO_NAME } from '~/config'
 
 defineComponent({ name: 'AppLogo' })
+
+type AppLogoProps = {
+  /**
+   * The pixel size of the logo.
+   */
+  size: string
+}
+
+withDefaults(defineProps<AppLogoProps>(), {
+  size: '40',
+})
 
 const route = useRoute()
 const currentRepo = computed(() => {
