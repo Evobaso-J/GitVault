@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxt/image',
+    'nuxt-auth-utils',
   ],
 
   image: {
@@ -34,10 +35,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-04',
 
   runtimeConfig: {
-    ghToken: '',
     public: {
-      ghRepoOwner: '',
       ghDefaultBranch: 'main',
+    },
+    oauth: {
+      github: {
+        clientId: '',
+        clientSecret: '',
+      },
     },
   },
 

@@ -17,14 +17,14 @@ const fileSchemaPut: z.ZodType<GhRepoContentsRequestParams> = z.object({
 })
 
 export default defineEventHandler<{ body: GhRepoContentsRequestParams, query: Record<string, string> }, Promise<GhRepoContentsResponseData>>(async (event) => {
+  const { secure, user } = await requireUserSession(event)
   const query = getQuery(event)
   const body = await readValidatedBody<GhRepoContentsRequestParams>(event, data => fileSchemaPut.parse(data))
-  const { ghToken, public: { ghRepoOwner } } = useRuntimeConfig(event)
-  return await $fetch<GhRepoContentsResponseData>(`https://api.github.com/repos/${ghRepoOwner}/${query.repo}/contents/${query.path}`, {
+  return await $fetch<GhRepoContentsResponseData>(`https://api.github.com/repos/${user.login}/${query.repo}/contents/${query.path}`, {
     method: 'PUT',
     body,
     headers: {
-      'Authorization': `Bearer ${ghToken}`,
+      'Authorization': `Bearer ${secure?.tokens.access_token}`,
       'X-GitHub-Api-Version': '2022-11-28',
     },
   })
