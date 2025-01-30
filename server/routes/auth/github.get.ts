@@ -1,5 +1,5 @@
 export default defineOAuthGitHubEventHandler({
-  async onSuccess(event, { user, tokens }) {
+  onSuccess: async (event, { user, tokens }) => {
     await setUserSession(event, {
       user,
       secure: {
@@ -8,4 +8,5 @@ export default defineOAuthGitHubEventHandler({
     })
     return sendRedirect(event, '/')
   },
+  config: { scope: ['repo'] },
 })
