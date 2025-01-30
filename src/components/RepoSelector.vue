@@ -6,16 +6,15 @@
       height: 'max-h-60',
     }"
   >
-    <div class="flex items-center gap-1 text-sm max-w-40 truncate">
-      <UButton
-        :ui="{ rounded: 'rounded-lg' }"
-        variant="ghost"
-        :disabled="repoSelectorOptions[0].length < 2"
-        size="xs"
-        :label="Array.isArray($route.params.repo) || !$route.params.repo ? '' : $route.params.repo"
-        trailing-icon="i-material-symbols-home-storage-outline"
-      />
-    </div>
+    <UButton
+      :ui="{ rounded: 'rounded-lg', base: 'max-w-40' }"
+      variant="ghost"
+      :disabled="repoSelectorOptions[0].length < 2"
+      size="xs"
+      trailing-icon="i-material-symbols-home-storage-outline"
+    >
+      <span class="truncate">{{ Array.isArray($route.params.repo) || !$route.params.repo ? '' : $route.params.repo }}</span>
+    </UButton>
   </UDropdown>
 </template>
 
