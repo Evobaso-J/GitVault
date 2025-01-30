@@ -1,16 +1,16 @@
 <template>
   <div class="h-full flex">
     <UContainer
-      class="w-1/3 flex flex-col my-36 gap-16"
+      class="md:w-1/3 flex flex-col my-6 md:my-36 gap-16"
     >
-      <div class="w-full flex items-center gap-2">
+      <div class="w-full flex items-center gap-2 mb-8 md:mb-0">
         <AppLogo size="30" />
         <h1 class="text-xl font-semibold">
           {{ $t('app.name') }}
         </h1>
       </div>
 
-      <div class="flex flex-col gap-2 mb-5">
+      <div class="flex flex-col gap-2 mb-5 text-center px-1 md:px-0 md:text-left">
         <span class="font-semibold text-4xl">
           {{ $t('signIn.title') }}
         </span>
@@ -63,7 +63,7 @@
         </i18n-t>
       </div>
     </UContainer>
-    <div class="w-2/3">
+    <div class="w-2/3 hidden md:block">
       <UCard
         class="h-full"
         :ui="{
