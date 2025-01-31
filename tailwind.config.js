@@ -18,6 +18,11 @@ export default {
           950: '#1c1650',
         },
       },
+      aspectRatio: {
+        auto: 'auto',
+        square: '1 / 1',
+        video: '16 / 9',
+      },
     },
   },
   plugins: [],
