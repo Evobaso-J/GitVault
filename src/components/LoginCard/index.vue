@@ -10,7 +10,7 @@
   >
     <div class="grid grid-cols-7 grid-rows-7 gap-0">
       <div
-        v-for="i in 15 * 7"
+        v-for="i in 7 * 7"
         :key="i"
         class="col-span-1 aspect-square"
       >
