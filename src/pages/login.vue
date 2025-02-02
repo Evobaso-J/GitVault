@@ -1,90 +1,67 @@
 <template>
   <div class="h-full flex">
-    <div class="grid grid-cols-5 grid-rows-7 gap-0 fixed lg:hidden">
-      <div
-        v-for="i in 15 * 7"
-        :key="i"
-        class="col-span-1 aspect-square"
-      >
-        <LoginCardCanvasPattern />
-      </div>
-    </div>
     <UContainer
-      class="lg:w-1/3 my-6 lg:my-36 isolate"
-      :ui="{
-        padding: 'p-6 lg-px-8',
-      }"
+      class="lg:w-1/3 flex flex-col my-6 lg:my-36 gap-16"
     >
-      <UCard
-        class="h-full"
-        :ui="{
-          ring: 'ring-1 ring-gray-200 dark:ring-gray-800 lg:ring-0',
-          body: {
-            base: 'h-full flex flex-col gap-16',
-          },
-        }"
-      >
-        <div class="w-full flex items-center gap-2 mb-8 lg:mb-0">
-          <AppLogo size="30" />
-          <h1 class="text-xl font-semibold">
-            {{ $t('app.name') }}
-          </h1>
-        </div>
+      <div class="w-full flex items-center gap-2 mb-8 lg:mb-0">
+        <AppLogo size="30" />
+        <h1 class="text-xl font-semibold">
+          {{ $t('app.name') }}
+        </h1>
+      </div>
 
-        <div class="flex flex-col justify-center h-full">
-          <div class="flex flex-col gap-2 mb-5 text-center px-1 lg:px-0 lg:text-left">
-            <span class="font-semibold text-4xl">
-              {{ $t('signIn.title') }}
-            </span>
-            <i18n-t
-              keypath="signIn.description"
-              tag="p"
-              class="text-gray-500"
-            >
-              <template #gitHubLink>
-                <ULink
-                  class="text-primary text-wrap"
-                  to="https://github.com"
-                  external
-                  target="_blank"
-                >
-                  {{ $t('gitHub') }}
-                </ULink>
-              </template>
-            </i18n-t>
-          </div>
-          <div class="py-4">
-            <UButton
-              v-if="!loggedIn"
-              to="/auth/github"
-              icon="i-simple-icons-github"
-              :label="$t('signIn.gitHub')"
-              color="black"
-              variant="outline"
+      <div class="flex flex-col gap-2 mb-5 text-center px-1 lg:px-0 lg:text-left">
+        <span class="font-semibold text-4xl">
+          {{ $t('signIn.title') }}
+        </span>
+        <i18n-t
+          keypath="signIn.description"
+          tag="p"
+          class="text-gray-500"
+        >
+          <template #gitHubLink>
+            <ULink
+              class="text-primary text-wrap"
+              to="https://github.com"
               external
-              block
-              size="lg"
-              class="mb-4"
-            />
-            <i18n-t
-              keypath="signIn.dontHaveAnAccount"
-              tag="div"
-              class="font-normal text-gray-500 text-sm text-center w-full"
+              target="_blank"
             >
-              <template #createAccount>
-                <ULink
-                  class="text-primary text-wrap"
-                  to="https://github.com/signup"
-                  external
-                  target="_blank"
-                >
-                  {{ $t('signIn.createAccount') }}
-                </ULink>
-              </template>
-            </i18n-t>
-          </div>
-        </div>
-      </UCard>
+              {{ $t('gitHub') }}
+            </ULink>
+          </template>
+        </i18n-t>
+      </div>
+
+      <div class="py-4">
+        <UButton
+          v-if="!loggedIn"
+          to="/auth/github"
+          icon="i-simple-icons-github"
+          :label="$t('signIn.gitHub')"
+          color="black"
+          variant="outline"
+          external
+          block
+          size="lg"
+          class="mb-4"
+        />
+        <i18n-t
+          keypath="signIn.dontHaveAnAccount"
+          tag="div"
+          class="font-normal text-gray-500 text-sm text-center w-full"
+        >
+          <template #createAccount>
+            <ULink
+              class="text-primary text-wrap"
+              to="https://github.com/signup"
+              external
+              target="_blank"
+            >
+              {{ $t('signIn.createAccount') }}
+            </ULink>
+          </template>
+        </i18n-t>
+      </div>
     </UContainer>
     <div class="w-2/3 hidden lg:flex overflow-clip justify-end">
       <LoginCard />
