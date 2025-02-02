@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to="`/${$route.params.repo}/file/${to}`"
+    :to="getPathToFile({ fileName: to, repo: $route.params.repo })"
     target="_blank"
   >
     <UCard
@@ -30,6 +30,7 @@
 
 <script setup lang='ts'>
 import type { NuxtLinkProps } from '#app'
+import { getPathToFile } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FileCard' })
 

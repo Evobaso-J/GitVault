@@ -1,6 +1,7 @@
 import { EXTENSION_TO_CATEGORY_MAP, FILE_CATEGORY_ICONS, type FileCategory } from './extensions'
 import type { NuxtLinkProps } from '#app'
 import { DownloadError } from '~/errors'
+import type { RouteLocationAsRelativeGeneric, RouteLocationAsPathGeneric, RouteParamsGeneric } from '#vue-router'
 
 export const getFileExtension = (fileName: string): string => fileName.split('.').pop() ?? ''
 export const getFileCategory = (fileName: string): FileCategory | 'unsupported' => {
@@ -44,4 +45,16 @@ export const getPathFromNuxtLinkTo = (nuxtLinkToProp: NuxtLinkProps['to']): stri
   if (typeof nuxtLinkToProp === 'string') return nuxtLinkToProp
   if (!nuxtLinkToProp?.path) throw new Error('NuxtLinkProps.to.path is required')
   return nuxtLinkToProp.path
+}
+
+export const getPathToFile = ({ fileName, repo }: { fileName: string | RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric | undefined, repo: RouteParamsGeneric[string] | undefined }): string => {
+  if (typeof fileName !== 'string') {
+    console.error('fileName is not a string:', fileName)
+    return ''
+  }
+  if (typeof repo !== 'string') {
+    console.error('fileName is not a string:', fileName)
+    return ''
+  }
+  return `/${repo}/file/${fileName}`
 }
