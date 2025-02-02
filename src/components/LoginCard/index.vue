@@ -1,6 +1,6 @@
 <template>
   <UCard
-    class="h-full overflow-hidden aspect-square"
+    class="h-full overflow-hidden aspect-auto"
     :ui="{
       rounded: 'rounded-l-[6.5rem] rounded-r-none',
       body: {
@@ -10,7 +10,7 @@
   >
     <div class="grid grid-cols-7 grid-rows-7 gap-0">
       <div
-        v-for="i in 7 * 7"
+        v-for="i in 14 * 7"
         :key="i"
         class="col-span-1 aspect-square"
       >

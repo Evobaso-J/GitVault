@@ -191,7 +191,6 @@ const drawFourOverlappingCircles = (ctx: CanvasRenderingContext2D) => {
 
 const drawCircleQuarters = (ctx: CanvasRenderingContext2D) => {
   const ciao = getRandomArrayElements(lighterColors, { numberOfElements: 5, distinct: true })
-  console.log({ lighterColors, ciao })
   const [color1, color2, color3, color4, backgroundColor] = ciao
   const { width, height } = ctx.canvas
 
