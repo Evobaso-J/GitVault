@@ -1,7 +1,10 @@
 <template>
-  <div class="h-full flex">
+  <div class="h-full flex flex-col lg:flex-row overflow-hidden">
     <UContainer
-      class="lg:w-1/3 flex flex-col my-6 lg:my-36 gap-16"
+      class="flex flex-col my-6 lg:my-36 gap-16 lg:shrink-0 lg:w-[35rem]"
+      :ui="{
+        padding: 'px-4 sm:px-6 lg:px-12',
+      }"
     >
       <div class="w-full flex items-center gap-2 mb-8 lg:mb-0">
         <AppLogo size="30" />
@@ -63,7 +66,7 @@
         </i18n-t>
       </div>
     </UContainer>
-    <div class="w-2/3 hidden lg:flex overflow-clip justify-end">
+    <div class="flex justify-end mt-auto lg:mt-0">
       <LoginCard />
     </div>
   </div>
