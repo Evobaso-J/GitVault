@@ -20,7 +20,7 @@ type AppLogoProps = {
   /**
    * The pixel size of the logo.
    */
-  size: string
+  size?: string
 }
 
 withDefaults(defineProps<AppLogoProps>(), {
