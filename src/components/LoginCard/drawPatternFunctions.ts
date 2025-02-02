@@ -76,17 +76,6 @@ const drawNineCircles = (ctx: CanvasRenderingContext2D) => {
   }
 }
 
-const drawNineSquares = (ctx: CanvasRenderingContext2D) => {
-  const squareColors = getRandomArrayElements(lighterColors, { numberOfElements: 9 })
-  const { width, height } = ctx.canvas
-  for (let i = 0; i < 9; i++) {
-    const x = (i % 3) * (width / 3)
-    const y = Math.floor(i / 3) * (height / 3)
-    ctx.fillStyle = squareColors[i]!
-    ctx.fillRect(x, y, width / 3, height / 3)
-  }
-}
-
 const drawRhombus = (ctx: CanvasRenderingContext2D) => {
   const [rhombusColor, backgroundColor] = getRandomArrayElements(lighterColors, { numberOfElements: 2, distinct: true })
   const { width, height } = ctx.canvas
@@ -227,7 +216,6 @@ type DrawPatternFunction = (ctx: CanvasRenderingContext2D) => void
 export const drawPatternFunctions: DrawPatternFunction[] = [
   drawSplitSquare,
   drawNineCircles,
-  drawNineSquares,
   drawRhombus,
   drawConcentricCircles,
   drawDiagonalStripe,
