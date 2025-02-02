@@ -6,15 +6,15 @@ import type { Tuple } from './helpers'
  * If the number of requested elements is higher than the number of elements in the array,
  * then elements won't be guaranteed to be distinct.
  */
-export const getRandomArrayElements = <T, const N extends number>(myArray: T[], config: { numberOfElements: N, distinct?: boolean }) => {
+export const getRandomArrayElements = <T, const N extends number>(arr: T[], config: { numberOfElements: N, distinct?: boolean }) => {
   const { numberOfElements, distinct } = config
   const randomElements: T[] = []
-  const tempArray = [...myArray]
+  const tempArray = [...arr]
   for (let i = 0; i < numberOfElements; i++) {
     const index = Math.floor(Math.random() * tempArray.length)
-    const randomElement = myArray[index]!
+    const randomElement = tempArray[index]!
     randomElements.push(randomElement)
-    if (distinct && numberOfElements < myArray.length) {
+    if (distinct && numberOfElements < arr.length) {
       tempArray.splice(index, 1)
     }
   }

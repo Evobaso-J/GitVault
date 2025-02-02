@@ -7,7 +7,7 @@ type PrimaryColor = typeof theme.colors['royal-blue'][TailwindPrimaryColorKeys]
 const lighterColors = Object.entries(theme.colors['royal-blue'])
   .filter(([shade]) => {
     const colorNumber = Number(shade)
-    return colorNumber > 50 && colorNumber <= 700
+    return colorNumber > 50 && colorNumber <= 600
   })
   .map<PrimaryColor>(([_, color]) => color)
 
@@ -16,6 +16,23 @@ const rotateCanvasRandomly = (ctx: CanvasRenderingContext2D) => {
   ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
   ctx.rotate(angle)
   ctx.translate(-ctx.canvas.width / 2, -ctx.canvas.height / 2)
+}
+
+const drawArc = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  radius: number,
+  startAngle: number,
+  endAngle: number,
+  fillColor: string,
+) => {
+  ctx.fillStyle = fillColor
+  ctx.beginPath()
+  ctx.arc(x, y, radius, startAngle, endAngle)
+  ctx.lineTo(x, y)
+  ctx.closePath()
+  ctx.fill()
 }
 
 const drawSplitSquare = (ctx: CanvasRenderingContext2D) => {
@@ -43,7 +60,7 @@ const drawSplitSquare = (ctx: CanvasRenderingContext2D) => {
 }
 
 const drawNineCircles = (ctx: CanvasRenderingContext2D) => {
-  const [circleColor, backgroundColor] = getRandomArrayElements(lighterColors, { numberOfElements: 2, distinct: true })
+  const [circleColor, backgroundColor] = getRandomArrayElements(lighterColors, { numberOfElements: 2 })
   const { width, height } = ctx.canvas
 
   ctx.fillStyle = backgroundColor
@@ -55,9 +72,7 @@ const drawNineCircles = (ctx: CanvasRenderingContext2D) => {
   for (let i = 0; i < 9; i++) {
     const x = (i % 3) * (width / 3) + width / 6
     const y = Math.floor(i / 3) * (height / 3) + height / 6
-    ctx.beginPath()
-    ctx.arc(x, y, radius, 0, Math.PI * 2)
-    ctx.fill()
+    drawArc(ctx, x, y, radius, 0, Math.PI * 2, circleColor)
   }
 }
 
@@ -103,15 +118,9 @@ const drawConcentricCircles = (ctx: CanvasRenderingContext2D) => {
 
   const firstCircleRadius = width / 4
   const secondCircleRadius = width / 8
-  ctx.fillStyle = circleColor
-  ctx.beginPath()
-  ctx.arc(width / 2, height / 2, firstCircleRadius, 0, Math.PI * 2)
-  ctx.fill()
 
-  ctx.fillStyle = secondCircleColor
-  ctx.beginPath()
-  ctx.arc(width / 2, height / 2, secondCircleRadius, 0, Math.PI * 2)
-  ctx.fill()
+  drawArc(ctx, width / 2, height / 2, firstCircleRadius, 0, Math.PI * 2, circleColor)
+  drawArc(ctx, width / 2, height / 2, secondCircleRadius, 0, Math.PI * 2, secondCircleColor)
 }
 
 const drawDiagonalStripe = (ctx: CanvasRenderingContext2D) => {
@@ -141,21 +150,8 @@ const drawQuarterOfCircle = (ctx: CanvasRenderingContext2D) => {
   ctx.fillStyle = backgroundColor
   ctx.fillRect(0, 0, width, height)
 
-  // Draw the outermost quarter circle
-  ctx.fillStyle = firstArcColor
-  ctx.beginPath()
-  ctx.arc(0, 0, width * 2 / 3, 0, Math.PI / 2)
-  ctx.lineTo(0, 0)
-  ctx.closePath()
-  ctx.fill()
-
-  // Draw the innermost quarter circle
-  ctx.fillStyle = secondArcColor
-  ctx.beginPath()
-  ctx.arc(0, 0, width / 3, 0, Math.PI / 2)
-  ctx.lineTo(0, 0)
-  ctx.closePath()
-  ctx.fill()
+  drawArc(ctx, 0, 0, width * 2 / 3, 0, Math.PI / 2, firstArcColor)
+  drawArc(ctx, 0, 0, width / 3, 0, Math.PI / 2, secondArcColor)
 }
 
 const drawLargeQuarterOfCircle = (ctx: CanvasRenderingContext2D) => {
@@ -166,21 +162,8 @@ const drawLargeQuarterOfCircle = (ctx: CanvasRenderingContext2D) => {
   ctx.fillStyle = backgroundColor
   ctx.fillRect(0, 0, width, height)
 
-  // Draw the outermost quarter circle
-  ctx.fillStyle = firstArcColor
-  ctx.beginPath()
-  ctx.arc(0, 0, width, 0, Math.PI / 2)
-  ctx.lineTo(0, 0)
-  ctx.closePath()
-  ctx.fill()
-
-  // Draw the innermost quarter circle
-  ctx.fillStyle = secondArcColor
-  ctx.beginPath()
-  ctx.arc(0, 0, width * 2 / 3, 0, Math.PI / 2)
-  ctx.lineTo(0, 0)
-  ctx.closePath()
-  ctx.fill()
+  drawArc(ctx, 0, 0, width, 0, Math.PI / 2, firstArcColor)
+  drawArc(ctx, 0, 0, width * 2 / 3, 0, Math.PI / 2, secondArcColor)
 }
 
 const drawFourOverlappingCircles = (ctx: CanvasRenderingContext2D) => {
@@ -207,19 +190,37 @@ const drawFourOverlappingCircles = (ctx: CanvasRenderingContext2D) => {
 
   // Draw large circles
   positions.forEach((pos, index) => {
-    ctx.fillStyle = index === 0 || index === (positions.length - 1) ? circleColor : altCircleColor
-    ctx.beginPath()
-    ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2)
-    ctx.fill()
+    const color = index === 0 || index === (positions.length - 1) ? circleColor : altCircleColor
+    drawArc(ctx, pos.x, pos.y, radius, 0, Math.PI * 2, color)
   })
 
-  // Draw small white circles in the center
   ctx.fillStyle = smallCircleColor
   for (const pos of positions) {
-    ctx.beginPath()
-    ctx.arc(pos.x, pos.y, smallRadius, 0, Math.PI * 2)
-    ctx.fill()
+    drawArc(ctx, pos.x, pos.y, smallRadius, 0, Math.PI * 2, smallCircleColor)
   }
+}
+
+const drawCircleQuarters = (ctx: CanvasRenderingContext2D) => {
+  const ciao = getRandomArrayElements(lighterColors, { numberOfElements: 5, distinct: true })
+  console.log({ lighterColors, ciao })
+  const [color1, color2, color3, color4, backgroundColor] = ciao
+  const { width, height } = ctx.canvas
+
+  ctx.fillStyle = backgroundColor
+  ctx.fillRect(0, 0, width, height)
+
+  const radius = width / 2
+
+  const arcs = [
+    { x: 0, y: 0, startAngle: 0, endAngle: Math.PI / 2, color: color1 }, // Top-left quarter
+    { x: width, y: 0, startAngle: Math.PI / 2, endAngle: Math.PI, color: color2 }, // Top-right quarter
+    { x: width, y: height, startAngle: Math.PI, endAngle: 3 * Math.PI / 2, color: color3 }, // Bottom-right quarter
+    { x: 0, y: height, startAngle: 3 * Math.PI / 2, endAngle: 2 * Math.PI, color: color4 }, // Bottom-left quarter
+  ]
+
+  arcs.forEach((arc) => {
+    drawArc(ctx, arc.x, arc.y, radius, arc.startAngle, arc.endAngle, arc.color)
+  })
 }
 
 type DrawPatternFunction = (ctx: CanvasRenderingContext2D) => void
@@ -234,4 +235,5 @@ export const drawPatternFunctions: DrawPatternFunction[] = [
   drawQuarterOfCircle,
   drawLargeQuarterOfCircle,
   drawFourOverlappingCircles,
+  drawCircleQuarters,
 ]

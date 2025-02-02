@@ -2,7 +2,7 @@
   <UCard
     class="h-full overflow-hidden aspect-square"
     :ui="{
-      rounded: 'rounded-l-[5rem] rounded-r-none',
+      rounded: 'rounded-l-[6.5rem] rounded-r-none',
       body: {
         padding: '',
       },
