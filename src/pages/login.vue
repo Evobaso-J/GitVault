@@ -63,14 +63,8 @@
         </i18n-t>
       </div>
     </UContainer>
-    <div class="w-2/3 hidden md:block">
-      <UCard
-        class="h-full"
-        :ui="{
-          background: 'bg-royal-blue-400',
-          rounded: 'rounded-l-[5rem] rounded-r-none',
-        }"
-      />
+    <div class="w-2/3 hidden md:block overflow-clip">
+      <LoginCard />
     </div>
   </div>
 </template>
