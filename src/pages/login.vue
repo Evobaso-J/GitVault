@@ -1,7 +1,7 @@
 <template>
   <div class="h-full flex flex-col lg:flex-row overflow-hidden">
     <UContainer
-      class="flex flex-col my-6 lg:my-36 gap-16 lg:shrink-0 lg:w-[35rem]"
+      class="flex flex-col my-6 lg:my-36 gap-16 lg:shrink-0 lg:w-[35rem] pt-[calc(50vh-28rem)]"
       :ui="{
         padding: 'px-4 sm:px-6 lg:px-12',
       }"
