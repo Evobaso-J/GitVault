@@ -15,7 +15,7 @@
 import { useClipboard } from '@vueuse/core'
 import type { FileCardHeaderProps } from './Header.vue'
 import type { DropdownItem } from '#ui/types'
-import { downloadFile, getPathFromNuxtLinkTo } from '~/resources/CDNFiles/utils'
+import { downloadFile, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
 import type { UseUploadFileOptions } from '~/composables/useUploadFile'
 
 defineComponent({ name: 'FileCardMenu' })
@@ -24,6 +24,7 @@ const props = defineProps<FileCardMenuProps>()
 
 const { copied, copy } = useClipboard()
 const { origin } = useRequestURL()
+const route = useRoute()
 const { t } = useI18n()
 
 const copyPathToClipboard = () => {
@@ -65,7 +66,7 @@ const items = computed<DropdownItem[][]>(() => {
         click: (e: Event) => {
           e.stopPropagation()
         },
-        to: `/file/${props.to}`,
+        to: getPathToFile({ fileName: props.to, repo: route.params.repo }),
         target: '_blank',
       },
     ],
