@@ -20,6 +20,7 @@ import type { FileCardProps } from './index.vue'
 defineComponent({ name: 'FileCardPreview' })
 type FileCardPreviewProps = {
   fileName: FileCardProps['title']
+  downloadUrl?: FileCardProps['downloadUrl']
 }
 defineProps<FileCardPreviewProps>()
 </script>
