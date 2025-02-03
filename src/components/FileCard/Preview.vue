@@ -4,13 +4,18 @@
       rounded: 'rounded-none rounded-b-lg',
       background: 'bg-gray-50 dark:bg-gray-800',
       ring: 'ring-0',
+      body: {
+        padding: 'p-0 sm:p-0',
+      },
     }"
-    class="flex items-center justify-around"
+    class="h-36"
   >
-    <FileCardIcon
-      :title="fileName"
-      size="lg"
-    />
+    <div class="flex items-center justify-around px-4 py-5 sm:p-6">
+      <FileCardIcon
+        :title="fileName"
+        size="lg"
+      />
+    </div>
   </UCard>
 </template>
 
