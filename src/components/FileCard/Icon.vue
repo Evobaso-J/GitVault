@@ -3,8 +3,8 @@
     :name="fileIcon"
     class="text-gray-500 text-8xl"
     :class="{
-      'w-6 h-6': size==='md',
-      'text-8xl': size === 'lg',
+      'size-6': size==='md',
+      'size-24': size === 'lg',
     }"
   />
 </template>
