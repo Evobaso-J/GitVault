@@ -1,20 +1,4 @@
-import { z } from 'zod'
-import type { GhRepoContentsRequestParams, GhRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
-
-const gitUserSchema: z.ZodType<GhRepoContentsRequestParams['author']> = z.object({
-  name: z.string(),
-  email: z.string(),
-  date: z.string().optional(),
-})
-
-const fileSchemaPut: z.ZodType<GhRepoContentsRequestParams> = z.object({
-  content: z.string(),
-  message: z.string(),
-  sha: z.string().optional(),
-  author: gitUserSchema.optional(),
-  branch: z.string().optional(),
-  committer: gitUserSchema.optional(),
-})
+import { fileSchemaPut, type GhRepoContentsRequestParams, type GhRepoContentsResponseData } from '~~/server/resources/gitHubRepoContents'
 
 export default defineEventHandler<{ body: GhRepoContentsRequestParams, query: Record<string, string> }, Promise<GhRepoContentsResponseData>>(async (event) => {
   const { secure, user } = await requireUserSession(event)
