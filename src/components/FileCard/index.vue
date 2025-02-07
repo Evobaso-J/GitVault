@@ -21,8 +21,8 @@
         class="mb-2 px-4"
       />
       <FileCardPreview
-        class="px-0"
         :file-name="title"
+        :download-url="getDownloadUrl()"
       />
     </UCard>
   </ULink>
@@ -30,7 +30,7 @@
 
 <script setup lang='ts'>
 import type { NuxtLinkProps } from '#app'
-import { getPathToFile } from '~/resources/CDNFiles/utils'
+import { getPathToFile, getFileCategory } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FileCard' })
 
@@ -41,5 +41,10 @@ export interface FileCardProps {
   sha: string
 }
 
-defineProps<FileCardProps>()
+const props = defineProps<FileCardProps>()
+const getDownloadUrl = () => {
+  const category = getFileCategory(props.title)
+  if (category === 'image') return props.downloadUrl
+  return undefined
+}
 </script>
