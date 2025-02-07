@@ -1,4 +1,5 @@
-import { GITVAULT_REPO_PREFIX, type GhUserReposData } from '~~/server/resources/gitHubUserRepos'
+import { GITVAULT_REPO_PREFIX } from '~/config'
+import { type GhUserReposData } from '~~/server/resources/gitHubUserRepos'
 
 export default defineEventHandler(async (event): Promise<GhUserReposData> => {
   const { secure } = await requireUserSession(event)
