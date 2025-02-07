@@ -1,6 +1,4 @@
-import {
-  // GITVAULT_REPO_PREFIX,
-  type GhUserReposData } from '~~/server/resources/gitHubUserRepos'
+import { GITVAULT_REPO_PREFIX, type GhUserReposData } from '~~/server/resources/gitHubUserRepos'
 
 export default defineEventHandler(async (event): Promise<GhUserReposData> => {
   const { secure } = await requireUserSession(event)
@@ -11,9 +9,8 @@ export default defineEventHandler(async (event): Promise<GhUserReposData> => {
     },
   })
 
-  // TODO: re-enable once you can show private repos
-  // if (result) {
-  //   return result.filter(repo => repo.name.startsWith(GITVAULT_REPO_PREFIX))
-  // }
+  if (result) {
+    return result.filter(repo => repo.name.startsWith(GITVAULT_REPO_PREFIX))
+  }
   return result
 })
