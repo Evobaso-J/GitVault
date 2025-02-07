@@ -2,7 +2,7 @@
   <UModal v-model="model">
     <UCard>
       <template #header>
-        {{ $t('createFolder') }}
+        {{ title }}
       </template>
       <UForm
         :schema="schema"
@@ -34,34 +34,29 @@
 </template>
 
 <script setup lang='ts'>
-import { z } from 'zod'
+import type { z } from 'zod'
 
-defineComponent({ name: 'CreateFolderModal' })
+defineComponent({ name: 'CreateNamedResourceModal' })
 
 const model = defineModel<boolean>()
 
-const { t } = useI18n()
-const schema = z.object({
-  name: z.string().min(1).refine(name => !name.includes('/'), {
-    message: t('validationError.noSlashInFolderName'),
-  }),
-})
-
-const state = reactive({
-  name: '',
-})
-
-type CreateFolderModalEmits = {
-  (e: 'create-folder', name: string): void
+type CreateNamedResourceModalEmits = {
+  (e: 'submit', name: string): void
   (e: 'cancel'): void
 }
-const emit = defineEmits<CreateFolderModalEmits>()
+const emit = defineEmits<CreateNamedResourceModalEmits>()
 
-const { createFolder } = useCreateFolder()
+type CreateNamedResourceModalProps = {
+  title: string
+  schema: z.ZodObject<{ name: z.ZodEffects<z.ZodString> }>
+  initialState: { name: string }
+}
+const props = defineProps<CreateNamedResourceModalProps>()
+
+const state = reactive(props.initialState)
 
 const save = async () => {
-  emit('create-folder', state.name)
-  await createFolder(state.name)
+  emit('submit', state.name)
   state.name = ''
 }
 </script>
