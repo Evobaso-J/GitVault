@@ -48,7 +48,7 @@ const emit = defineEmits<CreateNamedResourceModalEmits>()
 
 type CreateNamedResourceModalProps = {
   title: string
-  schema: z.ZodObject<{ name: z.ZodEffects<z.ZodString> }>
+  schema: z.ZodObject<{ name: z.ZodEffects<z.ZodString> | z.ZodString }>
   initialState: { name: string }
 }
 const props = defineProps<CreateNamedResourceModalProps>()

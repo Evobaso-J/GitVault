@@ -21,7 +21,17 @@
               </template>
             </CreateItemsDropdown>
           </div>
-          <RepoSelector />
+          <RepoSelector
+            @create-click="openCreateRepoModal"
+          />
+          <CreateNamedResourceModal
+            v-model="isModalOpen"
+            :title="$t('createRepo')"
+            :schema="createUserRepoSchema"
+            :initial-state="{ name: '' }"
+            @submit="saveAndClose"
+            @cancel="closeModal"
+          />
         </div>
       </UContainer>
     </div>
@@ -46,7 +56,9 @@
 </template>
 
 <script setup lang='ts'>
+import { z } from 'zod'
 import type { BreadcrumbLink } from '#ui/types'
+import { GITVAULT_REPO_PREFIX } from '~/config'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -63,4 +75,17 @@ const links = computed<BreadcrumbLink[]>(() => {
     to: `/${route.params.repo}`,
   }, ...linksFromRoute]
 })
+const isModalOpen = ref(false)
+const openCreateRepoModal = () => isModalOpen.value = true
+const closeModal = () => isModalOpen.value = false
+
+const createUserRepoSchema = z.object({
+  name: z.string().min(1),
+})
+
+const { createUserRepo } = useCreateUserRepo()
+const saveAndClose = async (name: string) => {
+  await createUserRepo({ name: `${GITVAULT_REPO_PREFIX}${name}` })
+  closeModal()
+}
 </script>

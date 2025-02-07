@@ -9,7 +9,6 @@
     <UButton
       :ui="{ rounded: 'rounded-lg', base: 'max-w-40' }"
       variant="ghost"
-      :disabled="repoSelectorOptions[0].length < 2"
       size="xs"
       trailing-icon="i-material-symbols-home-storage-outline"
     >
@@ -23,18 +22,37 @@ import type { DropdownItem } from '#ui/types'
 
 defineComponent({ name: 'RepoSelector' })
 
+type RepoSelectorEmits = {
+  (e: 'create-click'): void
+}
+
+const emit = defineEmits<RepoSelectorEmits>()
+
 const { data } = useFetch('/gh-user-repos')
 const repositoryNames = computed(() => (
   data.value?.map(repo => repo.name)
   ?? []))
 
-const repoSelectorOptions = computed<[DropdownItem[]]>(() =>
-  [repositoryNames.value.map<DropdownItem>(repoName =>
-    ({
-      label: repoName,
-      value: repoName,
-      click: async () => await navigateTo(`/${repoName}`),
-    }),
-  ),
+const route = useRoute()
+const { t } = useI18n()
+const repoSelectorOptions = computed<DropdownItem[][]>(() =>
+  [
+    [{
+      label: t('createRepo'),
+      value: '',
+      icon: 'i-mdi-plus',
+      iconClass: 'text-primary-500',
+      class: 'text-primary-500',
+      click: () => emit('create-click'),
+    }],
+    repositoryNames.value
+      .map<DropdownItem>(repoName =>
+        ({
+          label: repoName,
+          value: repoName,
+          click: async () => await navigateTo(`/${repoName}`),
+          disabled: repoName === route.params.repo,
+        }),
+      ),
   ])
 </script>
