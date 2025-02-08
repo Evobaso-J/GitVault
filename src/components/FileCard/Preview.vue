@@ -12,12 +12,10 @@
     class="overflow-hidden"
   >
     <template v-if="downloadUrl">
-      <NuxtImg
+      <img
         class="w-full h-full object-cover"
         :src="downloadUrl"
-        placeholder
-        loading="lazy"
-      />
+      >
     </template>
     <div
       v-else
