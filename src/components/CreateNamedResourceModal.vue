@@ -10,9 +10,14 @@
         class="space-y-4"
         @submit="save"
       >
-        <UFormGroup name="name">
-          <UInput v-model="state.name" />
-        </UFormGroup>
+        <slot
+          name="input"
+          :state="state"
+        >
+          <UFormGroup name="name">
+            <UInput v-model="state.name" />
+          </UFormGroup>
+        </slot>
 
         <div class="flex justify-end gap-3">
           <UButton

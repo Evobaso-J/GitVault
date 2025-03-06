@@ -31,7 +31,21 @@
             :initial-state="{ name: '' }"
             @submit="saveAndClose"
             @cancel="closeModal"
-          />
+          >
+            <template #input="{ state }">
+              <div class="flex items-start gap-1">
+                <span
+                  class="font-semibold text-lg h-8 flex items-center"
+                >{{ GITVAULT_REPO_PREFIX }}</span>
+                <UFormGroup
+                  name="name"
+                  class="w-full"
+                >
+                  <UInput v-model="state.name" />
+                </UFormGroup>
+              </div>
+            </template>
+          </CreateNamedResourceModal>
         </div>
       </UContainer>
     </div>
