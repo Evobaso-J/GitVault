@@ -1,4 +1,5 @@
 {
+  "add": "Add",
   "app": {
     "name": "GitVault",
     "titleTemplate": "%s • @:app.name"
@@ -8,6 +9,7 @@
   "copyLink": "Copy link",
   "create": "Create",
   "createFolder": "Create folder",
+  "createRepo": "Create new repository",
   "deleteFolder": "Delete folder",
   "download": "Download",
   "emptyFolder": {
@@ -27,6 +29,7 @@
   },
   "files": "Files",
   "folders": "Folders",
+  "gitHub": "GitHub",
   "home": "Home",
   "newFolder": "Create new folder",
   "openInNewTab": "Open in a new tab",
@@ -35,17 +38,16 @@
   "search": "Search...",
   "showAsText": "Show as plain text",
   "signIn": {
-    "title": "Sign in",
+    "createAccount": "Create one!",
     "description": "@:app.name leverages the power of {gitHubLink} to provide you with limitless storage for your files.",
-    "gitHub": "@:signIn.title with @:gitHub",
     "dontHaveAnAccount": "Don't have an account yet? {createAccount}",
-    "createAccount": "Create one!"
+    "gitHub": "@:signIn.title with @:gitHub",
+    "title": "Sign in"
   },
   "successMessage": "Operation successful!",
   "uploadFile": "Upload file",
   "validationError": {
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },
-  "gitHub": "GitHub",
   "viewOnGitHub": "View on @:gitHub"
 }

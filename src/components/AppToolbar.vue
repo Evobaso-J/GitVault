@@ -13,7 +13,7 @@
         <template #activator>
           <UButton
             icon="i-mdi-plus"
-            :label="$t('create')"
+            :label="$t('add')"
             size="xl"
           />
         </template>
