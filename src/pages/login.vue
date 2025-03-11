@@ -73,8 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import { DEFAULT_REPO_NAME } from '~/config'
-
 const { t } = useI18n()
 definePageMeta({
   layout: false,
@@ -91,10 +89,4 @@ declare module '#auth-utils' {
 }
 
 const { loggedIn } = useUserSession()
-
-watch(loggedIn, () => {
-  if (!loggedIn.value) {
-    navigateTo(`/${DEFAULT_REPO_NAME}`)
-  }
-})
 </script>
