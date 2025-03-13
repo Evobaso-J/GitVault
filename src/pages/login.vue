@@ -74,9 +74,19 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
+const { loggedIn } = useUserSession()
+
 definePageMeta({
   layout: false,
+  middleware: () => {
+    const { loggedIn } = useUserSession()
+    if (loggedIn.value) {
+      const { activeRepository } = useRepoStorage()
+      return navigateTo(`/${activeRepository.value}`)
+    }
+  },
 })
+
 useHead({
   title: t('signIn.title'),
 })
@@ -87,6 +97,4 @@ declare module '#auth-utils' {
     login: string
   }
 }
-
-const { loggedIn } = useUserSession()
 </script>
