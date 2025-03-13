@@ -13,8 +13,8 @@
   "deleteFolder": "Delete folder",
   "download": "Download",
   "emptyFolder": {
-    "description": "Maybe you searched too deep? \nIf that's the case try cleaning the filters, otherwise...",
-    "title": "There's nothing to see here!"
+    "description": "You didn't upload any file in the current folder. Time to start!",
+    "title": "There's nothing to see here"
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
