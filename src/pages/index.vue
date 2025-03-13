@@ -1,4 +1,5 @@
 <template>
-  <!-- PREVENTS APP FROM BREAKING WHEN NAVIGATING TO ROOT -->
-  <div />
+  <div>
+    <!-- PREVENTS APP FROM BREAKING WHEN NAVIGATING TO ROOT -->
+  </div>
 </template>
