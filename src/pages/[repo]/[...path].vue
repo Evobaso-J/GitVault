@@ -46,7 +46,7 @@ useHead({
   title: t('folders'),
 })
 definePageMeta({
-  middleware: 'auth',
+  middleware: ['auth', 'initialize-repo'],
 })
 
 const { queryPath } = useRouteQueryPath()
