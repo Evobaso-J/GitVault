@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="`/${currentRepo}`"
+    :to="`/${activeRepository}`"
     class="cursor-pointer"
   >
     <NuxtImg
@@ -12,8 +12,6 @@
 </template>
 
 <script setup lang='ts'>
-import { DEFAULT_REPO_NAME } from '~/config'
-
 defineComponent({ name: 'AppLogo' })
 
 type AppLogoProps = {
@@ -27,11 +25,5 @@ withDefaults(defineProps<AppLogoProps>(), {
   size: '40',
 })
 
-const route = useRoute()
-const currentRepo = computed(() => {
-  if (!route.params.repo || Array.isArray(route.params.repo)) {
-    return DEFAULT_REPO_NAME
-  }
-  return route.params.repo
-})
+const { activeRepository } = useRepoStorage()
 </script>
