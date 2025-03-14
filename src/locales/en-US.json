@@ -32,6 +32,9 @@
   "gitHub": "GitHub",
   "home": "Home",
   "newFolder": "Create new folder",
+  "noRepos": {
+    "title": "No repositories"
+  },
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
   "replace": "Replace",

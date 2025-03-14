@@ -11,7 +11,7 @@ import { parseGhRepoContentsToCDNFile } from '~/resources/CDNFiles/parse'
 
 definePageMeta({
   layout: 'single-file',
-  middleware: ['00-auth', 'initialize-repo'],
+  middleware: ['00-auth', '03-active-repo'],
 })
 
 const { queryPath } = useRouteQueryPath()
