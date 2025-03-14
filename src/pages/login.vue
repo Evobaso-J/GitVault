@@ -78,13 +78,7 @@ const { loggedIn } = useUserSession()
 
 definePageMeta({
   layout: false,
-  middleware: () => {
-    const { loggedIn } = useUserSession()
-    if (loggedIn.value) {
-      const { activeRepository } = useRepoStorage()
-      return navigateTo(`/${activeRepository.value}`)
-    }
-  },
+  middleware: '01-guest',
 })
 
 useHead({
