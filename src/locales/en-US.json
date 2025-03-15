@@ -33,6 +33,16 @@
   "home": "Home",
   "newFolder": "Create new folder",
   "noRepos": {
+    "step1": {
+      "cta": "Let's get started!",
+      "description": "To start using @:app.name you first have to select a GitHub repository to store your files in.\nYou might not want to use any of your existing repositories, so we'll create one from scratch.",
+      "title": "A bit of setup"
+    },
+    "step2": {
+      "cta": "Create the new repository",
+      "description": "@:app.name recognizes repositories whose name starts with {repoPrefix}. Type your repo name, it will be automatically prepended with the {repoPrefix} prefix.",
+      "title": "Your first repository"
+    },
     "title": "No repositories"
   },
   "openInNewTab": "Open in a new tab",
