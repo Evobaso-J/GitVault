@@ -51,9 +51,11 @@ const { createUserRepo } = useCreateUserRepo()
 
 const repoName = ref<CDNUserRepoName>()
 const createRepo = async (name: CDNUserRepoName) => {
-  await createUserRepo({ name })
-  repoName.value = name
-  goToNextStep()
+  const status = await createUserRepo({ name })
+  if (status === 'success') {
+    repoName.value = name
+    goToNextStep()
+  }
 }
 
 // Starting out of range to trigger the transition on the first element

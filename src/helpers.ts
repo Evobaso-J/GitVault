@@ -5,3 +5,5 @@ export type Prettify<T> = { [K in keyof T]: T[K] } & {}
 
 type TupleHelper<T, N extends number, U extends unknown[]> = U['length'] extends N ? U : TupleHelper<T, N, [T, ...U]>
 export type Tuple<T, N extends number> = TupleHelper<T, N, []>
+
+export type OperationStatus = 'success' | 'error'
