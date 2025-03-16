@@ -40,8 +40,13 @@
     },
     "step2": {
       "cta": "Create the new repository",
-      "description": "@:app.name recognizes repositories whose name starts with {repoPrefix}. Type your repo name, it will be automatically prepended with the {repoPrefix} prefix.",
+      "description": "To start using a repository as a storage space, you will need the {repoPrefix} prefix in the repository name. Write it down, and we will automatically add the prefix for you. ",
       "title": "Your first repository"
+    },
+    "step3": {
+      "cta": "Start uploading",
+      "description": "{repoName} has been created successfully! Now you can start uploading your files.",
+      "title": "You are all set!"
     },
     "title": "No repositories"
   },
