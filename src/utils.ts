@@ -20,3 +20,9 @@ export const getRandomArrayElements = <T, const N extends number>(arr: T[], conf
   }
   return randomElements as Tuple<T, N>
 }
+
+/**
+ * Stops the execution of the program for a specified amount of time.
+ * Useful for transitions and animations.
+ */
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))

@@ -13,8 +13,8 @@
   "deleteFolder": "Delete folder",
   "download": "Download",
   "emptyFolder": {
-    "description": "Maybe you searched too deep? \nIf that's the case try cleaning the filters, otherwise...",
-    "title": "There's nothing to see here!"
+    "description": "You didn't upload any file in the current folder. Time to start!",
+    "title": "There's nothing to see here"
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
@@ -32,6 +32,24 @@
   "gitHub": "GitHub",
   "home": "Home",
   "newFolder": "Create new folder",
+  "noRepos": {
+    "step1": {
+      "cta": "Let's get started!",
+      "description": "To start using @:app.name you first have to select a GitHub repository to store your files in.\nYou might not want to use any of your existing repositories, so we'll create one from scratch.",
+      "title": "A bit of setup"
+    },
+    "step2": {
+      "cta": "Create the new repository",
+      "description": "To start using a repository as a storage space, you will need the {repoPrefix} prefix in the repository name. Write it down, and we will automatically add the prefix for you. ",
+      "title": "Your first repository"
+    },
+    "step3": {
+      "cta": "Start uploading",
+      "description": "{repoName} has been created successfully! Now you can start uploading your files.",
+      "title": "You are all set!"
+    },
+    "title": "No repositories"
+  },
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
   "replace": "Replace",

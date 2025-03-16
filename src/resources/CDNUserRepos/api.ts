@@ -1,7 +1,7 @@
-import type { GITVAULT_REPO_PREFIX } from '~/config'
+import type { CDNUserRepoName } from '.'
 
 export type CreateUserRepoPayload = {
-  name: `${typeof GITVAULT_REPO_PREFIX}${string}`
+  name: CDNUserRepoName
 }
 
 export const $createUserRepo = ({ name }: CreateUserRepoPayload) => {

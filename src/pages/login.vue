@@ -73,12 +73,14 @@
 </template>
 
 <script setup lang="ts">
-import { DEFAULT_REPO_NAME } from '~/config'
-
 const { t } = useI18n()
+const { loggedIn } = useUserSession()
+
 definePageMeta({
   layout: false,
+  middleware: '01-guest',
 })
+
 useHead({
   title: t('signIn.title'),
 })
@@ -89,12 +91,4 @@ declare module '#auth-utils' {
     login: string
   }
 }
-
-const { loggedIn } = useUserSession()
-
-watch(loggedIn, () => {
-  if (!loggedIn.value) {
-    navigateTo(`/${DEFAULT_REPO_NAME}`)
-  }
-})
 </script>

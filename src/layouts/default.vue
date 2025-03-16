@@ -27,15 +27,15 @@
           <CreateNamedResourceModal
             v-model="isModalOpen"
             :title="$t('createRepo')"
-            :schema="createUserRepoSchema"
-            :initial-state="{ name: '' }"
+            :schema="USER_REPO_SCHEMA"
+            :initial-state="USER_REPO_FORM_INITIAL_STATE"
             @submit="saveAndClose"
             @cancel="closeModal"
           >
             <template #input="{ state }">
               <div class="flex items-start gap-1">
                 <span
-                  class="font-semibold text-lg h-8 flex items-center"
+                  class="font-semibold text-lg text-primary px-2 py-1 rounded-md bg-royal-blue-100 h-8 flex items-center"
                 >{{ GITVAULT_REPO_PREFIX }}</span>
                 <UFormGroup
                   name="name"
@@ -70,9 +70,9 @@
 </template>
 
 <script setup lang='ts'>
-import { z } from 'zod'
 import type { BreadcrumbLink } from '#ui/types'
 import { GITVAULT_REPO_PREFIX } from '~/config'
+import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNUserRepos/constants'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -92,10 +92,6 @@ const links = computed<BreadcrumbLink[]>(() => {
 const isModalOpen = ref(false)
 const openCreateRepoModal = () => isModalOpen.value = true
 const closeModal = () => isModalOpen.value = false
-
-const createUserRepoSchema = z.object({
-  name: z.string().min(1),
-})
 
 const { createUserRepo } = useCreateUserRepo()
 const saveAndClose = async (name: string) => {

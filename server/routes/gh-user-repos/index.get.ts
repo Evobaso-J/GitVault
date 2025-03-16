@@ -1,7 +1,7 @@
 import { GITVAULT_REPO_PREFIX } from '~/config'
-import { type GhUserReposData } from '~~/server/resources/gitHubUserRepos'
+import type { CDNUserRepo, CDNUserReposData, GhUserReposData } from '~~/server/resources/gitHubUserRepos'
 
-export default defineEventHandler(async (event): Promise<GhUserReposData> => {
+export default defineEventHandler(async (event): Promise<CDNUserReposData> => {
   const { secure } = await requireUserSession(event)
   const result = await $fetch<GhUserReposData>(`https://api.github.com/user/repos`, {
     headers: {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event): Promise<GhUserReposData> => {
   })
 
   if (result) {
-    return result.filter(repo => repo.name.startsWith(GITVAULT_REPO_PREFIX))
+    return result.filter((repo): repo is CDNUserRepo => repo.name.startsWith(GITVAULT_REPO_PREFIX))
   }
   return result
 })

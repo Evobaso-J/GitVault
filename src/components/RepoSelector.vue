@@ -35,24 +35,34 @@ const repositoryNames = computed(() => (
 
 const route = useRoute()
 const { t } = useI18n()
-const repoSelectorOptions = computed<DropdownItem[][]>(() =>
-  [
+
+type RepoSelectorItem = DropdownItem & {
+  value: string | undefined
+}
+const repoSelectorOptions = computed<RepoSelectorItem[][]>(() => {
+  const options: RepoSelectorItem[][] = [
     [{
       label: t('createRepo'),
-      value: '',
+      value: undefined,
       icon: 'i-mdi-plus',
       iconClass: 'text-primary-500',
       class: 'text-primary-500',
       click: () => emit('create-click'),
     }],
-    repositoryNames.value
-      .map<DropdownItem>(repoName =>
-        ({
-          label: repoName,
-          value: repoName,
-          click: async () => await navigateTo(`/${repoName}`),
-          disabled: repoName === route.params.repo,
-        }),
-      ),
-  ])
+  ]
+
+  if (repositoryNames.value.length) {
+    const repositoryOptions = repositoryNames.value
+      .map<RepoSelectorItem>(repoName => ({
+        label: repoName,
+        value: repoName,
+        click: async () => await navigateTo(`/${repoName}`),
+        disabled: repoName === route.params.repo,
+      }),
+      )
+    options.push(repositoryOptions)
+  }
+
+  return options
+})
 </script>
