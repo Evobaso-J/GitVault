@@ -11,7 +11,6 @@
   </i18n-t>
   <UButton
     variant="outline"
-    class="mr-auto"
     size="xl"
     @click="goToNextStep"
   >

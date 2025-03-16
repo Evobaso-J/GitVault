@@ -1,12 +1,12 @@
 <template>
-  <UContainer class="mt-28">
+  <UContainer class="h-full flex pt-10 md:pt-44 items-start">
     <transition
       name="slide"
       mode="out-in"
     >
       <section
         :key="currentStep"
-        class="flex flex-col justify-center gap-8 h-full w-1/2"
+        class="flex flex-col justify-center gap-8 md:w-1/2 text-center md:text-start items-center md:items-start"
       >
         <NoReposSetupStep1
           v-if="currentStep === 0"

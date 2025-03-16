@@ -3,7 +3,6 @@
   <span class="text-lg">{{ $t('noRepos.step1.description') }}</span>
   <UButton
     variant="outline"
-    class="mr-auto"
     size="xl"
     @click="goToNextStep"
   >

@@ -10,8 +10,8 @@
         <UserMenu />
       </div>
     </UContainer>
-    <UContainer class="flex-1 overflow-auto w-full md:mt-6">
-      <div class="mb-12 pt-6">
+    <UContainer class="flex-1 overflow-auto w-full h-full md:mt-6 flex">
+      <div class="mb-12 flex-1">
         <slot />
       </div>
     </UContainer>

@@ -29,9 +29,7 @@
     <UButton
       type="submit"
       variant="outline"
-      class="mr-auto"
       size="xl"
-      @click="createRepo"
     >
       {{ $t('noRepos.step2.cta') }}
     </UButton>
