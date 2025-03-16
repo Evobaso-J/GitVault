@@ -2,6 +2,7 @@
   <NuxtLink
     :to="`/${activeRepository}`"
     class="cursor-pointer"
+    :class="{ 'pointer-events-none': !activeRepository }"
   >
     <NuxtImg
       src="/images/logo.svg"
