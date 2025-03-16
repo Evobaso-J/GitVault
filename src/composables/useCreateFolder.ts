@@ -1,3 +1,4 @@
+import type { OperationStatus } from '~/helpers'
 import { $createFolder } from '~/resources/CDNFolders/api'
 
 const createFilePath = (queryPath: string | undefined, fileName: string) => {
@@ -11,9 +12,9 @@ export const useCreateFolder = () => {
   const toast = useToast()
   const { t } = useI18n()
 
-  const createFolder = async (name: string) => {
+  const createFolder = async (name: string): Promise<OperationStatus> => {
     const { params: { repo } } = useRoute()
-    if (!repo || Array.isArray(repo)) return
+    if (!repo || Array.isArray(repo)) return 'error'
 
     const folderName = `${name}/.gitkeep`
     const path = createFilePath(queryPath.value, folderName)
@@ -40,6 +41,7 @@ export const useCreateFolder = () => {
         },
       })
       refreshNuxtData()
+      return 'success'
     }
     catch (error) {
       let errorMessage = t('errorMessage')
@@ -55,6 +57,7 @@ export const useCreateFolder = () => {
           icon: { base: 'animate-none' },
         },
       })
+      return 'error'
     }
   }
   return { createFolder }

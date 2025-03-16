@@ -1,10 +1,11 @@
+import type { OperationStatus } from '~/helpers'
 import { $createUserRepo, type CreateUserRepoPayload } from '~/resources/CDNUserRepos/api'
 
 export const useCreateUserRepo = () => {
   const toast = useToast()
   const { t } = useI18n()
 
-  const createUserRepo = async ({ name }: CreateUserRepoPayload) => {
+  const createUserRepo = async ({ name }: CreateUserRepoPayload): Promise<OperationStatus> => {
     const toastId = `repo-${name}`
 
     toast.add({
@@ -28,6 +29,7 @@ export const useCreateUserRepo = () => {
         },
       })
       refreshNuxtData()
+      return 'success'
     }
     catch (error) {
       let errorMessage = t('errorMessage')
@@ -43,6 +45,7 @@ export const useCreateUserRepo = () => {
           icon: { base: 'animate-none' },
         },
       })
+      return 'error'
     }
   }
   return { createUserRepo }
