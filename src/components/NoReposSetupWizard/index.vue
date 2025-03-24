@@ -55,16 +55,6 @@ onMounted(async () => {
 })
 </script>
 
-  <style scoped>
-  .slide-enter-active, .slide-leave-active {
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .slide-enter-from, .slide-leave-to {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  .slide-enter-to, .slide-leave-from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  </style>
+<style scoped>
+@import url('~/assets/animations.css');
+</style>
