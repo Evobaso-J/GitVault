@@ -4,23 +4,37 @@
       name="slide"
       mode="out-in"
     >
+      <NoReposSetupWizard v-if="!isAnyRepoPresent && fetchStatus !== 'pending'" />
       <section
-        :key="currentStep"
+        v-else-if="isAnyRepoPresent && fetchStatus !== 'pending'"
+        key="select-repo"
         class="flex flex-col justify-center gap-8 md:w-1/2 text-center md:text-start items-center md:items-start"
       >
-        <NoReposSetupStep1
-          v-if="currentStep === 0"
-          @next-step="goToNextStep"
+        <span class="text-5xl font-semibold">{{ $t('selectRepo.title') }}</span>
+        <span class="text-lg">{{ $t('selectRepo.description') }}</span>
+        <USelectMenu
+          v-model="selectedRepo"
+          class="w-full"
+          :placeholder="$t('selectRepo.cta')"
+          searchable
+          :options="repositoryNames"
+          size="xl"
         />
-        <NoReposSetupStep2
-          v-if="currentStep === 1"
-          @create-repo="createRepo"
-        />
-        <NoReposSetupStep3
-          v-if="currentStep === 2 && repoName"
-          :repo-name="repoName"
-          @next-step="navigateTo(repoName)"
-        />
+        <transition
+          name="slide"
+          mode="out-in"
+        >
+          <span v-if="selectedRepo">
+            <!-- Span is needed to make animation work -->
+            <UButton
+              variant="outline"
+              size="xl"
+              :to="`/${selectedRepo}`"
+            >
+              {{ $t('selectRepo.goToRepo', { selectedRepo }) }}
+            </UButton>
+          </span>
+        </transition>
       </section>
     </transition>
   </UContainer>
@@ -28,7 +42,6 @@
 
 <script setup lang="ts">
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
-import { sleep } from '~/utils'
 
 const { t } = useI18n()
 
@@ -43,39 +56,10 @@ useHead({
   title: t('noRepos.title'),
 })
 
-const goToNextStep = () => {
-  currentStep.value++
-}
-
-const { createUserRepo } = useCreateUserRepo()
-
-const repoName = ref<CDNUserRepoName>()
-const createRepo = async (name: CDNUserRepoName) => {
-  const status = await createUserRepo({ name })
-  if (status === 'success') {
-    repoName.value = name
-    goToNextStep()
-  }
-}
-
-// Starting out of range to trigger the transition on the first element
-const currentStep = ref<number>(-1)
-onMounted(async () => {
-  await sleep(200)
-  currentStep.value = 0
-})
+const { isAnyRepoPresent, repositoryNames, fetchStatus } = useRepoStorage()
+const selectedRepo = ref<CDNUserRepoName>()
 </script>
 
 <style scoped>
-.slide-enter-active, .slide-leave-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.slide-enter-from, .slide-leave-to {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.slide-enter-to, .slide-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
+@import url('~/assets/animations.css');
 </style>
