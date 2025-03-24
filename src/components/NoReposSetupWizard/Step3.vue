@@ -21,19 +21,19 @@
 <script setup lang='ts'>
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 
-defineComponent({ name: 'NoReposSetupStep3' })
+defineComponent({ name: 'NoReposSetupWizardStep3' })
 
-type NoReposSetupStep3Props = {
+type NoReposSetupWizardStep3Props = {
   repoName: CDNUserRepoName
 }
 
-defineProps<NoReposSetupStep3Props>()
+defineProps<NoReposSetupWizardStep3Props>()
 
-type NoReposSetupStep3Emits = {
+type NoReposSetupWizardStep3Emits = {
   (event: 'next-step'): void
 }
 
-const emit = defineEmits<NoReposSetupStep3Emits>()
+const emit = defineEmits<NoReposSetupWizardStep3Emits>()
 
 const goToNextStep = () => {
   emit('next-step')

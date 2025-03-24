@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang='ts'>
-defineComponent({ name: 'NoReposSetupStep1' })
+defineComponent({ name: 'NoReposSetupWizardStep1' })
 
 type NoReposSetupStep1Emits = {
   (event: 'next-step'): void

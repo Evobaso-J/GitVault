@@ -42,13 +42,13 @@ import { GITVAULT_REPO_PREFIX } from '~/config'
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA, type UserRepoForm } from '~/resources/CDNUserRepos/constants'
 
-defineComponent({ name: 'NoReposSetupStep2' })
+defineComponent({ name: 'NoReposSetupWizardStep2' })
 
-type NoReposSetupStep2Emits = {
+type NoReposSetupWizardStep2Emits = {
   (event: 'create-repo', repoName: CDNUserRepoName): void
 }
 
-const emit = defineEmits<NoReposSetupStep2Emits>()
+const emit = defineEmits<NoReposSetupWizardStep2Emits>()
 
 const formState = ref(USER_REPO_FORM_INITIAL_STATE)
 
