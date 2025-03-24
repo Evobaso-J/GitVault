@@ -54,6 +54,12 @@
   "operationInProgress": "Operation in progress...",
   "replace": "Replace",
   "search": "Search...",
+  "selectRepo": {
+    "cta": "Select a repository",
+    "description": "You have already been here, but it seems that you don't have a default repository.\nChoose your favourite among the ones you previously created.",
+    "goToRepo": "Go to {selectedRepo}",
+    "title": "Did you get lost?"
+  },
   "showAsText": "Show as plain text",
   "signIn": {
     "createAccount": "Create one!",
