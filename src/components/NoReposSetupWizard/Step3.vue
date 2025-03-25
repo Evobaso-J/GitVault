@@ -12,7 +12,7 @@
   <UButton
     variant="outline"
     size="xl"
-    @click="goToNextStep"
+    :to="`/${repoName}`"
   >
     {{ $t('noRepos.step3.cta') }}
   </UButton>
@@ -28,14 +28,4 @@ type NoReposSetupWizardStep3Props = {
 }
 
 defineProps<NoReposSetupWizardStep3Props>()
-
-type NoReposSetupWizardStep3Emits = {
-  (event: 'next-step'): void
-}
-
-const emit = defineEmits<NoReposSetupWizardStep3Emits>()
-
-const goToNextStep = () => {
-  emit('next-step')
-}
 </script>

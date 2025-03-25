@@ -15,7 +15,6 @@
     <NoReposSetupWizardStep3
       v-if="currentStep === 2 && repoName"
       :repo-name="repoName"
-      @next-step="navigateTo(repoName)"
     />
   </section>
 </template>
