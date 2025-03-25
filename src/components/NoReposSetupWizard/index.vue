@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
-import { sleep } from '~/utils'
 
 defineComponent({
   name: 'NoReposSetupWizard',
@@ -43,10 +42,5 @@ const createRepo = async (name: CDNUserRepoName) => {
   }
 }
 
-// Starting out of range to trigger the transition on the first element
-const currentStep = ref<number>(-1)
-onMounted(async () => {
-  await sleep(200)
-  currentStep.value = 0
-})
+const currentStep = ref<number>(0)
 </script>
