@@ -1,12 +1,12 @@
 <template>
-  <UContainer class="h-full flex pt-10 md:pt-44 items-start">
+  <UContainer class="h-full flex pt-10 md:pt-40 items-start">
     <transition
       name="slide"
       mode="out-in"
     >
-      <NoReposSetupWizard v-if="!isAnyRepoPresent && fetchStatus !== 'pending'" />
+      <NoReposSetupWizard v-if="!initialIsAnyRepoPresent && initialFetchStatus !== 'pending'" />
       <section
-        v-else-if="isAnyRepoPresent && fetchStatus !== 'pending'"
+        v-else-if="initialIsAnyRepoPresent && initialFetchStatus !== 'pending'"
         key="select-repo"
         class="flex flex-col justify-center gap-8 md:w-1/2 text-center md:text-start items-center md:items-start"
       >
@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import type { AsyncDataRequestStatus } from '#app'
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 
 const { t } = useI18n()
@@ -57,6 +58,16 @@ useHead({
 })
 
 const { isAnyRepoPresent, repositoryNames, fetchStatus } = useRepoStorage()
+
+const initialIsAnyRepoPresent = ref<boolean>(false)
+const initialFetchStatus = ref<AsyncDataRequestStatus>('pending')
+watch(fetchStatus, () => {
+  if (fetchStatus.value === 'success') {
+    initialIsAnyRepoPresent.value = isAnyRepoPresent.value
+    initialFetchStatus.value = fetchStatus.value
+  }
+}, { once: true })
+
 const selectedRepo = ref<CDNUserRepoName>()
 </script>
 
