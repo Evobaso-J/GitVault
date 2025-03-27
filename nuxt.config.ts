@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image',
     'nuxt-auth-utils',
+    '@nuxt/test-utils/module',
   ],
 
   image: {
