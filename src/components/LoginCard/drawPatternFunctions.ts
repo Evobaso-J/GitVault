@@ -1,5 +1,4 @@
 import theme from '#tailwind-config/theme'
-import { getRandomArrayElements } from '~/utils'
 
 type TailwindPrimaryColorKeys = keyof typeof theme.colors['royal-blue']
 type PrimaryColor = typeof theme.colors['royal-blue'][TailwindPrimaryColorKeys]

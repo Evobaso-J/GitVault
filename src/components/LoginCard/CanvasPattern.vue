@@ -9,7 +9,6 @@
 
 <script setup lang='ts'>
 import { drawPatternFunctions } from './drawPatternFunctions'
-import { getRandomArrayElements } from '~/utils'
 
 defineComponent({ name: 'LoginCardCanvasPattern' })
 
