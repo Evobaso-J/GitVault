@@ -1,18 +1,6 @@
 <template>
-  <UCard
-    :ui="{
-      // UCard Theme: https://ui.nuxt.com/docs/components/card#theme
-      body: 'bg-neutral-100 dark:bg-neutral-800',
-      footer: 'text-sm text-neutral-500 dark:text-neutral-400',
-    }"
-    class="overflow-x-hidden"
-  >
-    <!-- DO NOT PLACE THE PRE TAG IN MORE THAN ONE LINE -->
-    <pre class="h-[65vh] overflow-scroll">{{ parsedContent }}</pre>
-    <template #footer>
-      {{ source.name }}
-    </template>
-  </UCard>
+  <!-- DO NOT PLACE THE PRE TAG IN MORE THAN ONE LINE -->
+  <pre class="overflow-auto rounded-lg bg-elevated p-4 text-xs">{{ parsedContent }}</pre>
 </template>
 
 <script setup lang='ts'>
@@ -23,7 +11,6 @@ defineComponent({ name: 'CodeFilePreview' })
 type CodeFilePreviewProps = FilePreviewProps
 const props = defineProps<CodeFilePreviewProps>()
 
-const parsedContent = computed(() => {
-  return decodeBase64Utf8(props.source.content)
-})
+// A folder listing entry has no content until the single-file response arrives
+const parsedContent = computed(() => props.source.content ? decodeBase64Utf8(props.source.content) : '')
 </script>

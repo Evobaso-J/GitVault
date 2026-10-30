@@ -27,7 +27,7 @@ Use Nuxt UI 4 `U*` components + Tailwind 4 utilities. Palettes in `src/assets/cs
 
 ## File previews
 
-New preview type: add extensions in `src/resources/CDNFiles/extensions.ts`, then a `FilePreview/<Category>.vue` branch in `src/components/FilePreview/index.vue`. Unknown types fall to `Fallback.vue`.
+New preview type: add extensions in `src/resources/CDNFiles/extensions.ts`, then a `FilePreview/<Category>.vue` branch in `src/components/FilePreview/index.vue`. Unknown types fall to `Fallback.vue`. Preview components have no fixed height or card chrome: the caller sizes them with a class (`h-64` in the folder preview panel, `h-[75vh]` on the file page). File actions (download, copy link, replace) go through `useFileActions`, shared by the folder list, the preview panel and the file page. Below `md` a file's actions open in a bottom `UDrawer` (tap-sized rows) instead of a dropdown, and the primary mobile action is the floating Upload button (`src/layouts/default.vue`).
 
 ## i18n
 

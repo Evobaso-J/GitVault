@@ -12,6 +12,9 @@ concepts:
   vault_contents:
     definition: The files and folders inside the active vault repo, at the folder of the current route.
     notes: All writes to them (upload, replace, create folder) go through `useVaultContents`; creating a vault repo is a separate concept (`useCreateUserRepo`).
+  upload_queue:
+    definition: The app-wide list of files being uploaded, with a status each (waiting, uploading, conflict, done, skipped, error).
+    notes: Owned by `useVaultContents` (`useState`), shown by `UploadQueue.vue`. A file's target path is fixed when it is queued, so navigating away doesn't move it. A "conflict" is a file already at that path, waiting for Replace / Keep both / Skip.
   # example:
   # <concept_name>:
   #   definition: <one-line definition of the concept>

@@ -1,80 +1,141 @@
 {
-  "add": "Add",
   "app": {
     "name": "GitVault",
     "titleTemplate": "%s • @:app.name"
   },
+  "backTo": "Back to {folder}",
   "cancel": "Cancel",
+  "chooseFiles": "Choose files",
+  "closePreview": "Close preview",
   "copied": "Copied!",
   "copyLink": "Copy link",
+  "copyLinkOf": "Copy link of {name}",
   "create": "Create",
   "createFolder": "Create folder",
   "createRepo": "Create new repository",
   "deleteFolder": "Delete folder",
   "download": "Download",
+  "downloadFile": "Download {name}",
+  "dropZone": {
+    "hint": "Drag files here to upload them to {location}",
+    "title": "Drop to upload"
+  },
   "emptyFolder": {
-    "description": "You didn't upload any file in the current folder. Time to start!",
-    "title": "There's nothing to see here"
+    "title": "{folder} is empty",
+    "description": "Drag files here, even several at once, or choose them from your computer."
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
-    "fallback": {
-    }
+    "fallback": {}
   },
+  "fileCategory": {
+    "archive": "Archive",
+    "audio": "Audio",
+    "book": "Book",
+    "code": "Code",
+    "exec": "Executable",
+    "font": "Font",
+    "image": "Image",
+    "pdf": "PDF",
+    "sheet": "Spreadsheet",
+    "slide": "Presentation",
+    "text": "Text",
+    "unsupported": "File",
+    "video": "Video"
+  },
+  "fileCount": "{n} file | {n} files",
   "filePreview": {
     "fallback": {
-      "description": "You might even try to view it as plain text, if you don't fear the consequences",
-      "title": "This file type is not supported for preview"
+      "title": "No preview for this file type"
     }
   },
   "files": "Files",
+  "firstVault": {
+    "cta": "Create vault",
+    "description": "A vault is a private repository on your GitHub where @:app.name keeps your files.",
+    "help": "This creates {repo}. You can create more later.",
+    "title": "Create your first vault"
+  },
+  "folder": "Folder",
+  "folderCount": "{n} folder | {n} folders",
+  "folderError": {
+    "title": "Can't read this folder",
+    "description": "GitHub didn't answer. Your files are safe: try again in a few seconds.",
+    "notFoundTitle": "This folder doesn't exist",
+    "notFoundDescription": "It may have been renamed or deleted on GitHub."
+  },
   "folders": "Folders",
   "gitHub": "GitHub",
   "home": "Home",
+  "loadingFolder": "Loading the folder",
   "logout": "Logout",
+  "moreActions": "More actions for {name}",
+  "name": "Name",
   "newFolder": "New folder",
   "newVault": "New vault",
   "noRepos": {
-    "step1": {
-      "cta": "Let's get started!",
-      "description": "To start using @:app.name you first have to select a GitHub repository to store your files in.\nYou might not want to use any of your existing repositories, so we'll create one from scratch.",
-      "title": "A bit of setup"
-    },
-    "step2": {
-      "cta": "Create the new repository",
-      "description": "To start using a repository as a storage space, you will need the {repoPrefix} prefix in the repository name. Write it down, and we will automatically add the prefix for you. ",
-      "title": "Your first repository"
-    },
-    "step3": {
-      "cta": "Start uploading",
-      "description": "{repoName} has been created successfully! Now you can start uploading your files.",
-      "title": "You are all set!"
-    },
-    "title": "No repositories"
+    "title": "Set up"
   },
+  "openFullScreen": "Open full screen",
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
+  "palette": {
+    "actions": "Actions",
+    "close": "close",
+    "move": "move",
+    "open": "open",
+    "uploadHere": "Upload files to {location}"
+  },
+  "path": "Path",
+  "preview": "Preview",
   "replace": "Replace",
-  "search": "Search...",
+  "retry": "Retry",
+  "searchPlaceholder": "Search files, folders or actions…",
+  "searchVault": "Search the vault",
   "selectRepo": {
     "cta": "Select a repository",
-    "description": "You have already been here, but it seems that you don't have a default repository.\nChoose your favourite among the ones you previously created.",
+    "description": "You have vaults, but none is selected. Pick one to open.",
     "goToRepo": "Go to {selectedRepo}",
     "title": "Did you get lost?"
   },
   "showAsText": "Show as plain text",
   "signIn": {
-    "createAccount": "Create one!",
-    "description": "@:app.name leverages the power of {gitHubLink} to provide you with limitless storage for your files.",
-    "dontHaveAnAccount": "Don't have an account yet? {createAccount}",
-    "gitHub": "@:signIn.title with @:gitHub",
-    "title": "Sign in"
+    "createAccount": "Create one",
+    "description": "Upload, browse and share files stored in private repositories of your own GitHub account. No third-party server in between.",
+    "dontHaveAnAccount": "No GitHub account? {createAccount}",
+    "gitHub": "Sign in with @:gitHub",
+    "pageTitle": "Sign in",
+    "prefixNote": "@:app.name only shows repositories whose name starts with {prefix}.",
+    "title": "Your files, in your GitHub repositories"
   },
+  "size": "Size",
   "successMessage": "Operation successful!",
+  "type": "Type",
+  "upload": "Upload",
   "uploadFile": "Upload file",
+  "uploadQueue": {
+    "close": "Close upload list",
+    "collapse": "Collapse upload list",
+    "exists": "{name} already exists",
+    "expand": "Expand upload list",
+    "finished": "{n} upload done | {n} uploads done",
+    "keepBoth": "Keep both",
+    "label": "Uploads",
+    "needsChoice": "A file needs your choice",
+    "skip": "Skip",
+    "status": {
+      "done": "Done",
+      "error": "Failed",
+      "skipped": "Skipped",
+      "uploading": "Uploading",
+      "waiting": "Waiting"
+    },
+    "uploading": "Uploading {current} of {total}"
+  },
   "validationError": {
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },
+  "vault": "Vault",
   "vaults": "Vaults",
   "viewOnGitHub": "View on @:gitHub"
 }

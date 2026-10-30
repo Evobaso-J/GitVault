@@ -17,7 +17,7 @@ Business language, entities, and how they relate. Read this when a task involves
 | File category | Preview bucket (code, text, image, video, pdf, …) derived from extension. | `src/resources/CDNFiles/extensions.ts`, `utils.ts` |
 | Excluded file | File hidden from listings (e.g. `.gitkeep` folder placeholders). | `src/config.ts` `EXCLUDE_FILES` |
 | User / session | GitHub user (`id`, `login`) + OAuth tokens in the sealed session. | `shared/types/auth.d.ts` |
-| Setup wizard | Onboarding shown when the user has no vault repo yet. | `src/components/NoReposSetupWizard/` |
+| First vault form | Single-screen onboarding shown on `/` when the user has no vault repo yet; if they have vaults but none active, `/` shows a vault picker instead ("Did you get lost?"). | `src/pages/index.vue` |
 
 "CDN" prefix = files are served from GitHub `download_url`s, not a real CDN.
 
@@ -33,7 +33,7 @@ Business language, entities, and how they relate. Read this when a task involves
 
 <!-- exodia:section:journey -->
 1. `/login` → GitHub OAuth (`server/routes/auth/github.get.ts`) → session.
-2. `/` → no vault repo? Setup wizard creates one (`useCreateRepo`). Otherwise pick the active repo.
+2. `/` → no vault repo? The first vault form creates one (`useCreateRepo`) and opens it. Otherwise pick the active repo.
 3. `/<repo>` → browse folders/files; path kept in the route query.
 4. Create folder (writes `.gitkeep`) or upload file (base64 PUT).
 5. `/<repo>/file/<path>` → preview by file category, download, replace.
