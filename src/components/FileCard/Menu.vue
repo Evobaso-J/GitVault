@@ -15,8 +15,7 @@
 import { useClipboard } from '@vueuse/core'
 import type { FileCardHeaderProps } from './Header.vue'
 import type { DropdownMenuItem } from '@nuxt/ui'
-import { downloadFile, getFileExtension, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
-import type { UseUploadFileOptions } from '~/composables/useUploadFile'
+import { downloadFile, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FileCardMenu' })
 type FileCardMenuProps = FileCardHeaderProps
@@ -33,16 +32,7 @@ const copyPathToClipboard = () => {
   copy(fullPath.toString())
 }
 
-const uploadFileOptions = computed<UseUploadFileOptions>(() => ({
-  multiple: false,
-  // A replacement keeps the old path, so a different format would break its preview
-  accept: props.title.includes('.') ? `.${getFileExtension(props.title)}` : undefined,
-  replace: {
-    path: getPathFromNuxtLinkTo(props.to),
-    sha: props.sha,
-  },
-}))
-const { open: replaceFile } = useUploadFile(uploadFileOptions)
+const { pickAndReplace } = useVaultContents()
 
 const items = computed<DropdownMenuItem[][]>(() => {
   const copyItem: DropdownMenuItem = copied.value
@@ -87,7 +77,7 @@ const items = computed<DropdownMenuItem[][]>(() => {
       {
         label: t('replace'),
         icon: 'i-mdi-autorenew',
-        onSelect: () => replaceFile(),
+        onSelect: () => pickAndReplace({ path: getPathFromNuxtLinkTo(props.to), sha: props.sha }),
       },
     ],
   ]

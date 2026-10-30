@@ -21,7 +21,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 
 ## Client side
 
-- `src/resources/<Entity>/api.ts`: `$fetch` wrappers for mutations (`$putFile`).
+- Mutations: `$fetch` called inside the mutation composable (`useVaultContents`, `useCreateUserRepo`); no separate wrapper module.
 - Reads: `useFetch('/gh-…')` directly in pages/components.
 - Import server types type-only via `~~/server/resources/*`.
 
@@ -29,13 +29,13 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 
 1. Types + zod schema in `server/resources/gitHub<Thing>.ts`.
 2. Handler `server/routes/gh-<thing>/index.<method>.ts` following the shape above.
-3. Client wrapper in `src/resources/<Entity>/api.ts` + parser in `parse.ts`.
-4. Mutation composable in `src/composables/` that wraps the call in `useOperationToast().runOperation`.
+3. Parser in `src/resources/<Entity>/parse.ts` for reads.
+4. Writes to vault repo contents: a method on `useVaultContents`. Other writes: a composable in `src/composables/` that wraps `$fetch` in `useOperationToast().runOperation`.
 
 ## Gotchas
 
-- Folders don't exist in git: a folder is created by writing `<name>/.gitkeep` (`useCreateFolder`); `.gitkeep` is hidden via `EXCLUDE_FILES` in `src/config.ts`.
-- Replacing a file needs its current `sha` in the PUT body (`useUploadFile` `replace` option). The path is kept, so the picker is limited to the same extension (`accept` in `src/components/FileCard/Menu.vue`).
-- Upload content is base64 (`useUploadFile`).
+- Folders don't exist in git: a folder is created by writing `<name>/.gitkeep` (`useVaultContents().createFolder`); `.gitkeep` is hidden via `EXCLUDE_FILES` in `src/config.ts`.
+- Replacing a file needs its current `sha` in the PUT body (`useVaultContents().replace`). The path is kept, so `pickAndReplace` limits the picker to the same extension.
+- Upload content is base64 (`useVaultContents`).
 - `download_url` carries a short-lived token: lists refetch on an interval.
 - `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`.

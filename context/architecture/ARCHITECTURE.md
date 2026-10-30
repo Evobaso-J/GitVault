@@ -30,8 +30,8 @@ Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents`
 <!-- exodia:section:modules -->
 - `src/pages/`, `src/layouts/` (`default`, `no-repo`, `single-file`): views.
 - `src/components/`: flat files plus feature folders (`FileCard/`, `FilePreview/`, `LoginCard/`, `NoReposSetupWizard/`).
-- `src/resources/<Entity>/`: client domain per entity. `index.ts` types, `api.ts` `$fetch` wrappers, `parse.ts` GitHub → domain narrowing, `utils.ts` helpers.
-- `src/composables/`: stateful logic and mutations (`useUploadFile`, `useCreateFolder`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
+- `src/resources/<Entity>/`: client domain per entity. `index.ts` types, `parse.ts` GitHub → domain narrowing, `utils.ts` helpers.
+- `src/composables/`: stateful logic and mutations (`useVaultContents`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
 - `server/routes/`: GitHub proxy handlers. `server/resources/`: Octokit-derived types + zod request schemas.
 - `shared/types/auth.d.ts`: session typing for `nuxt-auth-utils`, used by both sides.
 - `src/config.ts` (app constants), `src/errors.ts` (error classes), `src/helpers.ts` (type helpers), `i18n/` + `src/locales/`.
