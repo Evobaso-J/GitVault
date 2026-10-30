@@ -35,7 +35,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 ## Gotchas
 
 - Folders don't exist in git: a folder is created by writing `<name>/.gitkeep` (`useCreateFolder`); `.gitkeep` is hidden via `EXCLUDE_FILES` in `src/config.ts`.
-- Replacing a file needs its current `sha` in the PUT body (`useUploadFile` `replace` option).
+- Replacing a file needs its current `sha` in the PUT body (`useUploadFile` `replace` option). The path is kept, so the picker is limited to the same extension (`accept` in `src/components/FileCard/Menu.vue`).
 - Upload content is base64 (`useUploadFile`).
 - `download_url` carries a short-lived token: lists refetch on an interval.
 - `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`.

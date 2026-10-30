@@ -15,7 +15,7 @@
 import { useClipboard } from '@vueuse/core'
 import type { FileCardHeaderProps } from './Header.vue'
 import type { DropdownMenuItem } from '@nuxt/ui'
-import { downloadFile, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
+import { downloadFile, getFileExtension, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
 import type { UseUploadFileOptions } from '~/composables/useUploadFile'
 
 defineComponent({ name: 'FileCardMenu' })
@@ -35,6 +35,8 @@ const copyPathToClipboard = () => {
 
 const uploadFileOptions = computed<UseUploadFileOptions>(() => ({
   multiple: false,
+  // A replacement keeps the old path, so a different format would break its preview
+  accept: props.title.includes('.') ? `.${getFileExtension(props.title)}` : undefined,
   replace: {
     path: getPathFromNuxtLinkTo(props.to),
     sha: props.sha,
