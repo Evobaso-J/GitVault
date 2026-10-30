@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to="`/${$route.params.repo}/${to}`"
+    :to="getPathToFolder({ path: to, repo: $route.params.repo })"
   >
     <UCard
       class="bg-royal-blue-50 hover:bg-royal-blue-100 dark:bg-royal-blue-950 dark:hover:bg-royal-blue-900 ring-1 ring-primary/20 hover:ring-primary/40"
@@ -24,6 +24,7 @@
 
 <script setup lang='ts'>
 import type { NuxtLinkProps } from '#app'
+import { getPathToFolder } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FolderCard' })
 type FolderCardProps = {

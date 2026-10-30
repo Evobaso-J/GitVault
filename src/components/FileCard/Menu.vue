@@ -27,7 +27,7 @@ const route = useRoute()
 const { t } = useI18n()
 
 const copyPathToClipboard = () => {
-  const routePath = getPathToFile({ fileName: props.to, repo: route.params.repo })
+  const routePath = getPathToFile({ path: props.to, repo: route.params.repo })
   const fullPath = new URL(routePath, origin)
   copy(fullPath.toString())
 }
@@ -58,7 +58,7 @@ const items = computed<DropdownMenuItem[][]>(() => {
         onSelect: (e: Event) => {
           e.stopPropagation()
         },
-        to: getPathToFile({ fileName: props.to, repo: route.params.repo }),
+        to: getPathToFile({ path: props.to, repo: route.params.repo }),
         target: '_blank',
       },
     ],
