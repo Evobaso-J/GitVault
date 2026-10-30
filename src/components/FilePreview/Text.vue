@@ -18,12 +18,13 @@
 
 <script setup lang='ts'>
 import type { FilePreviewProps } from './index.vue'
+import { decodeBase64Utf8 } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'TextFilePreview' })
 type TextFilePreviewProps = FilePreviewProps
 const props = defineProps<TextFilePreviewProps>()
 
 const parsedContent = computed(() => {
-  return atob(props.source.content)
+  return decodeBase64Utf8(props.source.content)
 })
 </script>
