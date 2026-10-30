@@ -55,6 +55,15 @@
         block
         :to="getFileUrl(file)"
       />
+      <UButton
+        :label="$t('delete')"
+        icon="i-mdi-trash-can-outline"
+        color="error"
+        variant="outline"
+        block
+        class="col-span-2"
+        @click="remove(file)"
+      />
     </div>
 
     <dl class="grid grid-cols-[6rem_minmax(0,1fr)] gap-y-2 text-sm">
@@ -95,7 +104,7 @@ const props = defineProps<{ file: CDNFile }>()
 const emit = defineEmits<{ close: [] }>()
 
 const route = useRoute()
-const { getFileUrl, download, copyLink, replace } = useFileActions()
+const { getFileUrl, download, copyLink, replace, remove } = useFileActions()
 
 // A folder listing has no file content: text and code previews need the single-file response
 const { data: fullFile } = useFetch('/gh-repo-contents', {
