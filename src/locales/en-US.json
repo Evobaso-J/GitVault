@@ -31,7 +31,9 @@
   "folders": "Folders",
   "gitHub": "GitHub",
   "home": "Home",
-  "newFolder": "Create new folder",
+  "logout": "Logout",
+  "newFolder": "New folder",
+  "newVault": "New vault",
   "noRepos": {
     "step1": {
       "cta": "Let's get started!",
@@ -73,5 +75,6 @@
   "validationError": {
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },
+  "vaults": "Vaults",
   "viewOnGitHub": "View on @:gitHub"
 }

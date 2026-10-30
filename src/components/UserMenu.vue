@@ -4,16 +4,12 @@
     :items="items"
   >
     <UButton
-      variant="link"
-      class="p-0 rounded-full"
-      :aria-label="user?.login"
-    >
-      <UAvatar
-        :src="`https://github.com/${user?.login}.png`"
-        :alt="user?.login"
-        size="lg"
-      />
-    </UButton>
+      color="neutral"
+      variant="ghost"
+      :label="user?.login"
+      :avatar="{ src: `https://github.com/${user?.login}.png`, alt: user?.login }"
+      trailing-icon="i-mdi-unfold-more-horizontal"
+    />
   </UDropdownMenu>
 </template>
 
@@ -23,11 +19,12 @@ import type { DropdownMenuItem } from '@nuxt/ui'
 defineComponent({ name: 'UserMenu' })
 
 const { user, clear } = useUserSession()
+const { t } = useI18n()
 
 const items = [
   [
     {
-      label: 'Logout',
+      label: t('logout'),
       icon: 'i-heroicons-arrow-left-on-rectangle',
       onSelect: async () => {
         await clear()
