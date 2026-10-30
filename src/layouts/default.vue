@@ -21,6 +21,14 @@
           </template>
           <template #right>
             <VaultSearch />
+            <UButton
+              :aria-label="$t('newFolder')"
+              icon="i-mdi-folder-plus-outline"
+              color="neutral"
+              variant="ghost"
+              class="md:hidden"
+              @click="isFolderModalOpen = true"
+            />
             <div class="hidden md:flex items-center gap-2">
               <UButton
                 :label="$t('newFolder')"
@@ -46,18 +54,13 @@
 
     <CreateFolderModal v-model="isFolderModalOpen" />
     <UploadQueue />
-    <CreateItemsDropdown
-      class="fixed bottom-6 right-6 md:hidden"
-      :content="{ side: 'top', align: 'end' }"
-    >
-      <template #activator>
-        <UButton
-          icon="i-mdi-plus"
-          :label="$t('add')"
-          size="xl"
-        />
-      </template>
-    </CreateItemsDropdown>
+    <UButton
+      :label="$t('upload')"
+      icon="i-mdi-upload-outline"
+      size="xl"
+      class="fixed bottom-6 right-4 z-40 md:hidden rounded-full px-6 shadow-lg"
+      @click="pickAndUpload()"
+    />
   </UDashboardGroup>
 </template>
 

@@ -1,5 +1,4 @@
 {
-  "add": "Add",
   "app": {
     "name": "GitVault",
     "titleTemplate": "%s • @:app.name"
@@ -112,6 +111,7 @@
   "size": "Size",
   "successMessage": "Operation successful!",
   "type": "Type",
+  "upload": "Upload",
   "uploadFile": "Upload file",
   "uploadQueue": {
     "close": "Close upload list",
