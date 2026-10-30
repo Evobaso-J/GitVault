@@ -15,7 +15,7 @@ One folder per entity in `src/resources/<Entity>/` (`index.ts` / `api.ts` / `par
 
 ## Composables & mutations
 
-Mutations live in `src/composables/use*.ts`, not in components. Follow the toast lifecycle (loading → `toast.update` success/error), call `refreshNuxtData()` on success, return `OperationStatus` (`src/composables/useCreateFolder.ts`). No Pinia.
+Mutations live in `src/composables/use*.ts`, not in components. Wrap the API call in `runOperation` from `useOperationToast` (loading/success/error toast + `refreshNuxtData()`, returns `OperationStatus`); don't hand-roll toasts (`src/composables/useCreateFolder.ts`). Build repo paths with `createFilePath` (`src/utils/`). No Pinia.
 
 ## Validation
 

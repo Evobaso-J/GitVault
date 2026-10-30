@@ -30,7 +30,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 1. Types + zod schema in `server/resources/gitHub<Thing>.ts`.
 2. Handler `server/routes/gh-<thing>/index.<method>.ts` following the shape above.
 3. Client wrapper in `src/resources/<Entity>/api.ts` + parser in `parse.ts`.
-4. Mutation composable in `src/composables/` (toast + `refreshNuxtData()`).
+4. Mutation composable in `src/composables/` that wraps the call in `useOperationToast().runOperation`.
 
 ## Gotchas
 
