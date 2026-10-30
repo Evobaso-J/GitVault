@@ -13,9 +13,10 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 - `login.vue`: GitHub OAuth entry.
 - `[repo]/[...path].vue`: folder listing (folders + files) of the active repo. `?file=<name>` opens that file in the preview panel beside the list, so the URL is a deep link to it. The folder fetch is not awaited: the page shows `FolderContents/Loading`, `Error` (404 vs other, with retry) or `Empty` instead of a blank page.
 - `[repo]/file/[...path].vue`: single-file preview.
+- `share.vue`: target of the PWA share sheet (Android). `public/sw.js` stashes the shared files in the Cache API (`src/utils/sharedFiles.ts` reads them) and redirects here; the user picks vault + folder and the files go to the shared upload queue. Testing it needs HTTPS and the installed app.
 - Build links to these pages with `getPathToFolder` / `getPathToFile` (`src/resources/CDNFiles/utils.ts`), never by string concatenation: file names may contain `#`, `?` or `%`, which must be encoded per path segment.
 
-Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth`, `01.guest`, `03.active-repo`, `04.no-active-repo`).
+Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth`, `01.guest`, `02.shared-files`, `03.active-repo`, `04.no-active-repo`).
 
 Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET).
 

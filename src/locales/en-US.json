@@ -98,6 +98,13 @@
     "goToRepo": "Go to {selectedRepo}",
     "title": "Did you get lost?"
   },
+  "share": {
+    "choose": "Choose photos and videos",
+    "description": "On Android, install @:app.name and share photos from your gallery straight to it. On iPhone, sharing to web apps isn't supported: choose them here.",
+    "folderHelp": "Leave empty for the vault root. Missing folders are created.",
+    "title": "Upload from your gallery",
+    "upload": "Upload | Upload {n} file | Upload {n} files"
+  },
   "showAsText": "Show as plain text",
   "signIn": {
     "createAccount": "Create one",

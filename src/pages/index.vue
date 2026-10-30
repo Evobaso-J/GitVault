@@ -86,6 +86,7 @@ const { t } = useI18n()
 definePageMeta({
   middleware: [
     '00-auth',
+    '02-shared-files',
     '04-no-active-repo',
   ],
   layout: 'no-repo',

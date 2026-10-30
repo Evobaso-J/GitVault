@@ -84,6 +84,12 @@ describe('useVaultContents', () => {
       expect(requests[0]?.query.path).toBe('a.txt')
     })
 
+    it('uploads into an explicit vault and folder, ignoring the route', async () => {
+      await (await setup()).upload([new File(['hello'], 'a.jpg')], { repo: 'gitvault-photos', folder: 'Photos/2026' })
+
+      expect(requests[0]?.query).toEqual({ repo: 'gitvault-photos', path: 'Photos/2026/a.jpg' })
+    })
+
     it('encodes non-ASCII content as base64 of its UTF-8 bytes', async () => {
       await (await setup()).upload([new File(['venerdì'], 'a.txt')])
 

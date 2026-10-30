@@ -23,6 +23,12 @@ export type UploadItem = {
   keepBoth?: boolean
 }
 
+export type UploadTarget = {
+  repo: string | undefined
+  /** Folder path inside the repo, root when empty */
+  folder: string | undefined
+}
+
 export type ConflictChoice = 'replace' | 'keepBoth' | 'skip'
 
 const encodeBase64 = (file: File) => new Promise<string>((resolve, reject) => {
@@ -119,15 +125,18 @@ export const useVaultContents = () => {
     isProcessing.value = false
   }
 
-  /** Queues the files into the current folder; resolves when the queue stops (done or waiting on a conflict) */
-  const upload = (files: File[]): Promise<void> => {
-    const repo = getRepo()
+  /**
+   * Queues the files into `target` (default: the current folder);
+   * resolves when the queue stops (done or waiting on a conflict)
+   */
+  const upload = (files: File[], target: UploadTarget = { repo: getRepo(), folder: queryPath.value }): Promise<void> => {
+    const { repo, folder } = target
     if (!repo) return Promise.resolve()
     uploads.value.push(...files.map(file => ({
       id: nextId.value++,
       file,
       repo,
-      path: createFilePath(queryPath.value, file.name),
+      path: createFilePath(folder, file.name),
       status: 'waiting' as const,
     })))
     return processUploads()
