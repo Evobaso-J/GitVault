@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Tailwind 4 defaults borders to currentColor, keep the v3 gray */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 @theme static {
   --color-royal-blue-50: #f6f8fd;
   --color-royal-blue-100: #e5edff;

@@ -78,22 +78,14 @@ const items = computed<DropdownMenuItem[][]>(() => {
         label: t('download'),
         icon: 'i-mdi-download-outline',
         disabled: !props.downloadUrl,
-        onSelect: (e: Event) => {
-          e.stopPropagation()
-          e.preventDefault()
-          return downloadFile(props.downloadUrl!, props.title)
-        },
+        onSelect: () => downloadFile(props.downloadUrl!, props.title),
       },
     ],
     [
       {
         label: t('replace'),
         icon: 'i-mdi-autorenew',
-        onSelect: (e: Event) => {
-          e.stopPropagation()
-          e.preventDefault()
-          replaceFile()
-        },
+        onSelect: () => replaceFile(),
       },
     ],
   ]

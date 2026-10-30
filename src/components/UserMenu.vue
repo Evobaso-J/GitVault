@@ -3,11 +3,17 @@
     v-if="user"
     :items="items"
   >
-    <UAvatar
-      :src="`https://github.com/${user?.login}.png`"
-      :alt="user?.login"
-      size="lg"
-    />
+    <UButton
+      variant="link"
+      class="p-0 rounded-full"
+      :aria-label="user?.login"
+    >
+      <UAvatar
+        :src="`https://github.com/${user?.login}.png`"
+        :alt="user?.login"
+        size="lg"
+      />
+    </UButton>
   </UDropdownMenu>
 </template>
 
