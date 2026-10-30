@@ -30,7 +30,7 @@ Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents`
 
 <!-- exodia:section:modules -->
 - `src/pages/`, `src/layouts/` (`default`, `no-repo`, `single-file`): views.
-- `src/components/`: flat files plus feature folders (`FolderContents/` list + preview panel, `FilePreview/`, `LoginCard/`, `NoReposSetupWizard/`).
+- `src/components/`: flat files plus feature folders (`FolderContents/` list + preview panel, `FilePreview/`).
 - `src/resources/<Entity>/`: client domain per entity. `index.ts` types, `parse.ts` GitHub → domain narrowing, `utils.ts` helpers.
 - `src/composables/`: stateful logic and mutations (`useVaultContents`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
 - `server/routes/`: GitHub proxy handlers. `server/utils/github.ts`: the only GitHub caller. `server/resources/`: Octokit-derived types + zod request schemas.

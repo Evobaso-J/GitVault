@@ -51,6 +51,12 @@
     }
   },
   "files": "Files",
+  "firstVault": {
+    "cta": "Create vault",
+    "description": "A vault is a private repository on your GitHub where @:app.name keeps your files.",
+    "help": "This creates {repo}. You can create more later.",
+    "title": "Create your first vault"
+  },
   "folder": "Folder",
   "folderCount": "{n} folder | {n} folders",
   "folderError": {
@@ -69,22 +75,7 @@
   "newFolder": "New folder",
   "newVault": "New vault",
   "noRepos": {
-    "step1": {
-      "cta": "Let's get started!",
-      "description": "To start using @:app.name you first have to select a GitHub repository to store your files in.\nYou might not want to use any of your existing repositories, so we'll create one from scratch.",
-      "title": "A bit of setup"
-    },
-    "step2": {
-      "cta": "Create the new repository",
-      "description": "To start using a repository as a storage space, you will need the {repoPrefix} prefix in the repository name. Write it down, and we will automatically add the prefix for you. ",
-      "title": "Your first repository"
-    },
-    "step3": {
-      "cta": "Start uploading",
-      "description": "{repoName} has been created successfully! Now you can start uploading your files.",
-      "title": "You are all set!"
-    },
-    "title": "No repositories"
+    "title": "Set up"
   },
   "openFullScreen": "Open full screen",
   "openInNewTab": "Open in a new tab",
@@ -104,17 +95,19 @@
   "searchVault": "Search the vault",
   "selectRepo": {
     "cta": "Select a repository",
-    "description": "You have already been here, but it seems that you don't have a default repository.\nChoose your favourite among the ones you previously created.",
+    "description": "You have vaults, but none is selected. Pick one to open.",
     "goToRepo": "Go to {selectedRepo}",
     "title": "Did you get lost?"
   },
   "showAsText": "Show as plain text",
   "signIn": {
-    "createAccount": "Create one!",
-    "description": "@:app.name leverages the power of {gitHubLink} to provide you with limitless storage for your files.",
-    "dontHaveAnAccount": "Don't have an account yet? {createAccount}",
-    "gitHub": "@:signIn.title with @:gitHub",
-    "title": "Sign in"
+    "createAccount": "Create one",
+    "description": "Upload, browse and share files stored in private repositories of your own GitHub account. No third-party server in between.",
+    "dontHaveAnAccount": "No GitHub account? {createAccount}",
+    "gitHub": "Sign in with @:gitHub",
+    "pageTitle": "Sign in",
+    "prefixNote": "@:app.name only shows repositories whose name starts with {prefix}.",
+    "title": "Your files, in your GitHub repositories"
   },
   "size": "Size",
   "successMessage": "Operation successful!",
