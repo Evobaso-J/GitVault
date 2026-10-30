@@ -6,10 +6,10 @@ The browser never calls `api.github.com` directly. Every GitHub call goes throug
 
 Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 
-1. `requireUserSession(event)` → `{ user, secure }`. `secure.tokens.access_token` is the GitHub token (typed in `shared/types/auth.d.ts`).
+1. Routes on a vault repo validate `repo`/`path` with `getValidatedQuery(event, q => vaultRepoQuerySchema.parse(q))`: it rejects `.`/`..`/empty segments and returns `path` URL-encoded per segment. Never interpolate raw query values into a GitHub URL.
 2. Validate body with `readValidatedBody(event, data => schema.parse(data))` when there is one.
-3. `$fetch` the GitHub endpoint with headers `Authorization: Bearer <token>` and `X-GitHub-Api-Version` (copy from an existing handler).
-4. Owner is always `user.login`: users only touch their own repos.
+3. Call `github(event, owner => '/repos/${owner}/…', { method, query, body })` from `server/utils/github.ts`. It owns the session, Bearer token, API version header and error mapping (GitHub's `message` becomes `statusMessage`, which `useOperationToast` shows). Don't call `$fetch` on `api.github.com` directly.
+4. Owner is always the session user: `github` passes `user.login` to the endpoint builder.
 5. Return the raw GitHub payload; the client narrows it.
 
 ## Types and schemas
