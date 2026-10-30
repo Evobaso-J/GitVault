@@ -15,6 +15,9 @@ export const getIconFromFileName = (fileName: string): string => {
   return FILE_CATEGORY_ICONS[fileCategory]
 }
 
+// GitHub returns base64 of the raw UTF-8 bytes; atob alone yields Latin-1 mojibake
+export const decodeBase64Utf8 = (content: string): string => new TextDecoder().decode(Uint8Array.from(atob(content), c => c.charCodeAt(0)))
+
 export const downloadFile = async (url: string, fileName: string): Promise<Error | DownloadError | undefined> => {
   let response: Response
   try {
