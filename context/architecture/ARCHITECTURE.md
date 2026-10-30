@@ -11,7 +11,7 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 
 - `index.vue`: repo picker / no-repo setup wizard.
 - `login.vue`: GitHub OAuth entry.
-- `[repo]/[...path].vue`: folder listing (folders + files) of the active repo. `?file=<name>` opens that file in the preview panel beside the list, so the URL is a deep link to it.
+- `[repo]/[...path].vue`: folder listing (folders + files) of the active repo. `?file=<name>` opens that file in the preview panel beside the list, so the URL is a deep link to it. The folder fetch is not awaited: the page shows `FolderContents/Loading`, `Error` (404 vs other, with retry) or `Empty` instead of a blank page.
 - `[repo]/file/[...path].vue`: single-file preview.
 - Build links to these pages with `getPathToFolder` / `getPathToFile` (`src/resources/CDNFiles/utils.ts`), never by string concatenation: file names may contain `#`, `?` or `%`, which must be encoded per path segment.
 

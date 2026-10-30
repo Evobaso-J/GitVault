@@ -4,7 +4,9 @@
     "name": "GitVault",
     "titleTemplate": "%s • @:app.name"
   },
+  "backTo": "Back to {folder}",
   "cancel": "Cancel",
+  "chooseFiles": "Choose files",
   "closePreview": "Close preview",
   "copied": "Copied!",
   "copyLink": "Copy link",
@@ -16,8 +18,8 @@
   "download": "Download",
   "downloadFile": "Download {name}",
   "emptyFolder": {
-    "description": "You didn't upload any file in the current folder. Time to start!",
-    "title": "There's nothing to see here"
+    "title": "{folder} is empty",
+    "description": "Drag files here, even several at once, or choose them from your computer."
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
@@ -47,9 +49,16 @@
   "files": "Files",
   "folder": "Folder",
   "folderCount": "{n} folder | {n} folders",
+  "folderError": {
+    "title": "Can't read this folder",
+    "description": "GitHub didn't answer. Your files are safe: try again in a few seconds.",
+    "notFoundTitle": "This folder doesn't exist",
+    "notFoundDescription": "It may have been renamed or deleted on GitHub."
+  },
   "folders": "Folders",
   "gitHub": "GitHub",
   "home": "Home",
+  "loadingFolder": "Loading the folder",
   "logout": "Logout",
   "moreActions": "More actions for {name}",
   "name": "Name",
@@ -79,6 +88,7 @@
   "path": "Path",
   "preview": "Preview",
   "replace": "Replace",
+  "retry": "Retry",
   "search": "Search...",
   "selectRepo": {
     "cta": "Select a repository",

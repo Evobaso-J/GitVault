@@ -1,7 +1,14 @@
 <template>
   <div class="flex gap-6">
     <div class="flex-1 min-w-0 flex flex-col gap-3">
-      <template v-if="folders.length || files.length">
+      <FolderContentsLoading v-if="status === 'pending' && !data" />
+      <FolderContentsError
+        v-else-if="error"
+        :error
+        :parent
+        @retry="refresh()"
+      />
+      <template v-else-if="folders.length || files.length">
         <p class="text-sm text-muted">
           {{ summary }}
         </p>
@@ -11,25 +18,10 @@
           :selected="selectedFile?.name"
         />
       </template>
-      <div
+      <FolderContentsEmpty
         v-else
-        class="flex justify-center"
-      >
-        <EmptySectionCard
-          :title="$t('emptyFolder.title')"
-          :description="$t('emptyFolder.description')"
-          icon="i-mdi-cloud-question-outline"
-        >
-          <UButton
-            block
-            variant="outline"
-            icon="i-mdi-upload-outline"
-            size="xl"
-            :label="$t('uploadFile')"
-            @click="pickAndUpload()"
-          />
-        </EmptySectionCard>
-      </div>
+        :folder="folderName"
+      />
     </div>
 
     <aside
@@ -60,11 +52,11 @@
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints, useInterval } from '@vueuse/core'
 
-import EmptySectionCard from '~/components/EmptySectionCard.vue'
 import { isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
+import { getPathToFolder } from '~/resources/CDNFiles/utils'
 import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
 
 const { t } = useI18n()
@@ -81,7 +73,8 @@ const { params: { repo } } = route
 
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 
-const { data } = await useFetch('/gh-repo-contents', {
+// Not awaited: the page renders its loading state while the folder is fetched
+const { data, status, error, refresh } = useFetch('/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath,
@@ -104,7 +97,15 @@ const summary = computed(() => [
 const selectedFile = computed(() => files.value.find(file => file.name === route.query.file))
 const closePreview = () => navigateTo({ query: { ...route.query, file: undefined } })
 
-const isDesktop = useBreakpoints(breakpointsTailwind).greaterOrEqual('lg')
+const folderName = computed(() => queryPath.value?.split('/').pop() ?? String(repo))
+const parent = computed(() => {
+  if (!queryPath.value) return undefined
+  const parentPath = queryPath.value.split('/').slice(0, -1).join('/')
+  return {
+    name: parentPath.split('/').pop() || String(repo),
+    to: getPathToFolder({ path: parentPath, repo }),
+  }
+})
 
-const { pickAndUpload } = useVaultContents()
+const isDesktop = useBreakpoints(breakpointsTailwind).greaterOrEqual('lg')
 </script>
