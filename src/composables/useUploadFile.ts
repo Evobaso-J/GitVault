@@ -42,7 +42,7 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
     const path = options?.value?.replace?.path ?? createFilePath(queryPath.value, fileName)
     const body: GhRepoContentsRequestParams = {
       content: await convertFileToBase64(files[0]),
-      message: 'Upload file',
+      message: options?.value?.replace ? 'feat: replace file' : 'feat: upload file',
       sha: options?.value?.replace?.sha,
     }
     const toastId = `uploading-${path}`
