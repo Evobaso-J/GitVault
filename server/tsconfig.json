@@ -1,8 +1,0 @@
-{
-  "extends": "../.nuxt/tsconfig.server.json",
-  "compilerOptions": {
-    /* Strictness */
-    "noUncheckedIndexedAccess": true,
-    "noImplicitAny": true
-  }
-}

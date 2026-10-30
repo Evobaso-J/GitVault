@@ -23,7 +23,7 @@
           icon="i-mdi-upload-outline"
           size="xl"
           :label="$t('uploadFile')"
-          @click="open"
+          @click="open()"
         />
       </EmptySectionCard>
     </div>
@@ -39,7 +39,6 @@ import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
 import { parseGhRepoContentsToCDNFolders } from '~/resources/CDNFolders/parse'
-import type { _height } from '#tailwind-config/theme'
 
 const { t } = useI18n()
 useHead({

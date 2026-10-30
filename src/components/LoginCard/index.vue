@@ -1,11 +1,8 @@
 <template>
   <UCard
-    class="h-full overflow-hidden aspect-square"
+    class="h-full overflow-hidden aspect-square rounded-none"
     :ui="{
-      rounded: 'rounded-none',
-      body: {
-        padding: '',
-      },
+      body: 'p-0 sm:p-0',
     }"
   >
     <div class="grid grid-cols-7 grid-rows-7 gap-0">

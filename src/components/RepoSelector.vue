@@ -1,24 +1,24 @@
 <template>
-  <UDropdown
+  <UDropdownMenu
     :items="repoSelectorOptions"
-    :popper="{ placement: 'bottom-start' }"
+    :content="{ align: 'start' }"
     :ui="{
-      height: 'max-h-60',
+      content: 'max-h-60',
     }"
   >
     <UButton
-      :ui="{ rounded: 'rounded-lg', base: 'max-w-40' }"
+      class="rounded-lg max-w-40"
       variant="ghost"
       size="xs"
       trailing-icon="i-material-symbols-home-storage-outline"
     >
       <span class="truncate">{{ Array.isArray($route.params.repo) || !$route.params.repo ? '' : $route.params.repo }}</span>
     </UButton>
-  </UDropdown>
+  </UDropdownMenu>
 </template>
 
 <script setup lang='ts'>
-import type { DropdownItem } from '#ui/types'
+import type { DropdownMenuItem } from '@nuxt/ui'
 
 defineComponent({ name: 'RepoSelector' })
 
@@ -36,7 +36,7 @@ const repositoryNames = computed(() => (
 const route = useRoute()
 const { t } = useI18n()
 
-type RepoSelectorItem = DropdownItem & {
+type RepoSelectorItem = DropdownMenuItem & {
   value: string | undefined
 }
 const repoSelectorOptions = computed<RepoSelectorItem[][]>(() => {
@@ -45,9 +45,8 @@ const repoSelectorOptions = computed<RepoSelectorItem[][]>(() => {
       label: t('createRepo'),
       value: undefined,
       icon: 'i-mdi-plus',
-      iconClass: 'text-primary-500',
-      class: 'text-primary-500',
-      click: () => emit('create-click'),
+      color: 'primary',
+      onSelect: () => emit('create-click'),
     }],
   ]
 
@@ -56,7 +55,7 @@ const repoSelectorOptions = computed<RepoSelectorItem[][]>(() => {
       .map<RepoSelectorItem>(repoName => ({
         label: repoName,
         value: repoName,
-        click: async () => await navigateTo(`/${repoName}`),
+        onSelect: async () => await navigateTo(`/${repoName}`),
         disabled: repoName === route.params.repo,
       }),
       )

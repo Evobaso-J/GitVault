@@ -1,10 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-
-  typescript: {
-    typeCheck: true,
-  },
 
   modules: [
     '@nuxt/eslint',
@@ -14,26 +9,18 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@nuxt/test-utils/module',
   ],
-
-  image: {
-    inject: true,
-  },
-
-  eslint: {
-    config: {
-      stylistic: true,
-    },
-    checker: true,
-  },
+  ssr: false,
+  devtools: { enabled: true },
 
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 
-  srcDir: 'src/',
-  serverDir: 'server/',
-  ssr: false,
-  compatibilityDate: '2024-07-04',
+  css: ['~/assets/css/main.css'],
+
+  colorMode: {
+    preference: 'light',
+  },
 
   runtimeConfig: {
     public: {
@@ -47,7 +34,34 @@ export default defineNuxtConfig({
     },
   },
 
-  colorMode: {
-    preference: 'light',
+  srcDir: 'src/',
+  serverDir: 'server/',
+  compatibilityDate: '2026-10-30',
+
+  typescript: {
+    typeCheck: true,
+    tsConfig: {
+      compilerOptions: {
+        noUncheckedIndexedAccess: true,
+        noImplicitAny: true,
+      },
+    },
+  },
+
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+    checker: true,
+  },
+
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'en-US',
+    locales: [{ code: 'en-US', language: 'en-US' }],
+  },
+
+  image: {
+    inject: true,
   },
 })

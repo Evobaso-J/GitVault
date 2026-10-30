@@ -1,14 +1,5 @@
-import theme from '#tailwind-config/theme'
-
-type TailwindPrimaryColorKeys = keyof typeof theme.colors['royal-blue']
-type PrimaryColor = typeof theme.colors['royal-blue'][TailwindPrimaryColorKeys]
-
-const lighterColors = Object.entries(theme.colors['royal-blue'])
-  .filter(([shade]) => {
-    const colorNumber = Number(shade)
-    return colorNumber > 50 && colorNumber <= 600
-  })
-  .map<PrimaryColor>(([_, color]) => color)
+// royal-blue 100-600, keep in sync with `src/assets/css/main.css`
+const lighterColors = ['#e5edff', '#c2cdff', '#9caaff', '#757cff', '#6360ff', '#4936f5']
 
 const rotateCanvasRandomly = (ctx: CanvasRenderingContext2D) => {
   const angle = Math.floor(Math.random() * 4) * (Math.PI / 2) // Random multiple of 90 degrees

@@ -1,9 +1,9 @@
 <template>
-  <UModal v-model="model">
-    <UCard>
-      <template #header>
-        {{ title }}
-      </template>
+  <UModal
+    v-model:open="model"
+    :title="title"
+  >
+    <template #body>
       <UForm
         :schema="schema"
         :state="state"
@@ -14,9 +14,9 @@
           name="input"
           :state="state"
         >
-          <UFormGroup name="name">
+          <UFormField name="name">
             <UInput v-model="state.name" />
-          </UFormGroup>
+          </UFormField>
         </slot>
 
         <div class="flex justify-end gap-3">
@@ -34,7 +34,7 @@
           </UButton>
         </div>
       </UForm>
-    </UCard>
+    </template>
   </UModal>
 </template>
 

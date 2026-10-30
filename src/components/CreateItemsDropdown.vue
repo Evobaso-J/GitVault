@@ -1,11 +1,11 @@
 <template>
   <div>
-    <UDropdown
+    <UDropdownMenu
       :items="dropdownItems"
-      :popper
+      :content
     >
       <slot name="activator" />
-    </UDropdown>
+    </UDropdownMenu>
     <CreateNamedResourceModal
       v-model="isModalOpen"
       :title="$t('createFolder')"
@@ -19,12 +19,12 @@
 
 <script setup lang='ts'>
 import { z } from 'zod'
-import type { DropdownItem, PopperOptions } from '#ui/types'
+import type { DropdownMenuItem, DropdownMenuProps } from '@nuxt/ui'
 
 defineComponent({ name: 'CreateItemsDropdown' })
 
 interface CreateItemDropdownProps {
-  popper?: PopperOptions
+  content?: DropdownMenuProps['content']
 }
 
 defineProps<CreateItemDropdownProps>()
@@ -39,16 +39,16 @@ const { open } = useUploadFile(ref({
 
 const { t } = useI18n()
 
-const dropdownItems: DropdownItem[][] = [
+const dropdownItems: DropdownMenuItem[][] = [
   [{
     label: t('newFolder'),
     icon: 'i-mdi-folder-plus-outline',
-    click: openModal,
+    onSelect: openModal,
   }],
   [{
     label: t('uploadFile'),
     icon: 'i-mdi-upload-outline',
-    click: open,
+    onSelect: () => open(),
   }],
 ]
 

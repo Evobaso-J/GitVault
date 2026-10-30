@@ -1,15 +1,9 @@
 <template>
   <UCard
     :ui="{
-      rounded: 'rounded-none rounded-b-lg',
-      background: 'bg-gray-50 dark:bg-gray-800',
-      ring: 'ring-0',
-      body: {
-        base: 'h-36',
-        padding: 'p-0 sm:p-0',
-      },
+      body: 'h-36 p-0 sm:p-0',
     }"
-    class="overflow-hidden"
+    class="overflow-hidden rounded-none rounded-b-lg bg-gray-50 dark:bg-gray-800 ring-0"
   >
     <template v-if="downloadUrl">
       <img

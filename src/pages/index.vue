@@ -16,8 +16,7 @@
           v-model="selectedRepo"
           class="w-full"
           :placeholder="$t('selectRepo.cta')"
-          searchable
-          :options="repositoryNames"
+          :items="repositoryNames"
           size="xl"
         />
         <transition

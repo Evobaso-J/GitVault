@@ -8,7 +8,7 @@
       <div class="flex-grow" />
       <CreateItemsDropdown
         class="hidden md:block"
-        :popper="{ placement: 'auto' }"
+        :content="{ align: 'end' }"
       >
         <template #activator>
           <UButton

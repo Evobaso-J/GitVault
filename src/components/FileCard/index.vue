@@ -5,13 +5,10 @@
   >
     <UCard
       :ui="{
-        // UCard Config: https://ui.nuxt.com/components/card#config
-        body: {
-          padding: 'px-0 pt-3 pb-0 sm:px-0 sm:pt-3 sm:pb-0',
-        },
-        ring: 'hover:ring-gray-400 dark:hover:ring-gray-500',
+        // UCard Theme: https://ui.nuxt.com/docs/components/card#theme
+        body: 'px-0 pt-3 pb-0 sm:px-0 sm:pt-3 sm:pb-0',
       }"
-      class="min-h-48"
+      class="min-h-48 hover:ring-gray-400 dark:hover:ring-gray-500"
     >
       <FileCardHeader
         :title

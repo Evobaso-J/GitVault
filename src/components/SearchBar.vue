@@ -1,38 +1,24 @@
 <template>
   <UInputMenu
-    v-model:query="search"
-    :options="filesAndFolders"
-    option-attribute="path"
-    by="path"
+    v-model:search-term="search"
+    :items="filesAndFolders"
+    label-key="path"
+    ignore-filter
     :placeholder="$t('search')"
     size="xl"
     icon="i-mdi-magnify"
     :ui="{
-      icon: { trailing: { pointer: '' } },
-    }"
-    :ui-menu="{
-      option: { container: 'flex items-center gap-1.5 min-w-0 w-full' },
+      itemLeadingIcon: 'text-primary',
     }"
     @update:model-value="goToElement"
   >
-    <template #option="{ option }">
-      <div
-        class="flex gap-2 w-full truncate items-center cursor-pointer"
-      >
-        <UIcon
-          :name="option.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document-outline'"
-          class="text-primary"
-        />
-        {{ option.path }}
-      </div>
-    </template>
     <template #trailing>
       <UButton
         v-show="!!search"
-        class="text-gray-500"
+        color="neutral"
         variant="link"
         icon="i-heroicons-x-mark-20-solid"
-        :padded="false"
+        class="p-0"
         @click="search = ''"
       />
     </template>
@@ -46,7 +32,7 @@ import type { GhRepoTreeResponseData } from '~~/server/resources/gitHubRepoTree'
 
 defineComponent({ name: 'SearchBar' })
 
-const search = ref<string>()
+const search = ref('')
 
 const route = useRoute()
 
@@ -59,17 +45,29 @@ const { data } = useFetch('/gh-repo-tree', {
   },
 })
 
-const filesAndFolders = computed<GhRepoTreeResponseData['tree']>(() => data.value?.tree
-  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.toLowerCase().includes(search.value?.toLowerCase() ?? '')).slice(0, 10)
-  || [])
+type SearchBarItem = {
+  path: GhRepoTreeResponseData['tree'][number]['path']
+  isFolder: boolean
+  icon: string
+}
+
+// Mapped because UInputMenu reserves the `type` item key
+const filesAndFolders = computed<SearchBarItem[]>(() => (data.value?.tree ?? [])
+  .filter(treeItem => !isFileExcluded(treeItem.path ?? '') && treeItem.path?.toLowerCase().includes(search.value.toLowerCase()))
+  .slice(0, 10)
+  .map(treeItem => ({
+    path: treeItem.path,
+    isFolder: treeItem.type === 'tree',
+    icon: treeItem.type === 'tree' ? 'i-material-symbols-folder' : 'i-mdi-file-document-outline',
+  })))
 
 /**
  * Workaround to navigate to the selected element.
  * Currently impossible with anchor tags.
  */
-const goToElement = (treeItem: GhRepoTreeResponseData['tree'][number]) => {
-  const target = treeItem.type === 'tree' ? '_self' : '_blank'
-  const path = treeItem.type === 'tree' ? `/${routeRepo.value}/${treeItem.path}` : getPathToFile({ fileName: treeItem.path, repo: routeRepo.value })
+const goToElement = (treeItem: SearchBarItem) => {
+  const target = treeItem.isFolder ? '_self' : '_blank'
+  const path = treeItem.isFolder ? `/${routeRepo.value}/${treeItem.path}` : getPathToFile({ fileName: treeItem.path, repo: routeRepo.value })
   navigateTo(path, { open: { target } })
 }
 </script>
