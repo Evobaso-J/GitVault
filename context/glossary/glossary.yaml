@@ -1,0 +1,15 @@
+# Extended glossary terminology
+# Add entries as the team clarifies meanings or introduces new concepts.
+# Each entry: definition (required), plus optional relationship / synonyms / notes.
+
+entities: {}
+  # example:
+  # <entity_name>:
+  #   definition: <one-line business definition>
+  #   relationship: "<short relationship description, if any>"
+
+concepts: {}
+  # example:
+  # <concept_name>:
+  #   definition: <one-line definition of the concept>
+  #   notes: <where/how it applies, if non-obvious>
