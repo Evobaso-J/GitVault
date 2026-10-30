@@ -1,6 +1,6 @@
 <template>
   <ULink
-    :to="getPathToFile({ fileName: to, repo: $route.params.repo })"
+    :to="getPathToFile({ path: to, repo: $route.params.repo })"
     target="_blank"
   >
     <UCard

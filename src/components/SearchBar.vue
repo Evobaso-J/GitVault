@@ -27,7 +27,7 @@
 
 <script setup lang='ts'>
 import { isFileExcluded } from '~/config'
-import { getPathToFile } from '~/resources/CDNFiles/utils'
+import { getPathToFile, getPathToFolder } from '~/resources/CDNFiles/utils'
 import type { GhRepoTreeResponseData } from '~~/server/resources/gitHubRepoTree'
 
 defineComponent({ name: 'SearchBar' })
@@ -67,7 +67,7 @@ const filesAndFolders = computed<SearchBarItem[]>(() => (data.value?.tree ?? [])
  */
 const goToElement = (treeItem: SearchBarItem) => {
   const target = treeItem.isFolder ? '_self' : '_blank'
-  const path = treeItem.isFolder ? `/${routeRepo.value}/${treeItem.path}` : getPathToFile({ fileName: treeItem.path, repo: routeRepo.value })
-  navigateTo(path, { open: { target } })
+  const getUrl = treeItem.isFolder ? getPathToFolder : getPathToFile
+  navigateTo(getUrl({ path: treeItem.path, repo: routeRepo.value }), { open: { target } })
 }
 </script>

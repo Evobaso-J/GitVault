@@ -50,14 +50,28 @@ export const getPathFromNuxtLinkTo = (nuxtLinkToProp: NuxtLinkProps['to']): stri
   return nuxtLinkToProp.path
 }
 
-export const getPathToFile = ({ fileName, repo }: { fileName: string | RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric | undefined, repo: RouteParamsGeneric[string] | undefined }): string => {
-  if (typeof fileName !== 'string') {
-    console.error('fileName is not a string:', fileName)
+type VaultPathInput = {
+  path: string | RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric | undefined
+  repo: RouteParamsGeneric[string] | undefined
+}
+
+// `#`, `?` and `%` are valid in file names but not raw in a URL path
+const encodePath = (path: string): string => path.split('/').map(encodeURIComponent).join('/')
+
+const getVaultUrl = ({ path, repo }: VaultPathInput, section?: 'file'): string => {
+  if (typeof path !== 'string') {
+    console.error('path is not a string:', path)
     return ''
   }
   if (typeof repo !== 'string') {
-    console.error('fileName is not a string:', fileName)
+    console.error('repo is not a string:', repo)
     return ''
   }
-  return `/${repo}/file/${fileName}`
+  return `/${[repo, section, encodePath(path)].filter(Boolean).join('/')}`
 }
+
+/** App URL of a file's page, e.g. `/gitvault-a/file/docs/a%20%231.txt` */
+export const getPathToFile = (input: VaultPathInput): string => getVaultUrl(input, 'file')
+
+/** App URL of a folder, e.g. `/gitvault-a/docs/2026` */
+export const getPathToFolder = (input: VaultPathInput): string => getVaultUrl(input)

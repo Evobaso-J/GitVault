@@ -13,6 +13,7 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 - `login.vue`: GitHub OAuth entry.
 - `[repo]/[...path].vue`: folder listing (folders + files) of the active repo.
 - `[repo]/file/[...path].vue`: single-file preview.
+- Build links to these pages with `getPathToFolder` / `getPathToFile` (`src/resources/CDNFiles/utils.ts`), never by string concatenation: file names may contain `#`, `?` or `%`, which must be encoded per path segment.
 
 Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth`, `01.guest`, `03.active-repo`, `04.no-active-repo`).
 
