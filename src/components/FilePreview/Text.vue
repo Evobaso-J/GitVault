@@ -1,13 +1,9 @@
 <template>
   <UCard
     :ui="{
-      // UCard Config: https://ui.nuxt.com/components/card#config
-      body: {
-        background: 'bg-neutral-100 dark:bg-neutral-800',
-      },
-      footer: {
-        base: 'text-sm text-neutral-500 dark:text-neutral-400',
-      },
+      // UCard Theme: https://ui.nuxt.com/docs/components/card#theme
+      body: 'bg-neutral-100 dark:bg-neutral-800',
+      footer: 'text-sm text-neutral-500 dark:text-neutral-400',
     }"
     class="overflow-x-hidden"
   >

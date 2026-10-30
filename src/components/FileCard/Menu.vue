@@ -1,25 +1,25 @@
 <template>
-  <UDropdown
+  <UDropdownMenu
     :items
-    :popper="{ placement: 'bottom-start' }"
+    :content="{ align: 'start' }"
   >
     <UButton
-      color="gray"
+      color="neutral"
       icon="i-mdi-dots-vertical"
       variant="ghost"
     />
-  </UDropdown>
+  </UDropdownMenu>
 </template>
 
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 import type { FileCardHeaderProps } from './Header.vue'
-import type { DropdownItem } from '#ui/types'
+import type { DropdownMenuItem } from '@nuxt/ui'
 import { downloadFile, getPathFromNuxtLinkTo, getPathToFile } from '~/resources/CDNFiles/utils'
 import type { UseUploadFileOptions } from '~/composables/useUploadFile'
 
 defineComponent({ name: 'FileCardMenu' })
-interface FileCardMenuProps extends FileCardHeaderProps {}
+type FileCardMenuProps = FileCardHeaderProps
 const props = defineProps<FileCardMenuProps>()
 
 const { copied, copy } = useClipboard()
@@ -42,8 +42,8 @@ const uploadFileOptions = computed<UseUploadFileOptions>(() => ({
 }))
 const { open: replaceFile } = useUploadFile(uploadFileOptions)
 
-const items = computed<DropdownItem[][]>(() => {
-  const copyItem: DropdownItem = copied.value
+const items = computed<DropdownMenuItem[][]>(() => {
+  const copyItem: DropdownMenuItem = copied.value
     ? {
         label: t('copied'),
         icon: 'i-mdi-check',
@@ -52,7 +52,7 @@ const items = computed<DropdownItem[][]>(() => {
     : {
         label: t('copyLink'),
         icon: 'i-mdi-link-variant',
-        click: (e: Event) => {
+        onSelect: (e: Event) => {
           e.preventDefault()
           e.stopPropagation()
           copyPathToClipboard()
@@ -63,7 +63,7 @@ const items = computed<DropdownItem[][]>(() => {
       {
         label: t('openInNewTab'),
         icon: 'i-mdi-open-in-new',
-        click: (e: Event) => {
+        onSelect: (e: Event) => {
           e.stopPropagation()
         },
         to: getPathToFile({ fileName: props.to, repo: route.params.repo }),
@@ -78,22 +78,14 @@ const items = computed<DropdownItem[][]>(() => {
         label: t('download'),
         icon: 'i-mdi-download-outline',
         disabled: !props.downloadUrl,
-        click: (e: Event) => {
-          e.stopPropagation()
-          e.preventDefault()
-          return downloadFile(props.downloadUrl!, props.title)
-        },
+        onSelect: () => downloadFile(props.downloadUrl!, props.title),
       },
     ],
     [
       {
         label: t('replace'),
         icon: 'i-mdi-autorenew',
-        click: (e: Event) => {
-          e.stopPropagation()
-          e.preventDefault()
-          replaceFile()
-        },
+        onSelect: () => replaceFile(),
       },
     ],
   ]

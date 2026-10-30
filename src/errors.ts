@@ -7,9 +7,9 @@ export class BaseError<T extends string> extends Error {
 
   constructor({
     name,
-        message,
-        cause,
-        statusCode = 500,
+    message,
+    cause,
+    statusCode = 500,
   }: {
     name: T
     message: string

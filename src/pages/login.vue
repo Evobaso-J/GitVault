@@ -1,10 +1,7 @@
 <template>
   <div class="h-full flex flex-col lg:flex-row overflow-hidden">
     <UContainer
-      class="flex flex-col my-6 lg:my-36 gap-16 lg:shrink-0 lg:w-[35rem] pt-[calc(50vh-28rem)]"
-      :ui="{
-        padding: 'px-4 sm:px-6 lg:px-12',
-      }"
+      class="flex flex-col my-6 lg:my-36 gap-16 lg:shrink-0 lg:w-[35rem] pt-[calc(50vh-28rem)] px-4 sm:px-6 lg:px-12"
     >
       <div class="w-full flex items-center gap-2 mb-8 lg:mb-0">
         <AppLogo size="30" />
@@ -41,7 +38,7 @@
           to="/auth/github"
           icon="i-simple-icons-github"
           :label="$t('signIn.gitHub')"
-          color="black"
+          color="neutral"
           variant="outline"
           external
           block

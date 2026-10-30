@@ -6,14 +6,14 @@
         <div class="flex gap-12 md:mt-6 py-3 items-center justify-between border-y dark:border-gray-700 px-2 -mx-2 overflow-x-auto">
           <div class="flex items-center gap-2">
             <UBreadcrumb
-              :links="links"
+              :items="links"
             />
             <CreateItemsDropdown
-              :popper="{ placement: 'bottom-start' }"
+              :content="{ align: 'start' }"
             >
               <template #activator>
                 <UButton
-                  :ui="{ rounded: 'rounded-lg' }"
+                  class="rounded-lg"
                   variant="soft"
                   size="xs"
                   icon="i-mdi-plus"
@@ -37,12 +37,12 @@
                 <span
                   class="font-semibold text-lg text-primary px-2 py-1 rounded-md bg-royal-blue-100 h-8 flex items-center"
                 >{{ GITVAULT_REPO_PREFIX }}</span>
-                <UFormGroup
+                <UFormField
                   name="name"
                   class="w-full"
                 >
                   <UInput v-model="state.name" />
-                </UFormGroup>
+                </UFormField>
               </div>
             </template>
           </CreateNamedResourceModal>
@@ -56,7 +56,7 @@
     </UContainer>
     <CreateItemsDropdown
       class="fixed bottom-6 right-6 md:hidden"
-      :popper="{ placement: 'top-end' }"
+      :content="{ side: 'top', align: 'end' }"
     >
       <template #activator>
         <UButton
@@ -70,13 +70,13 @@
 </template>
 
 <script setup lang='ts'>
-import type { BreadcrumbLink } from '#ui/types'
+import type { BreadcrumbItem } from '@nuxt/ui'
 import { GITVAULT_REPO_PREFIX } from '~/config'
 import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNUserRepos/constants'
 
 const { t } = useI18n()
 const route = useRoute()
-const links = computed<BreadcrumbLink[]>(() => {
+const links = computed<BreadcrumbItem[]>(() => {
   const linksFromRoute = route.path.split('/')
     .filter(pathSection => !!pathSection && pathSection !== route.params.repo)
     .map((path, index, array) => ({

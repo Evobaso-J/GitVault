@@ -19,10 +19,12 @@
           @click="action"
         />
         <UModal
-          v-model="isModalOpen"
+          v-model:open="isModalOpen"
           :title="source.name"
         >
-          <FilePreviewText :source="source" />
+          <template #body>
+            <FilePreviewText :source="source" />
+          </template>
         </UModal>
       </div>
     </EmptySectionCard>

@@ -19,6 +19,6 @@
 import type { FileCardProps } from './index.vue'
 
 defineComponent({ name: 'FileCardHeader' })
-export interface FileCardHeaderProps extends FileCardProps {}
+export type FileCardHeaderProps = FileCardProps
 defineProps<FileCardHeaderProps>()
 </script>

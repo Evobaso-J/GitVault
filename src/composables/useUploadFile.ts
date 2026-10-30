@@ -49,10 +49,10 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
     toast.add({
       id: toastId,
       title: t('operationInProgress'),
-      timeout: 0,
+      duration: 0,
       icon: 'i-mdi-loading',
       ui: {
-        icon: { base: 'animate-spin' },
+        icon: 'animate-spin',
       },
     })
 
@@ -60,11 +60,11 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
       await $putFile({ path, body, repo })
       toast.update(toastId, {
         title: t('successMessage'),
-        color: 'green',
-        timeout: 3000,
+        color: 'success',
+        duration: 3000,
         icon: 'i-mdi-check',
         ui: {
-          icon: { base: 'animate-none' },
+          icon: 'animate-none',
         },
       })
       refreshNuxtData()
@@ -76,11 +76,11 @@ export const useUploadFile = (options?: Ref<UseUploadFileOptions>) => {
       }
       toast.update(toastId, {
         title: errorMessage,
-        color: 'red',
-        timeout: 3000,
+        color: 'error',
+        duration: 3000,
         icon: 'i-mdi-alert-outline',
         ui: {
-          icon: { base: 'animate-none' },
+          icon: 'animate-none',
         },
       })
     }

@@ -1,7 +1,7 @@
 <template>
   <UContainer>
     <UBreadcrumb
-      :links="links"
+      :items="links"
       class="my-6"
     />
 
@@ -10,11 +10,11 @@
 </template>
 
 <script setup lang='ts'>
-import type { BreadcrumbLink } from '#ui/types'
+import type { BreadcrumbItem } from '@nuxt/ui'
 
 const { t } = useI18n()
 const route = useRoute()
-const links = computed<BreadcrumbLink[]>(() => {
+const links = computed<BreadcrumbItem[]>(() => {
   const linksFromRoute = route.path.split('/')
     .filter(pathSection => !!pathSection && pathSection !== route.params.repo && pathSection !== 'file')
     .map((path, index, array) => ({

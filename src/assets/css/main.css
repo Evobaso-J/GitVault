@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* Tailwind 4 defaults borders to currentColor, keep the v3 gray */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@theme static {
+  --color-royal-blue-50: #f6f8fd;
+  --color-royal-blue-100: #e5edff;
+  --color-royal-blue-200: #c2cdff;
+  --color-royal-blue-300: #9caaff;
+  --color-royal-blue-400: #757cff;
+  --color-royal-blue-500: #6360ff;
+  --color-royal-blue-600: #4936f5;
+  --color-royal-blue-700: #3e2ad8;
+  --color-royal-blue-800: #3225ae;
+  --color-royal-blue-900: #2d2689;
+  --color-royal-blue-950: #1c1650;
+}

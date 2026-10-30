@@ -10,7 +10,6 @@
     </template>
   </i18n-t>
   <UForm
-    ref="createRepoForm"
     :schema="USER_REPO_SCHEMA"
     :state="formState"
     @submit="createRepo"
@@ -19,12 +18,12 @@
       <span
         class="font-semibold text-lg text-primary px-2 py-1 rounded-md bg-royal-blue-100 h-8 flex items-center"
       >{{ GITVAULT_REPO_PREFIX }}</span>
-      <UFormGroup
+      <UFormField
         name="name"
         class="w-full"
       >
         <UInput v-model="formState.name" />
-      </UFormGroup>
+      </UFormField>
     </div>
     <UButton
       type="submit"
@@ -37,10 +36,9 @@
 </template>
 
 <script setup lang='ts'>
-import type { Form } from '#ui/types'
 import { GITVAULT_REPO_PREFIX } from '~/config'
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
-import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA, type UserRepoForm } from '~/resources/CDNUserRepos/constants'
+import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNUserRepos/constants'
 
 defineComponent({ name: 'NoReposSetupWizardStep2' })
 
@@ -52,11 +50,8 @@ const emit = defineEmits<NoReposSetupWizardStep2Emits>()
 
 const formState = ref(USER_REPO_FORM_INITIAL_STATE)
 
-const createRepoForm = ref<Form<UserRepoForm>>()
-
-const createRepo = async () => {
-  const isValid = await createRepoForm.value?.validate()
-  if (!isValid) return
+// UForm emits `submit` only after the schema validation passes
+const createRepo = () => {
   emit('create-repo', `${GITVAULT_REPO_PREFIX}${formState.value.name}`)
 }
 

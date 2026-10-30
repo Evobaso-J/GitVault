@@ -1,11 +1,8 @@
 <template>
   <UCard
-    class="max-w-xl"
+    class="max-w-xl bg-neutral-50 dark:bg-gray-800"
     :ui="{
-      background: 'bg-neutral-50 dark:bg-gray-800',
-      body: {
-        base: 'flex flex-col items-center justify-center gap-4 text-neutral-700',
-      },
+      body: 'flex flex-col items-center justify-center gap-4 text-neutral-700',
     }"
   >
     <UIcon

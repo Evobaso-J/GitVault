@@ -1,11 +1,11 @@
 <template>
-  <div class="h-screen">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-
-    <UNotifications />
-  </div>
+  <UApp>
+    <div class="h-screen">
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+  </UApp>
 </template>
 
 <script setup lang='ts'>

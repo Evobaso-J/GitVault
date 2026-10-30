@@ -1,18 +1,24 @@
 <template>
-  <UDropdown
+  <UDropdownMenu
     v-if="user"
     :items="items"
   >
-    <UAvatar
-      :src="`https://github.com/${user.login}.png`"
-      :alt="user.login"
-      size="lg"
-    />
-  </UDropdown>
+    <UButton
+      variant="link"
+      class="p-0 rounded-full"
+      :aria-label="user?.login"
+    >
+      <UAvatar
+        :src="`https://github.com/${user?.login}.png`"
+        :alt="user?.login"
+        size="lg"
+      />
+    </UButton>
+  </UDropdownMenu>
 </template>
 
 <script setup lang='ts'>
-import type { DropdownItem } from '#ui/types'
+import type { DropdownMenuItem } from '@nuxt/ui'
 
 defineComponent({ name: 'UserMenu' })
 
@@ -23,11 +29,11 @@ const items = [
     {
       label: 'Logout',
       icon: 'i-heroicons-arrow-left-on-rectangle',
-      click: async () => {
+      onSelect: async () => {
         await clear()
         navigateTo('/login')
       },
     },
   ],
-] satisfies DropdownItem[][]
+] satisfies DropdownMenuItem[][]
 </script>

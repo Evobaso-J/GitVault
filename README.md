@@ -46,8 +46,8 @@ GitVault leverages GitHub's infrastructure to provide you with virtually unlimit
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: [Nuxt 3](https://nuxt.com/) + Vue 3 + TypeScript
-- **UI Library**: [Nuxt UI](https://ui.nuxt.com/) + Tailwind CSS
+- **Frontend**: [Nuxt 4](https://nuxt.com/) + Vue 3 + TypeScript
+- **UI Library**: [Nuxt UI 4](https://ui.nuxt.com/) + Tailwind CSS 4
 - **Authentication**: [nuxt-auth-utils](https://github.com/Atinux/nuxt-auth-utils) with GitHub OAuth
 - **API Integration**: GitHub REST API
 - **Testing**: Vitest + Vue Test Utils
@@ -56,7 +56,7 @@ GitVault leverages GitHub's infrastructure to provide you with virtually unlimit
 
 ## 📋 Prerequisites
 
-- Node.js 18+
+- Node.js 22.22.3+ or 24.15+
 - pnpm (managed via corepack)
 - GitHub OAuth App (for authentication)
 
@@ -174,6 +174,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- [Nuxt 3](https://nuxt.com/) for the amazing framework
+- [Nuxt 4](https://nuxt.com/) for the amazing framework
 - [GitHub API](https://docs.github.com/en/rest) for repository access
 - [Nuxt UI](https://ui.nuxt.com/) for the beautiful components
