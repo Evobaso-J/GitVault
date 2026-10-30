@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { isRepoNameValid } from '~/resources/CDNUserRepos/utils'
 
 // `.` and `..` would let the URL resolve outside /repos/{owner}/{repo}
-const isPathSegment = (segment: string) => segment !== '' && segment !== '.' && segment !== '..'
+export const isPathSegment = (segment: string) => segment !== '' && segment !== '.' && segment !== '..'
 
 /**
  * Query of every route that targets one of the user's vault repos.
@@ -21,21 +21,25 @@ type GitHubFetchOptions = {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   query?: Record<string, string>
   body?: Record<string, unknown>
+  /** Act as this user instead of the session user: for routes authenticated by an upload key */
+  auth?: { login: string, token: string }
 }
 
 /**
- * Calls the GitHub REST API as the session user. `endpoint` receives the user's login,
+ * Calls the GitHub REST API as the session user (or `options.auth`). `endpoint` receives the user's login,
  * so a route can only reach the user's own repos. GitHub errors are rethrown with
  * GitHub's own message as `statusMessage`.
  */
-export const github = async <T>(event: Parameters<typeof requireUserSession>[0], endpoint: (owner: string) => string, options: GitHubFetchOptions = {}): Promise<T> => {
-  const { user, secure } = await requireUserSession(event)
+export const github = async <T>(event: Parameters<typeof requireUserSession>[0], endpoint: (owner: string) => string, { auth, ...options }: GitHubFetchOptions = {}): Promise<T> => {
+  const session = auth ? undefined : await requireUserSession(event)
+  const login = auth?.login ?? session?.user.login ?? ''
+  const token = auth?.token ?? session?.secure?.tokens.access_token
   try {
-    return await $fetch<T>(endpoint(user.login), {
+    return await $fetch<T>(endpoint(login), {
       ...options,
       baseURL: 'https://api.github.com',
       headers: {
-        'Authorization': `Bearer ${secure?.tokens.access_token}`,
+        'Authorization': `Bearer ${token}`,
         'X-GitHub-Api-Version': '2022-11-28',
       },
     })

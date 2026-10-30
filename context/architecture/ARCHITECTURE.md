@@ -18,7 +18,7 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 
 Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth`, `01.guest`, `03.active-repo`, `04.no-active-repo`).
 
-Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET).
+Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET), `upload-key` (POST, session: issues a sealed upload key), `ingest` (POST, authenticated by `Authorization: Bearer <upload key>` instead of the session, for phone automations; see `server/utils/uploadKey.ts` and `README.md` § Upload your phone gallery).
 
 ### Key Files
 

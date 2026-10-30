@@ -160,6 +160,28 @@ Key configuration options in `nuxt.config.ts`:
 | `NUXT_OAUTH_GITHUB_CLIENT_ID` | GitHub OAuth App Client ID | Yes |
 | `NUXT_OAUTH_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret | Yes |
 
+## 📱 Upload your phone gallery
+
+Open a vault, then **user menu → Phone uploads**, pick a base folder and generate an **upload key** (shown once). Phone automations then `POST` files to `https://<your-gitvault>/ingest` with `Authorization: Bearer <key>`; each file lands in `<folder>/YYYY/MM/<name>` (upload month, UTC). A name clash with different content becomes `name (1).ext`; the same photo sent twice is skipped, so re-running a backup is harmless. Max 20 MB per request (fewer photos per run if you hit it; serverless hosts may cap lower).
+
+**iOS (Shortcuts app)**
+
+1. New shortcut → **Select Photos** (enable *Select Multiple*), or **Find Photos** (e.g. *Date Taken is in the last 1 day*) for unattended runs.
+2. **Repeat with Each** item in Photos.
+3. Inside the loop: **Get Contents of URL** → URL `https://<your-gitvault>/ingest`, Method `POST`, Headers `Authorization` = `Bearer <key>`, Request Body `Form`, add a **File** field named `file` = *Repeat Item*.
+4. Daily backup: **Automation → Personal Automation → Time of Day**, run the *Find Photos* variant, turn off *Ask Before Running*.
+
+**Android (HTTP Shortcuts app)**
+
+1. New shortcut → Method `POST`, URL `https://<your-gitvault>/ingest`.
+2. Request Headers: `Authorization` = `Bearer <key>`.
+3. Request Body: *Form data* → add a parameter of type *File* (or *Multiple files*) named `file`.
+4. Share photos from the gallery to the shortcut. For a schedule, trigger it from Tasker.
+
+Test from a computer: `curl -F file=@photo.jpg -H "Authorization: Bearer <key>" https://<your-gitvault>/ingest`
+
+**Security.** The key contains your GitHub OAuth token, encrypted (AES-256-GCM) with the server's `NUXT_SESSION_PASSWORD`; the server only uses it to write into the bound vault and folder. Anyone holding the key can upload there. Keys have no expiry and are not stored anywhere, so to revoke: revoke GitVault's access in GitHub *Settings → Applications* (kills every key and signs you out), or the operator rotates `NUXT_SESSION_PASSWORD` (kills every key and every session for all users).
+
 ## 🤝 Contributing
 
 1. Fork the repository

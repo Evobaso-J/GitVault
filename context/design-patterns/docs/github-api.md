@@ -9,7 +9,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 1. Routes on a vault repo validate `repo`/`path` with `getValidatedQuery(event, q => vaultRepoQuerySchema.parse(q))`: it rejects `.`/`..`/empty segments and returns `path` URL-encoded per segment. Never interpolate raw query values into a GitHub URL.
 2. Validate body with `readValidatedBody(event, data => schema.parse(data))` when there is one.
 3. Call `github(event, owner => '/repos/${owner}/…', { method, query, body })` from `server/utils/github.ts`. It owns the session, Bearer token, API version header and error mapping (GitHub's `message` becomes `statusMessage`, which `useOperationToast` shows). Don't call `$fetch` on `api.github.com` directly.
-4. Owner is always the session user: `github` passes `user.login` to the endpoint builder.
+4. Owner is always the session user: `github` passes `user.login` to the endpoint builder. Exception: `ingest` has no session and passes `{ auth: { login, token } }` from the unsealed upload key; never build `auth` from request input.
 5. Return the raw GitHub payload; the client narrows it.
 
 ## Types and schemas

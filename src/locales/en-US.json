@@ -126,6 +126,24 @@
   "type": "Type",
   "upload": "Upload",
   "uploadFile": "Upload file",
+  "uploadKey": {
+    "copy": "Copy key",
+    "description": "A key that lets a phone shortcut upload photos straight to {repo}, without signing in.",
+    "folderHelp": "Files land in {folder}/year/month/. A file with the same name gets a number; the same photo sent twice is skipped.",
+    "generate": "Generate key",
+    "keyLabel": "Upload key",
+    "menu": "Phone uploads",
+    "shownOnce": "Copy it now: it is shown only once.",
+    "steps": {
+      "android": "Android: in HTTP Shortcuts, create a shortcut with a file request body.",
+      "automation": "Optional, iOS: a daily Personal Automation that runs the shortcut backs up the latest photos.",
+      "ios": "iOS: in Shortcuts, add Select Photos (or Find Photos), then Get Contents of URL.",
+      "request": "Send a POST to {url} as a form with a file field, and the header Authorization: Bearer <key>."
+    },
+    "title": "Upload from your phone",
+    "warning": "Anyone with this key can write files to {repo} with your GitHub account until it is revoked. To revoke every key, revoke GitHub's access for @:app.name in GitHub Settings, Applications (this also signs you out).",
+    "warningTitle": "Keep this key secret"
+  },
   "uploadQueue": {
     "close": "Close upload list",
     "collapse": "Collapse upload list",
