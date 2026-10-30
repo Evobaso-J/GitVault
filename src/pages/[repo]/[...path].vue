@@ -1,6 +1,9 @@
 <template>
   <div class="flex gap-6">
-    <div class="flex-1 min-w-0 flex flex-col gap-3">
+    <div
+      ref="dropTarget"
+      class="relative flex-1 min-w-0 flex flex-col gap-3"
+    >
       <FolderContentsLoading v-if="status === 'pending' && !data" />
       <FolderContentsError
         v-else-if="error"
@@ -17,11 +20,30 @@
           :files
           :selected="selectedFile?.name"
         />
+        <p class="hidden md:flex items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-primary/30 text-sm text-muted">
+          <UIcon
+            name="i-mdi-upload-outline"
+            class="size-4"
+          />
+          {{ $t('dropZone.hint', { location }) }}
+        </p>
       </template>
       <FolderContentsEmpty
         v-else
         :folder="folderName"
       />
+
+      <div
+        v-if="isOverDropZone"
+        class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-primary bg-primary/10 backdrop-blur-sm pointer-events-none"
+      >
+        <UIcon
+          name="i-mdi-upload"
+          class="size-10 text-primary"
+        />
+        <span class="text-lg font-semibold text-highlighted">{{ $t('dropZone.title') }}</span>
+        <span class="text-sm text-muted">{{ location }}</span>
+      </div>
     </div>
 
     <aside
@@ -50,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { breakpointsTailwind, useBreakpoints, useInterval } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useDropZone, useInterval } from '@vueuse/core'
 
 import { isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
@@ -105,6 +127,14 @@ const parent = computed(() => {
     name: parentPath.split('/').pop() || String(repo),
     to: getPathToFolder({ path: parentPath, repo }),
   }
+})
+
+const location = computed(() => [repo, ...(queryPath.value?.split('/') ?? [])].join(' / '))
+const { upload } = useVaultContents()
+const dropTarget = useTemplateRef('dropTarget')
+const { isOverDropZone } = useDropZone(dropTarget, {
+  onDrop: files => files?.length && upload(files),
+  multiple: true,
 })
 
 const isDesktop = useBreakpoints(breakpointsTailwind).greaterOrEqual('lg')

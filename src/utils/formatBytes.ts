@@ -8,7 +8,8 @@ export const formatBytes = (bytes: number, locale?: string): string => {
   return new Intl.NumberFormat(locale, {
     style: 'unit',
     unit: UNITS[exponent],
-    unitDisplay: 'short',
+    // The short byte unit has no plural in English ("22 byte")
+    unitDisplay: exponent ? 'short' : 'long',
     maximumFractionDigits: exponent ? 1 : 0,
   }).format(bytes / 1024 ** exponent)
 }

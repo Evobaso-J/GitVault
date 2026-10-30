@@ -17,6 +17,10 @@
   "deleteFolder": "Delete folder",
   "download": "Download",
   "downloadFile": "Download {name}",
+  "dropZone": {
+    "hint": "Drag files here to upload them to {location}",
+    "title": "Drop to upload"
+  },
   "emptyFolder": {
     "title": "{folder} is empty",
     "description": "Drag files here, even several at once, or choose them from your computer."
@@ -108,6 +112,25 @@
   "successMessage": "Operation successful!",
   "type": "Type",
   "uploadFile": "Upload file",
+  "uploadQueue": {
+    "close": "Close upload list",
+    "collapse": "Collapse upload list",
+    "exists": "{name} already exists",
+    "expand": "Expand upload list",
+    "finished": "{n} upload done | {n} uploads done",
+    "keepBoth": "Keep both",
+    "label": "Uploads",
+    "needsChoice": "A file needs your choice",
+    "skip": "Skip",
+    "status": {
+      "done": "Done",
+      "error": "Failed",
+      "skipped": "Skipped",
+      "uploading": "Uploading",
+      "waiting": "Waiting"
+    },
+    "uploading": "Uploading {current} of {total}"
+  },
   "validationError": {
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },

@@ -3,8 +3,9 @@ import { formatBytes } from './formatBytes'
 
 describe('formatBytes', () => {
   it('keeps small sizes in bytes', () => {
-    expect(formatBytes(0, 'en-US')).toBe('0 byte')
-    expect(formatBytes(512, 'en-US')).toBe('512 byte')
+    expect(formatBytes(0, 'en-US')).toBe('0 bytes')
+    expect(formatBytes(1, 'en-US')).toBe('1 byte')
+    expect(formatBytes(512, 'en-US')).toBe('512 bytes')
   })
 
   it('switches to the largest unit with one decimal', () => {

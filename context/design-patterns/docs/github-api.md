@@ -37,5 +37,6 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 - Folders don't exist in git: a folder is created by writing `<name>/.gitkeep` (`useVaultContents().createFolder`); `.gitkeep` is hidden via `EXCLUDE_FILES` in `src/config.ts`.
 - Replacing a file needs its current `sha` in the PUT body (`useVaultContents().replace`). The path is kept, so `pickAndReplace` limits the picker to the same extension.
 - Upload content is base64 (`useVaultContents`).
+- Uploads go through the shared queue in `useVaultContents` (`upload(files)`, shown by `UploadQueue.vue`): one PUT at a time, because parallel PUTs on one branch get 409; each file is first checked with a GET, and an existing file waits for Replace / Keep both (`name (n).ext`) / Skip.
 - `download_url` carries a short-lived token: lists refetch on an interval.
 - `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`.

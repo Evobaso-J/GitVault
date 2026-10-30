@@ -46,6 +46,7 @@
     </UDashboardPanel>
 
     <CreateFolderModal v-model="isFolderModalOpen" />
+    <UploadQueue />
     <CreateItemsDropdown
       class="fixed bottom-6 right-6 md:hidden"
       :content="{ side: 'top', align: 'end' }"
