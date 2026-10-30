@@ -32,7 +32,7 @@ Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents`
 - `src/components/`: flat files plus feature folders (`FileCard/`, `FilePreview/`, `LoginCard/`, `NoReposSetupWizard/`).
 - `src/resources/<Entity>/`: client domain per entity. `index.ts` types, `parse.ts` GitHub → domain narrowing, `utils.ts` helpers.
 - `src/composables/`: stateful logic and mutations (`useVaultContents`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
-- `server/routes/`: GitHub proxy handlers. `server/resources/`: Octokit-derived types + zod request schemas.
+- `server/routes/`: GitHub proxy handlers. `server/utils/github.ts`: the only GitHub caller. `server/resources/`: Octokit-derived types + zod request schemas.
 - `shared/types/auth.d.ts`: session typing for `nuxt-auth-utils`, used by both sides.
 - `src/config.ts` (app constants), `src/errors.ts` (error classes), `src/helpers.ts` (type helpers), `i18n/` + `src/locales/`.
 
@@ -58,7 +58,7 @@ Nuxt (Vite + Nitro). Scripts in `package.json`; `postinstall` runs `nuxt prepare
 <!-- exodia:section:runtime -->
 `ssr: false`: pages render client-side only; Nitro still serves the proxy routes and the OAuth callback.
 
-Data flow: page `useFetch('/gh-…')` → Nitro handler `requireUserSession` → `$fetch` to `api.github.com/repos/<user.login>/…` with the user's OAuth token as Bearer → raw GitHub payload back to client → `src/resources/*/parse.ts` narrows it to domain types.
+Data flow: page `useFetch('/gh-…')` → Nitro handler → `github()` (`server/utils/github.ts`: session, token, error mapping) → `api.github.com/repos/<user.login>/…` with the user's OAuth token as Bearer → raw GitHub payload back to client → `src/resources/*/parse.ts` narrows it to domain types.
 
 The folder page refetches on an interval to renew GitHub `download_url` tokens (`src/pages/[repo]/[...path].vue`).
 
