@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { isRepoNameValid } from '~/resources/CDNUserRepos/utils'
 
 // `.` and `..` would let the URL resolve outside /repos/{owner}/{repo}
 const isPathSegment = (segment: string) => segment !== '' && segment !== '.' && segment !== '..'
@@ -8,7 +9,7 @@ const isPathSegment = (segment: string) => segment !== '' && segment !== '.' && 
  * `path` comes out URL-encoded per segment, ready to put in a GitHub URL; it is '' at the repo root.
  */
 export const vaultRepoQuerySchema = z.object({
-  repo: z.string().regex(/^[\w.-]+$/).refine(isPathSegment),
+  repo: z.string().refine(isRepoNameValid),
   path: z.string()
     .refine(path => path.split('/').every(isPathSegment))
     .transform(path => path.split('/').map(encodeURIComponent).join('/'))

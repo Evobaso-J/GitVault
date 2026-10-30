@@ -9,8 +9,8 @@ Business language, entities, and how they relate. Read this when a task involves
 <!-- exodia:section:entities -->
 | Term | Definition | Source |
 |---|---|---|
-| Vault repo (`CDNUserRepo`) | A GitHub repo owned by the user whose name starts with `GITVAULT_REPO_PREFIX`. Created private-only. | `server/resources/gitHubUserRepos.ts`, `src/config.ts` |
-| `CDNUserRepoName` | Template-literal type for a valid vault repo name; check with `isRepoNameValid`. | `src/resources/CDNUserRepos/` |
+| Vault repo (`CDNUserRepo`) | A GitHub repo owned by the user that has the `GITVAULT_TOPIC` topic or (legacy, transition) a name starting with `GITVAULT_REPO_PREFIX`; see `isVaultRepo`. Created private-only and tagged with the topic right after creation. | `server/resources/gitHubUserRepos.ts`, `server/utils/vaultRepo.ts`, `src/config.ts` |
+| `CDNUserRepoName` | Repo name (plain `string`); `isRepoNameValid` only checks it is a safe GitHub repo name, not that it is a vault. | `src/resources/CDNUserRepos/` |
 | Active repository | The vault repo currently selected; persisted client-side. | `src/composables/useRepoStorage.ts` |
 | `CDNFile` | A GitHub contents entry narrowed to `type: 'file'`. | `src/resources/CDNFiles/index.ts` |
 | `CDNFolder` | A directory entry as `{ name, to }` (`to` = navigation target). | `src/resources/CDNFolders/index.ts` |
@@ -45,7 +45,7 @@ Business language, entities, and how they relate. Read this when a task involves
 - Domain types: `src/resources/<Entity>/index.ts`, narrowed from GitHub types.
 - Session types: module augmentation in `shared/types/auth.d.ts`.
 - Import: `import type { CDNFile } from '~/resources/CDNFiles'`; server types via `~~/server/resources/…`.
-- Note: the boundary is crossed both ways; `server/` imports `GITVAULT_REPO_PREFIX` from `~/config`.
+- Note: the boundary is crossed both ways; `server/` imports `GITVAULT_TOPIC`/`GITVAULT_REPO_PREFIX` from `~/config` and `isRepoNameValid` from `~/resources/CDNUserRepos/utils`.
 
 ## L3 Data
 
