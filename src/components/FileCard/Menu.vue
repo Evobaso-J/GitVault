@@ -28,7 +28,7 @@ const route = useRoute()
 const { t } = useI18n()
 
 const copyPathToClipboard = () => {
-  const routePath = getPathFromNuxtLinkTo(props.to)
+  const routePath = getPathToFile({ fileName: props.to, repo: route.params.repo })
   const fullPath = new URL(routePath, origin)
   copy(fullPath.toString())
 }
