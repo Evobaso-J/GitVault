@@ -89,11 +89,19 @@
   "openFullScreen": "Open full screen",
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
+  "palette": {
+    "actions": "Actions",
+    "close": "close",
+    "move": "move",
+    "open": "open",
+    "uploadHere": "Upload files to {location}"
+  },
   "path": "Path",
   "preview": "Preview",
   "replace": "Replace",
   "retry": "Retry",
-  "search": "Search...",
+  "searchPlaceholder": "Search files, folders or actions…",
+  "searchVault": "Search the vault",
   "selectRepo": {
     "cta": "Select a repository",
     "description": "You have already been here, but it seems that you don't have a default repository.\nChoose your favourite among the ones you previously created.",

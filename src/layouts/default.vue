@@ -20,7 +20,7 @@
             <UBreadcrumb :items="links" />
           </template>
           <template #right>
-            <SearchBar class="hidden sm:block w-72" />
+            <VaultSearch />
             <div class="hidden md:flex items-center gap-2">
               <UButton
                 :label="$t('newFolder')"
@@ -40,7 +40,6 @@
       </template>
 
       <template #body>
-        <SearchBar class="sm:hidden" />
         <slot />
       </template>
     </UDashboardPanel>

@@ -106,8 +106,8 @@ const { data, status, error, refresh } = useFetch('/gh-repo-contents', {
   watch: [downloadUrlTokenDuration],
 })
 
-const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
-const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name)))
+const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value ?? []))
+const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value ?? []).filter(file => !isFileExcluded(file.name)))
 
 const summary = computed(() => [
   t('folderCount', folders.value.length),
