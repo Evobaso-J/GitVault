@@ -33,9 +33,7 @@ const isModalOpen = ref(false)
 const closeModal = () => isModalOpen.value = false
 const openModal = () => isModalOpen.value = true
 
-const { open } = useUploadFile(ref({
-  multiple: false,
-}))
+const { pickAndUpload, createFolder } = useVaultContents()
 
 const { t } = useI18n()
 
@@ -48,7 +46,7 @@ const dropdownItems: DropdownMenuItem[][] = [
   [{
     label: t('uploadFile'),
     icon: 'i-mdi-upload-outline',
-    onSelect: () => open(),
+    onSelect: () => pickAndUpload(),
   }],
 ]
 
@@ -58,7 +56,6 @@ const createFolderSchema = z.object({
   }),
 })
 
-const { createFolder } = useCreateFolder()
 const saveAndClose = async (name: string) => {
   await createFolder(name)
   closeModal()

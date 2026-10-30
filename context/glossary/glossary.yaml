@@ -8,7 +8,10 @@ entities: {}
   #   definition: <one-line business definition>
   #   relationship: "<short relationship description, if any>"
 
-concepts: {}
+concepts:
+  vault_contents:
+    definition: The files and folders inside the active vault repo, at the folder of the current route.
+    notes: All writes to them (upload, replace, create folder) go through `useVaultContents`; creating a vault repo is a separate concept (`useCreateUserRepo`).
   # example:
   # <concept_name>:
   #   definition: <one-line definition of the concept>

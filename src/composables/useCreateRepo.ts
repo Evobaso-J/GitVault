@@ -1,11 +1,14 @@
 import type { OperationStatus } from '~/helpers'
-import { $createUserRepo, type CreateUserRepoPayload } from '~/resources/CDNUserRepos/api'
+import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 
 export const useCreateUserRepo = () => {
   const { runOperation } = useOperationToast()
 
-  const createUserRepo = ({ name }: CreateUserRepoPayload): Promise<OperationStatus> =>
-    runOperation(`repo-${name}`, () => $createUserRepo({ name }))
+  const createUserRepo = ({ name }: { name: CDNUserRepoName }): Promise<OperationStatus> =>
+    runOperation(`repo-${name}`, () => $fetch('/gh-user-repos', {
+      method: 'POST',
+      body: { name, private: true },
+    }))
 
   return { createUserRepo }
 }

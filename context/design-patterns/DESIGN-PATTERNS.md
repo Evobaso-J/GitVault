@@ -11,11 +11,11 @@ See [docs/github-api.md](docs/github-api.md) for full details.
 
 ## Domain resources
 
-One folder per entity in `src/resources/<Entity>/` (`index.ts` / `api.ts` / `parse.ts` / `utils.ts`). Never consume raw GitHub payloads in components: narrow them in `parse.ts` first (`src/resources/CDNFiles/parse.ts`).
+One folder per entity in `src/resources/<Entity>/` (`index.ts` / `parse.ts` / `utils.ts`). Never consume raw GitHub payloads in components: narrow them in `parse.ts` first (`src/resources/CDNFiles/parse.ts`).
 
 ## Composables & mutations
 
-Mutations live in `src/composables/use*.ts`, not in components. Wrap the API call in `runOperation` from `useOperationToast` (loading/success/error toast + `refreshNuxtData()`, returns `OperationStatus`); don't hand-roll toasts (`src/composables/useCreateFolder.ts`). Build repo paths with `createFilePath` (`src/utils/`). No Pinia.
+Mutations live in `src/composables/use*.ts`, not in components. Every write to the contents of the active vault repo (upload, replace, create folder) goes through `useVaultContents`, which owns route reading, base64, `.gitkeep`, commit messages and the file picker; extend it instead of adding a new mutation composable. Other mutations wrap the call in `runOperation` from `useOperationToast` (loading/success/error toast + `refreshNuxtData()`, returns `OperationStatus`); don't hand-roll toasts. Build repo paths with `createFilePath` (`src/utils/`). No Pinia.
 
 ## Validation
 
@@ -43,7 +43,7 @@ Custom errors extend `BaseError` with a literal `name` (`src/errors.ts`).
 
 ## Testing
 
-Vitest with `environment: 'nuxt'` (`vitest.config.ts`); co-locate `*.test.ts` next to the code (`src/resources/CDNFiles/utils.test.ts`). Single file: `pnpm unit <path>`.
+Vitest with `environment: 'nuxt'` (`vitest.config.ts`); co-locate `*.test.ts` next to the code (`src/resources/CDNFiles/utils.test.ts`). Single file: `pnpm unit <path>`. Composables that use `useI18n`/`useToast` need a setup context: mount them with `mountSuspended`, fake the Nitro route with `registerEndpoint` (`src/composables/useVaultContents.test.ts`).
 
 ## Lint & formatting
 

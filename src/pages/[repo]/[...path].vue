@@ -23,7 +23,7 @@
           icon="i-mdi-upload-outline"
           size="xl"
           :label="$t('uploadFile')"
-          @click="open()"
+          @click="pickAndUpload()"
         />
       </EmptySectionCard>
     </div>
@@ -66,5 +66,5 @@ const { data } = await useFetch('/gh-repo-contents', {
 const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value))
 const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value).filter(file => !isFileExcluded(file.name)))
 
-const { open } = useUploadFile(ref({ multiple: false }))
+const { pickAndUpload } = useVaultContents()
 </script>
