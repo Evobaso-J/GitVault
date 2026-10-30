@@ -7,7 +7,7 @@ Environments, configuration, deploys, and any per-variant behavior the codebase 
 ## Environments
 
 <!-- exodia:section:environments -->
-Only local dev is defined. No CI (`.github/` absent), no staging/prod config in the repo.
+Local dev and Netlify (per-PR deploy previews plus production, see § Deploy). No GitHub Actions CI (`.github/` absent).
 
 - Env vars: template in `.env.example`, local values in `.env` (gitignored). Copy and fill per `README.md` § Environment Setup.
 - Node version: `.nvmrc`. Package manager: `packageManager` in `package.json`.
@@ -29,7 +29,7 @@ Single variant. No tenants, markets or feature flags. Per-user isolation comes f
 ## Deploy
 
 <!-- exodia:section:deploy -->
-No deploy pipeline in the repo. `.gitignore` lists `.netlify`, hinting at Netlify, but there is no Netlify config. Build output: `pnpm build` (Nitro server needed for proxy + OAuth, so static `generate` alone won't work).
+Netlify, wired through the Netlify GitHub app (no config file in the repo; settings live in the Netlify dashboard, project `gitvault`). Every PR gets a deploy preview and Netlify checks; production branch and env vars are configured in the dashboard. Build: `pnpm build` (Nitro server needed for proxy + OAuth, so static `generate` alone won't work).
 
 ## Localization / i18n (if applicable)
 
