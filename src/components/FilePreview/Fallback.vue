@@ -1,69 +1,38 @@
 <template>
-  <div class="flex justify-center items-center">
-    <EmptySectionCard
-      :title="$t('filePreview.fallback.title')"
-      :description="$t('filePreview.fallback.description')"
-      icon="i-mdi-file-document-remove-outline"
+  <div class="flex flex-col items-center justify-center gap-3 rounded-lg bg-elevated p-6 text-center">
+    <UIcon
+      :name="getIconFromFileName(source.name)"
+      class="size-12 text-muted"
+    />
+    <span class="text-sm text-muted">{{ $t('filePreview.fallback.title') }}</span>
+    <UButton
+      :label="$t('showAsText')"
+      icon="i-mdi-text"
+      color="neutral"
+      variant="outline"
+      size="sm"
+      @click="isModalOpen = true"
+    />
+    <UModal
+      v-model:open="isModalOpen"
+      :title="source.name"
     >
-      <div
-        class="flex flex-col gap-4 justify-center items-center w-full"
-      >
-        <UButton
-          v-for="{ label, icon, action } in buttons"
-          :key="label"
-          block
-          :icon="icon"
-          variant="outline"
-          size="xl"
-          :label="label"
-          @click="action"
+      <template #body>
+        <FilePreviewText
+          :source="source"
+          class="max-h-[60vh]"
         />
-        <UModal
-          v-model:open="isModalOpen"
-          :title="source.name"
-        >
-          <template #body>
-            <FilePreviewText :source="source" />
-          </template>
-        </UModal>
-      </div>
-    </EmptySectionCard>
+      </template>
+    </UModal>
   </div>
 </template>
 
 <script setup lang='ts'>
 import type { FilePreviewProps } from './index.vue'
-import { downloadFile } from '~/resources/CDNFiles/utils'
+import { getIconFromFileName } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'FallbackFilePreview' })
-type FallbackFilePreviewProps = FilePreviewProps
-
-const props = defineProps<FallbackFilePreviewProps>()
-
-const { t } = useI18n()
-const buttons: { icon: string, label: string, action?: () => void }[] = [
-  {
-    icon: 'i-mdi-github',
-    label: t('viewOnGitHub'),
-    action: () => {
-      if (!props.source.git_url) return
-      window.open(props.source._links.html ?? '', '_blank')
-    },
-  },
-  {
-    icon: 'i-mdi-download-outline',
-    label: t('download'),
-    action: () => {
-      if (!props.source.download_url) return
-      downloadFile(props.source.download_url, props.source.name)
-    },
-  },
-  {
-    icon: 'i-mdi-text',
-    label: t('showAsText'),
-    action: () => isModalOpen.value = true,
-  },
-]
+defineProps<FilePreviewProps>()
 
 const isModalOpen = ref(false)
 </script>

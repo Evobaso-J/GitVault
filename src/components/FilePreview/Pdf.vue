@@ -1,31 +1,19 @@
 <template>
-  <UCard
-    :ui="{
-      // UCard Theme: https://ui.nuxt.com/docs/components/card#theme
-      body: 'bg-neutral-100 dark:bg-neutral-800',
-      footer: 'text-sm text-neutral-500 dark:text-neutral-400',
-    }"
-    class="overflow-x-hidden"
-  >
-    <div class="h-[65vh] overflow-scroll">
-      <ClientOnly
-        fallback-tag="span"
-        fallback="Loading PDF..."
+  <div class="overflow-auto rounded-lg bg-elevated">
+    <ClientOnly
+      fallback-tag="span"
+      fallback="Loading PDF..."
+    >
+      <VuePdfEmbed
+        v-if="source.download_url"
+        :source="source.download_url"
       >
-        <VuePdfEmbed
-          v-if="source.download_url"
-          :source="source.download_url"
-        >
-          <template #after-page>
-            <div class="mb-2" />
-          </template>
-        </VuePdfEmbed>
-      </ClientOnly>
-    </div>
-    <template #footer>
-      {{ source.name }}
-    </template>
-  </UCard>
+        <template #after-page>
+          <div class="mb-2" />
+        </template>
+      </VuePdfEmbed>
+    </ClientOnly>
+  </div>
 </template>
 
 <script setup lang='ts'>

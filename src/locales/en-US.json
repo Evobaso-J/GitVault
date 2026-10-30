@@ -5,33 +5,54 @@
     "titleTemplate": "%s • @:app.name"
   },
   "cancel": "Cancel",
+  "closePreview": "Close preview",
   "copied": "Copied!",
   "copyLink": "Copy link",
+  "copyLinkOf": "Copy link of {name}",
   "create": "Create",
   "createFolder": "Create folder",
   "createRepo": "Create new repository",
   "deleteFolder": "Delete folder",
   "download": "Download",
+  "downloadFile": "Download {name}",
   "emptyFolder": {
     "description": "You didn't upload any file in the current folder. Time to start!",
     "title": "There's nothing to see here"
   },
   "errorMessage": "An error occurred! Try again after refreshing the page",
   "file-preview": {
-    "fallback": {
-    }
+    "fallback": {}
   },
+  "fileCategory": {
+    "archive": "Archive",
+    "audio": "Audio",
+    "book": "Book",
+    "code": "Code",
+    "exec": "Executable",
+    "font": "Font",
+    "image": "Image",
+    "pdf": "PDF",
+    "sheet": "Spreadsheet",
+    "slide": "Presentation",
+    "text": "Text",
+    "unsupported": "File",
+    "video": "Video"
+  },
+  "fileCount": "{n} file | {n} files",
   "filePreview": {
     "fallback": {
-      "description": "You might even try to view it as plain text, if you don't fear the consequences",
-      "title": "This file type is not supported for preview"
+      "title": "No preview for this file type"
     }
   },
   "files": "Files",
+  "folder": "Folder",
+  "folderCount": "{n} folder | {n} folders",
   "folders": "Folders",
   "gitHub": "GitHub",
   "home": "Home",
   "logout": "Logout",
+  "moreActions": "More actions for {name}",
+  "name": "Name",
   "newFolder": "New folder",
   "newVault": "New vault",
   "noRepos": {
@@ -52,8 +73,11 @@
     },
     "title": "No repositories"
   },
+  "openFullScreen": "Open full screen",
   "openInNewTab": "Open in a new tab",
   "operationInProgress": "Operation in progress...",
+  "path": "Path",
+  "preview": "Preview",
   "replace": "Replace",
   "search": "Search...",
   "selectRepo": {
@@ -70,11 +94,14 @@
     "gitHub": "@:signIn.title with @:gitHub",
     "title": "Sign in"
   },
+  "size": "Size",
   "successMessage": "Operation successful!",
+  "type": "Type",
   "uploadFile": "Upload file",
   "validationError": {
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },
+  "vault": "Vault",
   "vaults": "Vaults",
   "viewOnGitHub": "View on @:gitHub"
 }

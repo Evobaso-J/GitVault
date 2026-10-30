@@ -1,13 +1,46 @@
 <template>
-  <FilePreview
+  <div
     v-if="file"
-    :source="file"
-  />
+    class="flex flex-col gap-4"
+  >
+    <header class="flex flex-wrap items-center gap-3">
+      <div class="flex-1 min-w-56 flex flex-col">
+        <h1 class="font-semibold break-words">
+          {{ file.name }}
+        </h1>
+        <span class="text-sm text-muted">{{ $t(`fileCategory.${getFileCategory(file.name)}`) }} · {{ formatBytes(file.size) }}</span>
+      </div>
+      <UButton
+        :label="$t('copyLink')"
+        icon="i-mdi-link-variant"
+        color="neutral"
+        variant="outline"
+        @click="copyLink(file)"
+      />
+      <UButton
+        :label="$t('replace')"
+        icon="i-mdi-autorenew"
+        color="neutral"
+        variant="outline"
+        @click="replace(file)"
+      />
+      <UButton
+        :label="$t('download')"
+        icon="i-mdi-download-outline"
+        @click="download(file)"
+      />
+    </header>
+    <FilePreview
+      :source="file"
+      class="h-[75vh]"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useInterval } from '@vueuse/core'
 import { parseGhRepoContentsToCDNFile } from '~/resources/CDNFiles/parse'
+import { getFileCategory } from '~/resources/CDNFiles/utils'
 
 definePageMeta({
   layout: 'single-file',
@@ -32,4 +65,6 @@ const { data: file } = await useFetch('/gh-repo-contents', {
 useHead({
   title: file.value?.name,
 })
+
+const { copyLink, replace, download } = useFileActions()
 </script>
