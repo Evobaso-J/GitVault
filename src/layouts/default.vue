@@ -7,6 +7,14 @@
       </template>
 
       <VaultNavigation />
+      <UButton
+        :label="$t('galleryBackup.title')"
+        icon="i-mdi-image-multiple-outline"
+        :to="`/${route.params.repo}/backup`"
+        color="neutral"
+        variant="ghost"
+        class="justify-start"
+      />
 
       <template #footer>
         <UserMenu />

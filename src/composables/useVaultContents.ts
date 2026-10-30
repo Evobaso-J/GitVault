@@ -119,15 +119,18 @@ export const useVaultContents = () => {
     isProcessing.value = false
   }
 
-  /** Queues the files into the current folder; resolves when the queue stops (done or waiting on a conflict) */
-  const upload = (files: File[]): Promise<void> => {
+  /**
+   * Queues the files, into the current folder unless `getPath` says otherwise;
+   * resolves when the queue stops (done or waiting on a conflict)
+   */
+  const upload = (files: File[], getPath = (file: File) => createFilePath(queryPath.value, file.name)): Promise<void> => {
     const repo = getRepo()
     if (!repo) return Promise.resolve()
     uploads.value.push(...files.map(file => ({
       id: nextId.value++,
       file,
       repo,
-      path: createFilePath(queryPath.value, file.name),
+      path: getPath(file),
       status: 'waiting' as const,
     })))
     return processUploads()

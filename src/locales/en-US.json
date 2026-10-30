@@ -68,6 +68,15 @@
     "notFoundDescription": "It may have been renamed or deleted on GitHub."
   },
   "folders": "Folders",
+  "galleryBackup": {
+    "backedUp": "{n} already backed up",
+    "description": "Pick photos and videos from your phone, even the whole gallery: only the ones not in the vault yet are uploaded, into Photos / year / month.",
+    "error": "Couldn't read the vault to check what's already backed up. Try again.",
+    "new": "{n} new file, uploading | {n} new files, uploading",
+    "pick": "Choose photos and videos",
+    "title": "Gallery backup",
+    "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
+  },
   "gitHub": "GitHub",
   "home": "Home",
   "loadingFolder": "Loading the folder",
