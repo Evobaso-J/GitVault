@@ -18,36 +18,21 @@
           to="/auth/github"
           external
           icon="i-simple-icons-github"
-          :label="$t('signIn.gitHub')"
+          :label="$t('signIn.cta')"
           color="neutral"
           size="xl"
           class="self-start"
         />
-        <i18n-t
-          keypath="signIn.dontHaveAnAccount"
-          tag="p"
-          class="text-sm text-muted"
-        >
-          <template #createAccount>
-            <ULink
-              class="text-primary"
-              to="https://github.com/signup"
-              external
-              target="_blank"
-            >
-              {{ $t('signIn.createAccount') }}
-            </ULink>
-          </template>
-        </i18n-t>
-        <i18n-t
-          keypath="signIn.prefixNote"
-          tag="p"
-          class="text-xs text-muted"
-        >
-          <template #prefix>
-            <code class="font-mono text-highlighted">{{ GITVAULT_REPO_PREFIX }}</code>
-          </template>
-        </i18n-t>
+        <section class="flex flex-col gap-3">
+          <h2 class="text-sm font-semibold text-highlighted">
+            {{ $t('signIn.howItWorks') }}
+          </h2>
+          <ol class="flex flex-col gap-2 text-sm text-muted list-decimal ps-5">
+            <li>{{ $t('signIn.step1') }}</li>
+            <li>{{ $t('signIn.step2') }}</li>
+            <li>{{ $t('signIn.step3') }}</li>
+          </ol>
+        </section>
       </div>
     </section>
 
@@ -86,10 +71,9 @@
 </template>
 
 <script setup lang="ts">
-import { GITVAULT_REPO_PREFIX } from '~/config'
 import { getIconFromFileName } from '~/resources/CDNFiles/utils'
 
-const SAMPLE_VAULTS = ['gitvault-personal', 'gitvault-work', 'gitvault-photos']
+const SAMPLE_VAULTS = ['personal', 'work', 'photos']
 const SAMPLE_FILES = [
   { name: 'cover.png', size: '1.2 MB' },
   { name: 'passport-scan.pdf', size: '3.4 MB' },

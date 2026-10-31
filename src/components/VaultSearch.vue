@@ -42,7 +42,7 @@
 
 <script setup lang='ts'>
 import type { CommandPaletteGroup, CommandPaletteItem } from '@nuxt/ui'
-import { isFileExcluded } from '~/config'
+import { getVaultLabel, isFileExcluded } from '~/config'
 import { getIconFromFileName, getPathToFolder } from '~/resources/CDNFiles/utils'
 
 defineComponent({ name: 'VaultSearch' })
@@ -118,7 +118,7 @@ const groups = computed<CommandPaletteGroup<CommandPaletteItem>[]>(() => {
       label: t('vaults'),
       items: repositoryNames.value
         .filter(name => name !== repo.value)
-        .map(name => ({ label: name, icon: 'i-mdi-archive-outline', onSelect: () => go(`/${name}`) })),
+        .map(name => ({ label: getVaultLabel(name), icon: 'i-mdi-archive-outline', onSelect: () => go(`/${name}`) })),
     },
   ]
 })

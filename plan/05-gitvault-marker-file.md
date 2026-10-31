@@ -30,7 +30,7 @@ The naming UI is untouched: new vaults still get the `gitvault-` prefix, so they
 
 ## Phase 2 — follow-up
 
-1. **Naming UI** — drop the prefix display and concatenation in `src/components/VaultNavigation.vue` and `src/components/NoReposSetupWizard/Step2.vue`; update i18n strings that use `{repoPrefix}`. Do it after the redesign PRs touching those files land.
+1. **Naming UI** (done in `feat/frictionless-onboarding`: prefix hidden via `getVaultLabel`, new vaults still created with it) — drop the prefix display and concatenation in `src/components/VaultNavigation.vue` and `src/components/NoReposSetupWizard/Step2.vue`; update i18n strings that use `{repoPrefix}`. Do it after the redesign PRs touching those files land.
 2. **Retire the prefix fallback** — once legacy vaults are tagged (an explicit "tag my existing vaults" action, or a cut-off date), drop the prefix branch of `isVaultRepo` and `GITVAULT_REPO_PREFIX`. Do not tag repos silently on list.
 
 ## Verification

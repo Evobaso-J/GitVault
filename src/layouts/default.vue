@@ -77,6 +77,7 @@
 
 <script setup lang='ts'>
 import type { BreadcrumbItem } from '@nuxt/ui'
+import { getVaultLabel } from '~/config'
 
 const route = useRoute()
 // Folder actions write to the current folder, which the backup page doesn't have
@@ -91,7 +92,7 @@ const links = computed<BreadcrumbItem[]>(() => {
     }))
 
   return [{
-    label: repo,
+    label: getVaultLabel(repo),
     icon: 'i-mdi-archive-outline',
     to: `/${repo}`,
   }, ...linksFromRoute]

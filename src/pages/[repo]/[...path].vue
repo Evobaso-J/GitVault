@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints, useDropZone, useInterval } from '@vueuse/core'
 
-import { isFileExcluded } from '~/config'
+import { getVaultLabel, isFileExcluded } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
@@ -119,12 +119,12 @@ const summary = computed(() => [
 const selectedFile = computed(() => files.value.find(file => file.name === route.query.file))
 const closePreview = () => navigateTo({ query: { ...route.query, file: undefined } })
 
-const folderName = computed(() => queryPath.value?.split('/').pop() ?? String(repo))
+const folderName = computed(() => queryPath.value?.split('/').pop() ?? getVaultLabel(String(repo)))
 const parent = computed(() => {
   if (!queryPath.value) return undefined
   const parentPath = queryPath.value.split('/').slice(0, -1).join('/')
   return {
-    name: parentPath.split('/').pop() || String(repo),
+    name: parentPath.split('/').pop() || getVaultLabel(String(repo)),
     to: getPathToFolder({ path: parentPath, repo }),
   }
 })
