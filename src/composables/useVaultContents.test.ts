@@ -125,6 +125,15 @@ describe('useVaultContents', () => {
       }])
     })
 
+    it('uploads to the given path and keeps both on a clash without asking', async () => {
+      existing['Photos/2026/10/a.jpg'] = 'abc123'
+      const vault = await setup()
+      await vault.upload([new File(['new'], 'a.jpg')], { getPath: () => 'Photos/2026/10/a.jpg', keepBoth: true })
+
+      expect(requests.map(request => request.query.path)).toEqual(['Photos/2026/10/a (1).jpg'])
+      expect(vault.uploads.value[0]?.status).toBe('done')
+    })
+
     it('skips a conflicting file without writing it', async () => {
       existing['docs/2026/a.txt'] = 'abc123'
       const vault = await setup()

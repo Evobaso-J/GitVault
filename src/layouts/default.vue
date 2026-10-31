@@ -8,8 +8,8 @@
 
       <VaultNavigation />
       <UButton
-        :label="$t('galleryBackup.title')"
-        icon="i-mdi-image-multiple-outline"
+        :label="$t('phoneBackup.title')"
+        icon="i-mdi-cellphone-arrow-down"
         :to="`/${route.params.repo}/backup`"
         color="neutral"
         variant="ghost"

@@ -121,9 +121,13 @@ export const useVaultContents = () => {
 
   /**
    * Queues the files, into the current folder unless `getPath` says otherwise;
-   * resolves when the queue stops (done or waiting on a conflict)
+   * `keepBoth` saves a clash as `name (n).ext` instead of asking.
+   * Resolves when the queue stops (done or waiting on a conflict)
    */
-  const upload = (files: File[], getPath = (file: File) => createFilePath(queryPath.value, file.name)): Promise<void> => {
+  const upload = (
+    files: File[],
+    { getPath = (file: File) => createFilePath(queryPath.value, file.name), keepBoth = false } = {},
+  ): Promise<void> => {
     const repo = getRepo()
     if (!repo) return Promise.resolve()
     uploads.value.push(...files.map(file => ({
@@ -132,6 +136,7 @@ export const useVaultContents = () => {
       repo,
       path: getPath(file),
       status: 'waiting' as const,
+      keepBoth,
     })))
     return processUploads()
   }

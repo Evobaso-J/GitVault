@@ -68,15 +68,6 @@
     "notFoundDescription": "It may have been renamed or deleted on GitHub."
   },
   "folders": "Folders",
-  "galleryBackup": {
-    "backedUp": "{n} already backed up",
-    "description": "Pick photos and videos from your phone, even the whole gallery: only the ones not in the vault yet are uploaded, into Photos / year / month.",
-    "error": "Couldn't read the vault to check what's already backed up. Try again.",
-    "new": "{n} new file, uploading | {n} new files, uploading",
-    "pick": "Choose photos and videos",
-    "title": "Gallery backup",
-    "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
-  },
   "gitHub": "GitHub",
   "home": "Home",
   "loadingFolder": "Loading the folder",
@@ -99,6 +90,16 @@
     "uploadHere": "Upload files to {location}"
   },
   "path": "Path",
+  "phoneBackup": {
+    "backedUp": "{n} already backed up",
+    "description": "Pick photos and videos from your phone, even the whole gallery: only the ones not in the vault yet are uploaded, into Photos / year / month.",
+    "error": "Couldn't read the vault to check what's already backed up. Try again.",
+    "keepOpen": "Keep this page open until the uploads finish.",
+    "new": "{n} new file, uploading | {n} new files, uploading",
+    "pick": "Choose photos and videos",
+    "title": "Phone backup",
+    "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
+  },
   "preview": "Preview",
   "replace": "Replace",
   "retry": "Retry",
