@@ -7,6 +7,14 @@
       </template>
 
       <VaultNavigation />
+      <UButton
+        :label="$t('phoneBackup.title')"
+        icon="i-mdi-cellphone-arrow-down"
+        :to="`/${route.params.repo}/backup`"
+        color="neutral"
+        variant="ghost"
+        class="justify-start"
+      />
 
       <template #footer>
         <UserMenu />
@@ -21,28 +29,30 @@
           </template>
           <template #right>
             <VaultSearch />
-            <UButton
-              :aria-label="$t('newFolder')"
-              icon="i-mdi-folder-plus-outline"
-              color="neutral"
-              variant="ghost"
-              class="md:hidden"
-              @click="isFolderModalOpen = true"
-            />
-            <div class="hidden md:flex items-center gap-2">
+            <template v-if="!isBackupPage">
               <UButton
-                :label="$t('newFolder')"
+                :aria-label="$t('newFolder')"
                 icon="i-mdi-folder-plus-outline"
                 color="neutral"
-                variant="outline"
+                variant="ghost"
+                class="md:hidden"
                 @click="isFolderModalOpen = true"
               />
-              <UButton
-                :label="$t('uploadFile')"
-                icon="i-mdi-upload-outline"
-                @click="pickAndUpload()"
-              />
-            </div>
+              <div class="hidden md:flex items-center gap-2">
+                <UButton
+                  :label="$t('newFolder')"
+                  icon="i-mdi-folder-plus-outline"
+                  color="neutral"
+                  variant="outline"
+                  @click="isFolderModalOpen = true"
+                />
+                <UButton
+                  :label="$t('uploadFile')"
+                  icon="i-mdi-upload-outline"
+                  @click="pickAndUpload()"
+                />
+              </div>
+            </template>
           </template>
         </UDashboardNavbar>
       </template>
@@ -55,6 +65,7 @@
     <CreateFolderModal v-model="isFolderModalOpen" />
     <UploadQueue />
     <UButton
+      v-if="!isBackupPage"
       :label="$t('upload')"
       icon="i-mdi-upload-outline"
       size="xl"
@@ -68,6 +79,8 @@
 import type { BreadcrumbItem } from '@nuxt/ui'
 
 const route = useRoute()
+// Folder actions write to the current folder, which the backup page doesn't have
+const isBackupPage = computed(() => route.name === 'repo-backup')
 const links = computed<BreadcrumbItem[]>(() => {
   const repo = String(route.params.repo)
   const linksFromRoute = route.path.split('/')

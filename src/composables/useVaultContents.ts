@@ -81,9 +81,10 @@ export const useVaultContents = () => {
 
   const uploadItem = async (item: UploadItem) => {
     if (item.keepBoth) {
-      let copy = 1
-      while (await findExisting(item.repo, withCopyNumber(item.path, copy))) copy++
-      item.path = withCopyNumber(item.path, copy)
+      // The path itself if free, else the first free `name (n).ext`
+      let path = item.path
+      for (let copy = 1; await findExisting(item.repo, path); copy++) path = withCopyNumber(item.path, copy)
+      item.path = path
     }
     else if (!item.sha) {
       const sha = await findExisting(item.repo, item.path)
@@ -119,16 +120,24 @@ export const useVaultContents = () => {
     isProcessing.value = false
   }
 
-  /** Queues the files into the current folder; resolves when the queue stops (done or waiting on a conflict) */
-  const upload = (files: File[]): Promise<void> => {
+  /**
+   * Queues the files, into the current folder unless `getPath` says otherwise;
+   * `keepBoth` saves a clash as `name (n).ext` instead of asking.
+   * Resolves when the queue stops (done or waiting on a conflict)
+   */
+  const upload = (
+    files: File[],
+    { getPath = (file: File) => createFilePath(queryPath.value, file.name), keepBoth = false } = {},
+  ): Promise<void> => {
     const repo = getRepo()
     if (!repo) return Promise.resolve()
     uploads.value.push(...files.map(file => ({
       id: nextId.value++,
       file,
       repo,
-      path: createFilePath(queryPath.value, file.name),
+      path: getPath(file),
       status: 'waiting' as const,
+      keepBoth,
     })))
     return processUploads()
   }
