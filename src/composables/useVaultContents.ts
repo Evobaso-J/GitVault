@@ -81,9 +81,10 @@ export const useVaultContents = () => {
 
   const uploadItem = async (item: UploadItem) => {
     if (item.keepBoth) {
-      let copy = 1
-      while (await findExisting(item.repo, withCopyNumber(item.path, copy))) copy++
-      item.path = withCopyNumber(item.path, copy)
+      // The path itself if free, else the first free `name (n).ext`
+      let path = item.path
+      for (let copy = 1; await findExisting(item.repo, path); copy++) path = withCopyNumber(item.path, copy)
+      item.path = path
     }
     else if (!item.sha) {
       const sha = await findExisting(item.repo, item.path)

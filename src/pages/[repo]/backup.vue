@@ -19,6 +19,7 @@
       size="xl"
       block
       :loading="isChecking"
+      :disabled="isUploading"
       @click="open({ accept: 'image/*,video/*', multiple: true })"
     />
 
@@ -84,18 +85,18 @@ definePageMeta({
   middleware: ['00-auth', '03-active-repo'],
 })
 
-const { params: { repo } } = useRoute()
+const route = useRoute()
 const { uploads, upload } = useVaultContents()
 
 const isUploading = computed(() => uploads.value.some(item => item.status === 'waiting' || item.status === 'uploading'))
 // Mobile browsers pause the page when the screen locks: keep it on while files upload
 const wakeLock = useWakeLock()
-watch(isUploading, uploading => (uploading ? wakeLock.request('screen') : wakeLock.release()).catch(() => {}))
+watch(isUploading, uploading => (uploading ? wakeLock.request('screen') : wakeLock.release()).catch(() => {}), { immediate: true })
 
 /** Shas of every file in the vault; an empty repo has no tree yet */
 const fetchVaultShas = async (): Promise<Set<string>> => {
   try {
-    const { tree } = await $fetch('/gh-repo-tree', { query: { repo } })
+    const { tree } = await $fetch('/gh-repo-tree', { query: { repo: route.params.repo } })
     return new Set(tree.flatMap(item => item.type === 'blob' && item.sha ? [item.sha] : []))
   }
   catch (error) {
