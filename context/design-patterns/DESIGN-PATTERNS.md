@@ -15,7 +15,7 @@ One folder per entity in `src/resources/<Entity>/` (`index.ts` / `parse.ts` / `u
 
 ## Composables & mutations
 
-Mutations live in `src/composables/use*.ts`, not in components. Every write to the contents of the active vault repo (upload, replace, create folder) goes through `useVaultContents`, which owns route reading, base64, `.gitkeep`, commit messages and the file picker; extend it instead of adding a new mutation composable. Other mutations wrap the call in `runOperation` from `useOperationToast` (loading/success/error toast + `refreshNuxtData()`, returns `OperationStatus`); don't hand-roll toasts. Build repo paths with `createFilePath` (`src/utils/`). No Pinia.
+Mutations live in `src/composables/use*.ts`, not in components. Every write to the contents of the active vault repo (upload, replace, create folder) goes through `useVaultContents`, which owns route reading, base64, `.gitkeep`, commit messages and the file picker; extend it instead of adding a new mutation composable. Other mutations wrap the call in `runOperation` from `useOperationToast` (loading/success/error toast + `refreshNuxtData()`, returns `OperationStatus`); don't hand-roll toasts. Build repo paths with `createFilePath` (`src/utils/`). No Pinia. Pure logic that both the app and the server need lives in `shared/utils/` (auto-imported on both sides, top-level files only), e.g. `backup.ts`; `src/utils/` stays app-only.
 
 ## Validation
 

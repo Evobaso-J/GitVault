@@ -4,20 +4,20 @@ import { isPathSegment } from '~~/server/utils/github'
 
 export const uploadKeySchemaPost = z.object({
   repo: z.string().refine(isRepoNameValid),
-  /** Base folder of the uploads, '' for the repo root */
-  folder: z.string().max(200)
-    .transform(folder => folder.trim().replace(/^\/+|\/+$/g, ''))
-    .refine(folder => folder === '' || folder.split('/').every(isPathSegment)),
+  platform: z.enum(['ios', 'android']),
 })
 
-export type UploadKeyRequest = z.input<typeof uploadKeySchemaPost>
-export type UploadKeyResponse = { key: string }
+export type UploadKeyRequest = z.infer<typeof uploadKeySchemaPost>
+export type UploadKeyResponse = { key: string, kid: string }
 
-/** Per request: a phone shortcut sends a handful of photos; bigger bodies don't fit a serverless function anyway */
-export const MAX_INGEST_BYTES = 20 * 1024 * 1024
+/** Content of `UPLOAD_KEYS_DIR/<kid>.json`; the key is valid while the file exists */
+export type UploadKeyRecord = { platform: UploadKeyRequest['platform'], createdAt: string }
 
 /** File parts of an ingest request; the name is cut to its last segment so it can't leave the folder */
 export const ingestFilesSchema = z.array(z.object({
   filename: z.string().transform(name => name.split(/[/\\]/).pop() ?? '').refine(isPathSegment),
   data: z.instanceof(Buffer),
 })).min(1)
+
+export type IngestFile = z.output<typeof ingestFilesSchema>[number]
+export type IngestResponse = { uploaded: string[], skipped: string[], tooLarge: string[] }

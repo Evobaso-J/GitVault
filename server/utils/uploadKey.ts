@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { createFilePath } from '~/utils/createFilePath'
 
 const UPLOAD_KEY_PREFIX = 'gvk1.'
 const IV_BYTES = 12
@@ -7,12 +6,13 @@ const encoder = new TextEncoder()
 
 const uploadKeyPayloadSchema = z.object({
   v: z.literal(1),
+  /** Key id: name of its registry file, `UPLOAD_KEYS_DIR/<kid>.json`; a hex uuid, so safe as a path segment */
+  kid: z.string().regex(/^[0-9a-f]{32}$/),
   /** Issued at, ms since epoch */
   iat: z.number(),
   login: z.string(),
   token: z.string(),
   repo: z.string(),
-  folder: z.string(),
 })
 
 export type UploadKeyPayload = z.infer<typeof uploadKeyPayloadSchema>
@@ -58,10 +58,4 @@ export const unsealUploadKey = async (key: string, password: string): Promise<Up
   catch {
     return undefined
   }
-}
-
-/** Where an ingested file lands: `<folder>/YYYY/MM/<name>`, month of `date` in UTC */
-export const getIngestPath = (folder: string, fileName: string, date: Date): string => {
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0')
-  return createFilePath(folder, `${date.getUTCFullYear()}/${month}/${fileName}`)
 }

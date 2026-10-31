@@ -90,14 +90,59 @@
   },
   "path": "Path",
   "phoneBackup": {
-    "backedUp": "{n} already backed up",
-    "description": "Pick photos and videos from your phone, even the whole gallery: only the ones not in the vault yet are uploaded, into Photos / year / month.",
-    "error": "Couldn't read the vault to check what's already backed up. Try again.",
-    "keepOpen": "Keep this page open until the uploads finish.",
-    "new": "{n} new file, uploading | {n} new files, uploading",
-    "pick": "Choose photos and videos",
-    "title": "Phone backup",
-    "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
+    "auto": {
+      "android": {
+        "generate": "Generate a key",
+        "import": "Import the GitVault shortcut",
+        "importHelp": "Or build it by hand: POST {url}, header Authorization: Bearer <key>, form body with a file field named file.",
+        "install": "Install HTTP Shortcuts",
+        "paste": "Paste it in HTTP Shortcuts → Variables → gitvault_key.",
+        "share": "Select photos in your gallery → Share → HTTP Shortcuts → GitVault."
+      },
+      "description": "A shortcut on your phone sends the latest photos every night, without opening @:app.name.",
+      "device": {
+        "android": "Android",
+        "ios": "iPhone"
+      },
+      "devices": "Connected devices",
+      "error": "Couldn't load the backup status. Try again.",
+      "ios": {
+        "add": "Add the shortcut",
+        "addHelp": "Opens the GitVault Backup shortcut in Shortcuts: tap Add Shortcut.",
+        "automate": "Make it run every night",
+        "automateHelp": "Shortcuts → Automation → + → Time of Day → 02:00, Daily → Run Immediately → GitVault Backup.",
+        "connect": "Connect this iPhone",
+        "connectHelp": "Hands an upload key to the shortcut, which runs a first backup. The key is saved in plain text in iCloud Drive (Shortcuts/GitVault/config.json) and syncs to your other Apple devices: anyone with that file can add photos to {repo}, nothing else. Revoke it above at any time."
+      },
+      "key": {
+        "copy": "Copy key",
+        "label": "Upload key",
+        "shownOnce": "Copy it now: it is shown only once.",
+        "warning": "Anyone with this key can add photos to {repo} with your GitHub account until you revoke it above.",
+        "warningTitle": "Keep this key secret"
+      },
+      "last": "Last automatic backup {ago} · {n} photo | Last automatic backup {ago} · {n} photos",
+      "never": "No automatic backup received yet.",
+      "openOnPhone": "Open this page on your iPhone to connect it.",
+      "revoke": "Revoke",
+      "revokeHelp": "Revoking stops uploads from that device within a minute. You stay signed in. To cut off everything at once, revoke @:app.name under GitHub Settings → Applications.",
+      "since": "since {date}",
+      "stale": "Nothing arrived in the last {days} days: check the automation on your phone.",
+      "title": "Automatic daily backup"
+    },
+    "description": "Keep your phone's photos in {repo}: on demand, or every night without opening the app.",
+    "footnote": "Everything lands in {folder} / year / month. The same photo is never uploaded twice. Files over {size} are skipped (most videos).",
+    "now": {
+      "backedUp": "{n} already backed up",
+      "description": "Pick photos and videos, even the whole gallery: only the ones not in the vault yet are uploaded.",
+      "error": "Couldn't read the vault to check what's already backed up. Try again.",
+      "keepOpen": "Keep this page open until the uploads finish.",
+      "new": "{n} new file, uploading | {n} new files, uploading",
+      "pick": "Choose photos and videos",
+      "title": "Back up now",
+      "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
+    },
+    "title": "Phone backup"
   },
   "preview": "Preview",
   "replace": "Replace",
@@ -126,24 +171,6 @@
   "type": "Type",
   "upload": "Upload",
   "uploadFile": "Upload file",
-  "uploadKey": {
-    "copy": "Copy key",
-    "description": "A key that lets a phone shortcut upload photos straight to {repo}, without signing in.",
-    "folderHelp": "Files land in {folder}/year/month/. A file with the same name gets a number; the same photo sent twice is skipped.",
-    "generate": "Generate key",
-    "keyLabel": "Upload key",
-    "menu": "Phone uploads",
-    "shownOnce": "Copy it now: it is shown only once.",
-    "steps": {
-      "android": "Android: in HTTP Shortcuts, create a shortcut with a file request body.",
-      "automation": "Optional, iOS: a daily Personal Automation that runs the shortcut backs up the latest photos.",
-      "ios": "iOS: in Shortcuts, add Select Photos (or Find Photos), then Get Contents of URL.",
-      "request": "Send a POST to {url} as a form with a file field, and the header Authorization: Bearer <key>."
-    },
-    "title": "Upload from your phone",
-    "warning": "Anyone with this key can write files to {repo} with your GitHub account until it is revoked. To revoke every key, revoke GitHub's access for @:app.name in GitHub Settings, Applications (this also signs you out).",
-    "warningTitle": "Keep this key secret"
-  },
   "uploadQueue": {
     "close": "Close upload list",
     "collapse": "Collapse upload list",

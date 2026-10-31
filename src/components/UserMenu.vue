@@ -11,11 +11,6 @@
       trailing-icon="i-mdi-unfold-more-horizontal"
     />
   </UDropdownMenu>
-  <UploadKeyModal
-    v-if="repo"
-    v-model="isUploadKeyOpen"
-    :repo="repo"
-  />
 </template>
 
 <script setup lang='ts'>
@@ -25,21 +20,8 @@ defineComponent({ name: 'UserMenu' })
 
 const { user, clear } = useUserSession()
 const { t } = useI18n()
-const route = useRoute()
 
-const repo = computed(() => typeof route.params.repo === 'string' ? route.params.repo : undefined)
-const isUploadKeyOpen = ref(false)
-
-const items = computed(() => [
-  repo.value
-    ? [{
-        label: t('uploadKey.menu'),
-        icon: 'i-mdi-cellphone-arrow-down',
-        onSelect: () => {
-          isUploadKeyOpen.value = true
-        },
-      }]
-    : [],
+const items = [
   [
     {
       label: t('logout'),
@@ -50,5 +32,5 @@ const items = computed(() => [
       },
     },
   ],
-] satisfies DropdownMenuItem[][])
+] satisfies DropdownMenuItem[][]
 </script>

@@ -13,12 +13,12 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 - `login.vue`: GitHub OAuth entry.
 - `[repo]/[...path].vue`: folder listing (folders + files) of the active repo. `?file=<name>` opens that file in the preview panel beside the list, so the URL is a deep link to it. The folder fetch is not awaited: the page shows `FolderContents/Loading`, `Error` (404 vs other, with retry) or `Empty` instead of a blank page.
 - `[repo]/file/[...path].vue`: single-file preview.
-- `[repo]/backup.vue`: phone backup (pick photos/videos, upload only those whose content is not in the vault yet; a name clash keeps both). Static segments `file` and `backup` win over the catch-all, so a root folder with either name is unreachable by URL.
+- `[repo]/backup.vue`: phone backup. "Back up now" picks photos/videos and uploads only those whose content is not in the vault yet (a name clash keeps both); "Automatic daily backup" lists connected devices (upload keys, `useUploadKeys`), issues/revokes them, shows the setup steps per platform and the last automatic run from `gh-repo-commits`. Static segments `file` and `backup` win over the catch-all, so a root folder with either name is unreachable by URL.
 - Build links to these pages with `getPathToFolder` / `getPathToFile` (`src/resources/CDNFiles/utils.ts`), never by string concatenation: file names may contain `#`, `?` or `%`, which must be encoded per path segment.
 
 Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth`, `01.guest`, `03.active-repo`, `04.no-active-repo`).
 
-Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET), `upload-key` (POST, session: issues a sealed upload key), `ingest` (POST, authenticated by `Authorization: Bearer <upload key>` instead of the session, for phone automations; see `server/utils/uploadKey.ts` and `README.md` § Upload your phone gallery).
+Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT/DELETE), `gh-repo-tree` (GET), `gh-repo-commits` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET), `upload-key` (POST, session: writes the key's registry file `.gitvault/keys/<kid>.json` and returns the sealed key), `ingest` (POST, authenticated by `Authorization: Bearer <upload key>` instead of the session, for phone shortcuts; the writing rules are in `server/utils/ingest.ts`; see `README.md` § Phone backup).
 
 ### Key Files
 
@@ -33,9 +33,9 @@ Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents`
 - `src/pages/`, `src/layouts/` (`default`, `no-repo`, `single-file`): views.
 - `src/components/`: flat files plus feature folders (`FolderContents/` list + preview panel, `FilePreview/`).
 - `src/resources/<Entity>/`: client domain per entity. `index.ts` types, `parse.ts` GitHub → domain narrowing, `utils.ts` helpers.
-- `src/composables/`: stateful logic and mutations (`useVaultContents`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
+- `src/composables/`: stateful logic and mutations (`useVaultContents`, `useUploadKeys`, `useCreateRepo`, `useRepoStorage`, `useRouteQueryPath`).
 - `server/routes/`: GitHub proxy handlers. `server/utils/github.ts`: the only GitHub caller. `server/resources/`: Octokit-derived types + zod request schemas.
-- `shared/types/auth.d.ts`: session typing for `nuxt-auth-utils`, used by both sides.
+- `shared/types/auth.d.ts`: session typing for `nuxt-auth-utils`, used by both sides. `shared/utils/backup.ts`: the phone-backup rules (folder, month, dedupe, size cap), auto-imported by app and server.
 - `src/config.ts` (app constants), `src/errors.ts` (error classes), `src/helpers.ts` (type helpers), `i18n/` + `src/locales/`.
 
 Boundary: client imports server types type-only via `~~/server/resources/*`.
