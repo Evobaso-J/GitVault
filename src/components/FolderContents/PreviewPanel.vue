@@ -76,7 +76,7 @@
       <dt class="text-muted">
         {{ $t('vault') }}
       </dt>
-      <dd>{{ $route.params.repo }}</dd>
+      <dd>{{ getVaultLabel(String($route.params.repo)) }}</dd>
       <dt class="text-muted">
         {{ $t('gitHub') }}
       </dt>
@@ -95,6 +95,7 @@
 </template>
 
 <script setup lang='ts'>
+import { getVaultLabel } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFile } from '~/resources/CDNFiles/parse'
 import { getFileCategory } from '~/resources/CDNFiles/utils'

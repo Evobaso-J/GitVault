@@ -12,9 +12,9 @@
   "copyLinkOf": "Copy link of {name}",
   "create": "Create",
   "createFolder": "Create folder",
-  "createRepo": "Create new repository",
+  "createRepo": "Create a new vault",
   "delete": "Delete",
-  "deleteFileDescription": "{name} will be removed from the vault. Its earlier versions stay in the repo's git history.",
+  "deleteFileDescription": "{name} will be removed from the vault.",
   "deleteFileTitle": "Delete file?",
   "deleteFolder": "Delete folder",
   "download": "Download",
@@ -54,10 +54,9 @@
   },
   "files": "Files",
   "firstVault": {
-    "cta": "Create vault",
-    "description": "A vault is a private repository on your GitHub where @:app.name keeps your files.",
-    "help": "This creates {repo}. You can create more later.",
-    "title": "Create your first vault"
+    "creating": "Preparing your first vault…",
+    "error": "Couldn't create your first vault.",
+    "title": "Setting up your space"
   },
   "folder": "Folder",
   "folderCount": "{n} folder | {n} folders",
@@ -65,7 +64,7 @@
     "title": "Can't read this folder",
     "description": "GitHub didn't answer. Your files are safe: try again in a few seconds.",
     "notFoundTitle": "This folder doesn't exist",
-    "notFoundDescription": "It may have been renamed or deleted on GitHub."
+    "notFoundDescription": "It may have been renamed or deleted."
   },
   "folders": "Folders",
   "gitHub": "GitHub",
@@ -106,20 +105,21 @@
   "searchPlaceholder": "Search files, folders or actions…",
   "searchVault": "Search the vault",
   "selectRepo": {
-    "cta": "Select a repository",
+    "cta": "Select a vault",
     "description": "You have vaults, but none is selected. Pick one to open.",
     "goToRepo": "Go to {selectedRepo}",
     "title": "Did you get lost?"
   },
   "showAsText": "Show as plain text",
   "signIn": {
-    "createAccount": "Create one",
-    "description": "Upload, browse and share files stored in private repositories of your own GitHub account. No third-party server in between.",
-    "dontHaveAnAccount": "No GitHub account? {createAccount}",
-    "gitHub": "Sign in with @:gitHub",
+    "cta": "Continue with @:gitHub",
+    "description": "Keep documents, photos and videos safe and open them from any device. Free.",
+    "howItWorks": "How it works",
     "pageTitle": "Sign in",
-    "prefixNote": "@:app.name only shows repositories whose name starts with {prefix}.",
-    "title": "Your files, in your GitHub repositories"
+    "step1": "Continue with @:gitHub, the free service that keeps your files. No account yet? You can create one on the next page.",
+    "step2": "Allow @:app.name to save files for you.",
+    "step3": "Your first vault is ready: start uploading.",
+    "title": "A private place for your files"
   },
   "size": "Size",
   "successMessage": "Operation successful!",
