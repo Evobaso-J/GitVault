@@ -15,6 +15,9 @@ concepts:
   upload_queue:
     definition: The app-wide list of files being uploaded, with a status each (waiting, uploading, conflict, done, skipped, error).
     notes: Owned by `useVaultContents` (`useState`), shown by `UploadQueue.vue`. A file's target path is fixed when it is queued, so navigating away doesn't move it. A "conflict" is a file already at that path, waiting for Replace / Keep both / Skip.
+  upload_key:
+    definition: A sealed token that lets a phone shortcut write photos to one vault through POST /ingest without a session.
+    notes: Issued by POST /upload-key, which also writes the registry file `.gitvault/keys/<kid>.json`; the key is valid while that file exists. Listed on the backup page as "connected devices". See `server/utils/uploadKey.ts`.
   # example:
   # <concept_name>:
   #   definition: <one-line definition of the concept>

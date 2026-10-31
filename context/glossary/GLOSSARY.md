@@ -19,6 +19,9 @@ Business language, entities, and how they relate. Read this when a task involves
 | User / session | GitHub user (`id`, `login`) + OAuth tokens in the sealed session. | `shared/types/auth.d.ts` |
 | First vault | Created automatically on `/` (`gitvault-personal`) when the user has no vault repo yet, with a retry on failure; no naming form. If they have vaults but none active, `/` shows a vault picker instead. | `src/pages/index.vue` |
 | Vault label | Name a vault is shown with in the UI: the repo name minus the legacy `GITVAULT_REPO_PREFIX` (`getVaultLabel`). URLs and API calls keep the full repo name. Non-technical users should not see GitHub vocabulary (repo, prefix). | `src/config.ts` |
+| Upload key | Sealed token (`gvk1.…`: the user's GitHub token bound to one vault, with a `kid`) issued by `POST /upload-key` so a phone shortcut can call `POST /ingest` without a session. Valid while its registry file `.gitvault/keys/<kid>.json` exists; Revoke on the backup page deletes it. | `server/utils/uploadKey.ts`, `src/composables/useUploadKeys.ts` |
+| Backup folder | `Photos/YYYY/MM/` in the vault, where both phone backup modes write; month from the phone's clock, dedupe by content, 4 MiB cap. | `shared/utils/backup.ts` |
+| `.gitvault/` | Folder in a vault for GitVault's own files (today: the upload-key registry). Hidden from listings and search, not protected. | `src/config.ts` `EXCLUDE_FILES` |
 
 "CDN" prefix = files are served from GitHub `download_url`s, not a real CDN.
 
@@ -38,6 +41,7 @@ Business language, entities, and how they relate. Read this when a task involves
 3. `/<repo>` → browse folders/files; path kept in the route query.
 4. Create folder (writes `.gitkeep`) or upload file (base64 PUT).
 5. `/<repo>/file/<path>` → preview by file category, download, replace.
+6. `/<repo>/backup` → phone backup: pick photos now, or connect a phone (upload key) for a nightly shortcut run.
 
 ## Type System
 

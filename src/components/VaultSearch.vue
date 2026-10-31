@@ -85,7 +85,7 @@ const splitPath = (path: string): [string, string] => {
 const limit = (_searchTerm: string, items: CommandPaletteItem[]) => items.slice(0, RESULTS_PER_GROUP)
 
 const groups = computed<CommandPaletteGroup<CommandPaletteItem>[]>(() => {
-  const tree = (data.value?.tree ?? []).filter(item => item.path && !isFileExcluded(splitPath(item.path)[1]))
+  const tree = (data.value?.tree ?? []).filter(item => item.path && !isFileExcluded(item.path))
   const toItem = (path: string, isFolder: boolean): CommandPaletteItem => {
     const [parent, name] = splitPath(path)
     return {

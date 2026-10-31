@@ -25,6 +25,7 @@ Single variant. No tenants, markets or feature flags. Per-user isolation comes f
 - OAuth: `runtimeConfig.oauth.github` (`nuxt-auth-utils`); scope requested in `server/routes/auth/github.get.ts`.
 - Session sealing: the `nuxt-auth-utils` session password env var (see `.env.example`); must be at least 32 characters.
 - App constants (not env-driven): `src/config.ts`. UI theme: `src/app.config.ts` + `src/assets/css/main.css`.
+- Owner-filled constants in `src/config.ts`: `IOS_SHORTCUT_URL` (iCloud link of the published shortcut, a new one after every edit) and `ANDROID_SHORTCUT_ZIP` (HTTP Shortcuts export under `public/`). Empty = the matching button on the backup page is disabled. How to produce them: `README.md` § Phone backup.
 
 ## Deploy
 

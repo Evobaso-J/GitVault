@@ -9,7 +9,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 1. Routes on a vault repo validate `repo`/`path` with `getValidatedQuery(event, q => vaultRepoQuerySchema.parse(q))`: it rejects `.`/`..`/empty segments and returns `path` URL-encoded per segment. Never interpolate raw query values into a GitHub URL.
 2. Validate body with `readValidatedBody(event, data => schema.parse(data))` when there is one.
 3. Call `github(event, owner => '/repos/${owner}/…', { method, query, body })` from `server/utils/github.ts`. It owns the session, Bearer token, API version header and error mapping (GitHub's `message` becomes `statusMessage`, which `useOperationToast` shows). Don't call `$fetch` on `api.github.com` directly.
-4. Owner is always the session user: `github` passes `user.login` to the endpoint builder.
+4. Owner is always the session user: `github` passes `user.login` to the endpoint builder. Exception: `ingest` has no session and passes `{ auth: { login, token } }` from the unsealed upload key; never build `auth` from request input.
 5. Return the raw GitHub payload; the client narrows it.
 
 ## Types and schemas
@@ -41,4 +41,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 - Uploads go through the shared queue in `useVaultContents` (`upload(files)`, shown by `UploadQueue.vue`): one PUT at a time, because parallel PUTs on one branch get 409; each file is first checked with a GET, and an existing file waits for Replace / Keep both (`name (n).ext`) / Skip.
 - `download_url` carries a short-lived token: lists refetch on an interval.
 - Creating a vault is two calls (`createVaultRepo` in `server/utils/vaultRepo.ts`): `POST /user/repos` takes no topics, so `PUT …/topics` follows; it replaces every topic. Use the name GitHub returns, it normalizes the requested one.
-- `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`.
+- `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`; `server/utils/repoTree.ts` does the same for server-side callers and turns GitHub's 409 (repo without commits) into an empty tree.
+- `.gitvault/` in a vault is GitVault's own: today the upload-key registry (`UPLOAD_KEYS_DIR`). It is hidden from listings and search by `EXCLUDE_FILES` (`isFileExcluded` takes the full path), not protected.
+- `ingest` never trusts request input for where to write: the repo and `kid` come from the sealed key, the path is `Photos/YYYY/MM/<last segment of the filename>` (`ingestFilesSchema`), and the key's registry file must be in the tree it already fetched for dedupe (one extra call for nothing).
+- `gh-repo-commits` passes `path` and `since` as GitHub query filters (raw, not URL segments); the backup page reads the automatic runs from commits whose message is `BACKUP_COMMIT_MESSAGE`.
