@@ -47,7 +47,7 @@ const withCopyNumber = (path: string, copy: number) => {
  *
  * Uploads go through a queue shared by the whole app: one file at a time, each checked
  * for a file already at its path first; a clash waits for the user to replace, keep
- * both or skip. Replace and create folder run behind an operation toast. Every
+ * both or skip. Replace, delete and create folder run behind an operation toast. Every
  * successful write refreshes the fetched data.
  */
 export const useVaultContents = () => {
@@ -175,6 +175,16 @@ export const useVaultContents = () => {
     }))
   }
 
+  const remove = ({ path, sha }: ReplaceTarget): Promise<OperationStatus> => {
+    const repo = getRepo()
+    if (!repo) return Promise.resolve('error')
+    return runOperation(`deleting-${path}`, () => $fetch('/gh-repo-contents', {
+      method: 'DELETE',
+      query: { path, repo },
+      body: { message: 'feat: delete file', sha },
+    }))
+  }
+
   const { open, onChange, reset } = useFileDialog()
   let onPick: (files: File[]) => Promise<unknown> = upload
   onChange(async (files) => {
@@ -203,6 +213,7 @@ export const useVaultContents = () => {
     clearUploads,
     replace,
     createFolder,
+    remove,
     pickAndUpload,
     pickAndReplace,
   }

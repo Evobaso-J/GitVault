@@ -36,6 +36,7 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 
 - Folders don't exist in git: a folder is created by writing `<name>/.gitkeep` (`useVaultContents().createFolder`); `.gitkeep` is hidden via `EXCLUDE_FILES` in `src/config.ts`.
 - Replacing a file needs its current `sha` in the PUT body (`useVaultContents().replace`). The path is kept, so `pickAndReplace` limits the picker to the same extension.
+- Deleting a file (`DELETE gh-repo-contents`, `useVaultContents().remove`) also needs its `sha`. It runs outside the upload queue, so a delete during uploads can still hit 409; the toast shows it. Folders can't be deleted this way: the contents API deletes one file per commit. From the file page, `useFileActions().remove` navigates to the folder before deleting: `runOperation` refreshes every fetch, so the page would refetch the deleted file.
 - Upload content is base64 (`useVaultContents`).
 - Uploads go through the shared queue in `useVaultContents` (`upload(files)`, shown by `UploadQueue.vue`): one PUT at a time, because parallel PUTs on one branch get 409; each file is first checked with a GET, and an existing file waits for Replace / Keep both (`name (n).ext`) / Skip.
 - `download_url` carries a short-lived token: lists refetch on an interval.

@@ -18,7 +18,7 @@ export const vaultRepoQuerySchema = z.object({
 })
 
 type GitHubFetchOptions = {
-  method?: 'GET' | 'POST' | 'PUT'
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   query?: Record<string, string>
   body?: Record<string, unknown>
 }

@@ -20,3 +20,10 @@ export const fileSchemaPut: z.ZodType<GhRepoContentsRequestParams> = z.object({
   branch: z.string().optional(),
   committer: gitUserSchema.optional(),
 })
+
+export type GhRepoContentsDeleteParams = Pick<Endpoints['DELETE /repos/{owner}/{repo}/contents/{path}']['parameters'], 'message' | 'sha'>
+
+export const fileSchemaDelete: z.ZodType<GhRepoContentsDeleteParams> = z.object({
+  message: z.string(),
+  sha: z.string(),
+})
