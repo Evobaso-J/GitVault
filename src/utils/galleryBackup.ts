@@ -19,11 +19,12 @@ export type GalleryBackupPlan = {
 
 /**
  * Sorts the picked files by content: already in the vault (anywhere, under any name),
- * too large to upload, or new. A file picked twice counts as new once.
+ * too large to upload, or new. A file picked twice is planned once and not counted again:
+ * it isn't in the vault, so "already backed up" would be wrong.
  */
 export const planGalleryBackup = async (files: File[], vaultShas: Set<string>, maxBytes: number): Promise<GalleryBackupPlan> => {
   const plan: GalleryBackupPlan = { newFiles: [], backedUp: [], tooLarge: [] }
-  const known = new Set(vaultShas)
+  const picked = new Set<string>()
   // One file at a time: hashing reads the whole file into memory
   for (const file of files) {
     if (file.size > maxBytes) {
@@ -31,12 +32,10 @@ export const planGalleryBackup = async (files: File[], vaultShas: Set<string>, m
       continue
     }
     const sha = await gitBlobSha(file)
-    if (known.has(sha)) {
-      plan.backedUp.push(file)
-      continue
-    }
-    known.add(sha)
-    plan.newFiles.push(file)
+    if (picked.has(sha)) continue
+    picked.add(sha)
+    if (vaultShas.has(sha)) plan.backedUp.push(file)
+    else plan.newFiles.push(file)
   }
   return plan
 }

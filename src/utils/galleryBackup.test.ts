@@ -27,6 +27,6 @@ describe('planGalleryBackup', () => {
 
     const plan = await planGalleryBackup([inVault, fresh, freshAgain, big], new Set([HELLO_SHA]), 5)
 
-    expect(plan).toEqual({ newFiles: [fresh], backedUp: [inVault, freshAgain], tooLarge: [big] })
+    expect(plan).toEqual({ newFiles: [fresh], backedUp: [inVault], tooLarge: [big] })
   })
 })
