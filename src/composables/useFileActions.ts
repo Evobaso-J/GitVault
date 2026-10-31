@@ -37,10 +37,18 @@ export const useFileActions = () => {
     try {
       // Created on demand and destroyed on close: every row has its own useFileActions
       const confirmed = await overlay.create(ConfirmDeleteModal, { destroyOnClose: true }).open({ name: file.name })
-      if (!confirmed || await removeFile({ path: file.path, sha: file.sha }) !== 'success') return
-      // The file is gone: close its preview, or leave its page for its folder
-      if (route.query.file === file.name) await navigateTo({ query: { ...route.query, file: undefined } })
-      else if (route.name === 'repo-file-path') await navigateTo(getPathToFolder({ path: file.path.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
+      if (!confirmed) return
+      // Leave the file page for its folder before deleting: the refresh after the delete
+      // would refetch the deleted file on the page. A failed delete shows its toast there.
+      if (route.name === 'repo-file-path') {
+        await navigateTo(getPathToFolder({ path: file.path.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
+        await removeFile({ path: file.path, sha: file.sha })
+        return
+      }
+      // The file is gone: close its preview
+      if (await removeFile({ path: file.path, sha: file.sha }) === 'success' && route.query.file === file.name) {
+        await navigateTo({ query: { ...route.query, file: undefined } })
+      }
     }
     finally {
       isDeleting = false
