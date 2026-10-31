@@ -9,7 +9,7 @@
         {{ $t('phoneBackup.title') }}
       </h1>
       <p class="text-sm text-muted">
-        {{ $t('phoneBackup.description', { repo }) }}
+        {{ $t('phoneBackup.description', { repo: vaultLabel }) }}
       </p>
     </div>
 
@@ -196,7 +196,7 @@
                   @click="connectIphone"
                 />
                 <p class="mt-1 text-xs text-muted">
-                  {{ $t('phoneBackup.auto.ios.connectHelp', { repo }) }}
+                  {{ $t('phoneBackup.auto.ios.connectHelp', { repo: vaultLabel }) }}
                 </p>
               </li>
               <li>
@@ -277,7 +277,7 @@
                     variant="subtle"
                     icon="i-mdi-alert-outline"
                     :title="$t('phoneBackup.auto.key.warningTitle')"
-                    :description="$t('phoneBackup.auto.key.warning', { repo })"
+                    :description="$t('phoneBackup.auto.key.warning', { repo: vaultLabel })"
                   />
                   <p class="text-xs text-muted">
                     {{ $t('phoneBackup.auto.android.paste') }}
@@ -302,7 +302,7 @@
 <script setup lang="ts">
 import { useClipboard, useFileDialog, useTimeAgo, useWakeLock } from '@vueuse/core'
 import type { TabsItem } from '@nuxt/ui'
-import { ANDROID_SHORTCUT_ZIP, HTTP_SHORTCUTS_IMPORT_URL, HTTP_SHORTCUTS_PLAY_URL, IOS_SHORTCUT_URL } from '~/config'
+import { ANDROID_SHORTCUT_ZIP, getVaultLabel, HTTP_SHORTCUTS_IMPORT_URL, HTTP_SHORTCUTS_PLAY_URL, IOS_SHORTCUT_URL } from '~/config'
 import { parseBackupRuns } from '~/resources/BackupRuns/parse'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -319,6 +319,7 @@ definePageMeta({
 
 const route = useRoute()
 const repo = String(route.params.repo)
+const vaultLabel = getVaultLabel(repo)
 const { uploads, upload } = useVaultContents()
 
 // --- Back up now
