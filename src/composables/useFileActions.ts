@@ -2,6 +2,9 @@ import { ConfirmDeleteModal } from '#components'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { downloadFile, getPathToFile, getPathToFolder } from '~/resources/CDNFiles/utils'
 
+// Shared by every useFileActions: one delete at a time across the app
+let isDeleting = false
+
 /**
  * Actions on a single file of the active vault repo, shared by the folder list,
  * the preview panel and the file page.
@@ -28,14 +31,19 @@ export const useFileActions = () => {
   const replace = (file: CDNFile) => pickAndReplace({ path: file.path, sha: file.sha })
 
   const remove = async (file: CDNFile) => {
-    // Created on demand and destroyed on close: every row has its own useFileActions
-    const confirmed = await overlay.create(ConfirmDeleteModal, { destroyOnClose: true }).open({ name: file.name })
-    if (!confirmed) return
-    // On the file page every action targets the page's own file
-    const isOpen = route.query.file === file.name || route.name === 'repo-file-path'
-    if (await removeFile({ path: file.path, sha: file.sha }) === 'success' && isOpen) {
-      // The file is gone: leave its page or preview for its folder
-      await navigateTo(getPathToFolder({ path: file.path.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
+    // A double click would open two modals and send two deletes
+    if (isDeleting) return
+    isDeleting = true
+    try {
+      // Created on demand and destroyed on close: every row has its own useFileActions
+      const confirmed = await overlay.create(ConfirmDeleteModal, { destroyOnClose: true }).open({ name: file.name })
+      if (!confirmed || await removeFile({ path: file.path, sha: file.sha }) !== 'success') return
+      // The file is gone: close its preview, or leave its page for its folder
+      if (route.query.file === file.name) await navigateTo({ query: { ...route.query, file: undefined } })
+      else if (route.name === 'repo-file-path') await navigateTo(getPathToFolder({ path: file.path.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
+    }
+    finally {
+      isDeleting = false
     }
   }
 
