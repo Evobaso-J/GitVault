@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { H3Event } from 'h3'
-import { createVaultRepo } from './vaultRepo'
+import { createVaultRepo, listVaultRepos } from './vaultRepo'
 import { github } from './github'
 
 vi.mock('./github', () => ({ github: vi.fn() }))
@@ -42,5 +42,22 @@ describe('createVaultRepo', () => {
 
     await expect(createVaultRepo(event, { name: 'gitvault-a', private: true })).rejects.toMatchObject({ statusCode: 422 })
     expect(githubMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('listVaultRepos', () => {
+  const repo = (name: string, topics: string[] = []) => ({ name, topics })
+  const page = (size: number) => Array.from({ length: size }, (_, i) => repo(`other-${i}`))
+
+  it('reads every page of the user\'s own repos, not only the first', async () => {
+    githubMock
+      .mockResolvedValueOnce([...page(99), repo('Casa', ['gitvault'])])
+      .mockResolvedValueOnce([repo('test', ['gitvault']), repo('gitvault-untagged')])
+
+    await expect(listVaultRepos(event)).resolves.toEqual([repo('Casa', ['gitvault']), repo('test', ['gitvault'])])
+    expect(githubMock.mock.calls.map(call => call[2]?.query)).toEqual([
+      { affiliation: 'owner', per_page: '100', page: '1' },
+      { affiliation: 'owner', per_page: '100', page: '2' },
+    ])
   })
 })

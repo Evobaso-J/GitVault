@@ -25,8 +25,8 @@ const createFolderSchema = z.object({
 })
 
 const { createFolder } = useVaultContents()
-const saveAndClose = async (name: string) => {
-  await createFolder(name)
+const saveAndClose = (name: string) => {
   model.value = false
+  createFolder(name)
 }
 </script>

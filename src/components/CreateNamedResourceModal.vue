@@ -60,8 +60,9 @@ const props = defineProps<CreateNamedResourceModalProps>()
 
 const state = reactive(props.initialState)
 
-const save = async () => {
-  emit('submit', state.name)
+const save = () => {
+  // Phone keyboards add trailing spaces; GitHub would turn them into dashes
+  emit('submit', state.name.trim())
   state.name = ''
 }
 </script>
