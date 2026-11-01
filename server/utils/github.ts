@@ -51,3 +51,10 @@ export const github = async <T>(event: Parameters<typeof requireUserSession>[0],
     })
   }
 }
+
+/**
+ * A vault created a moment ago has no commit yet: GitHub answers 404 "This repository is empty."
+ * on contents and 409 "Git Repository is empty." on git trees. Routes treat it as a vault with no files.
+ */
+export const isEmptyRepoError = (error: unknown): boolean => error instanceof Error && 'statusMessage' in error
+  && typeof error.statusMessage === 'string' && /repository is empty\.$/i.test(error.statusMessage)
