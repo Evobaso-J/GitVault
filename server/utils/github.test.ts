@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { vaultRepoQuerySchema } from './github'
+import { isEmptyRepoError, vaultRepoQuerySchema } from './github'
 
 describe('vaultRepoQuerySchema', () => {
   it('encodes each path segment and keeps the slashes', () => {
@@ -19,5 +19,16 @@ describe('vaultRepoQuerySchema', () => {
     { repo: undefined, path: 'a.txt' },
   ])('rejects a query that could leave the repo: %o', (query) => {
     expect(() => vaultRepoQuerySchema.parse(query)).toThrow()
+  })
+})
+
+describe('isEmptyRepoError', () => {
+  it.each([
+    [createError({ statusCode: 404, statusMessage: 'This repository is empty.' }), true],
+    [createError({ statusCode: 409, statusMessage: 'Git Repository is empty.' }), true],
+    [createError({ statusCode: 404, statusMessage: 'Not Found' }), false],
+    ['This repository is empty.', false],
+  ])('%o → %s', (error, expected) => {
+    expect(isEmptyRepoError(error)).toBe(expected)
   })
 })

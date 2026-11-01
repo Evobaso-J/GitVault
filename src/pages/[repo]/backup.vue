@@ -93,16 +93,10 @@ const isUploading = computed(() => uploads.value.some(item => item.status === 'w
 const wakeLock = useWakeLock()
 watch(isUploading, uploading => (uploading ? wakeLock.request('screen') : wakeLock.release()).catch(() => {}), { immediate: true })
 
-/** Shas of every file in the vault; an empty repo has no tree yet */
+/** Shas of every file in the vault */
 const fetchVaultShas = async (): Promise<Set<string>> => {
-  try {
-    const { tree } = await $fetch('/gh-repo-tree', { query: { repo: route.params.repo } })
-    return new Set(tree.flatMap(item => item.type === 'blob' && item.sha ? [item.sha] : []))
-  }
-  catch (error) {
-    if (error instanceof Error && 'statusCode' in error && error.statusCode === 409) return new Set()
-    throw error
-  }
+  const { tree } = await $fetch('/gh-repo-tree', { query: { repo: route.params.repo } })
+  return new Set(tree.flatMap(item => item.type === 'blob' && item.sha ? [item.sha] : []))
 }
 
 const plan = ref<GalleryBackupPlan>()
