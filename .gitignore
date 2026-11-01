@@ -29,3 +29,6 @@ logs
 # Local Netlify folder
 .netlify
 
+# Claude Code agent worktrees and design-review output
+.claude/worktrees
+.ui-design

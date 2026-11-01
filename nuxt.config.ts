@@ -36,6 +36,8 @@ export default defineNuxtConfig({
 
   srcDir: 'src/',
   serverDir: 'server/',
+  // `.claude/` holds agent worktrees: watching them exhausts file descriptors.
+  ignore: ['.claude/**'],
   compatibilityDate: '2026-10-30',
 
   typescript: {
