@@ -1,5 +1,6 @@
 import { GITVAULT_TOPIC } from '~/config'
-import type { GhCreatedUserRepo, GhUserReposRequest } from '~~/server/resources/gitHubUserRepos'
+import { isVaultRepo } from '~~/server/resources/gitHubUserRepos'
+import type { CDNUserReposData, GhCreatedUserRepo, GhUserReposData, GhUserReposRequest } from '~~/server/resources/gitHubUserRepos'
 import { github } from './github'
 
 /**
@@ -24,4 +25,21 @@ export const createVaultRepo = async (event: Parameters<typeof github>[0], body:
     })
   }
   return repo
+}
+
+const PER_PAGE = 100
+
+/**
+ * Every vault the user owns. GitHub pages /user/repos (30 per page by default), so a single
+ * call silently drops repos; vaults are always created on the user's account, hence `owner`.
+ */
+export const listVaultRepos = async (event: Parameters<typeof github>[0]): Promise<CDNUserReposData> => {
+  const repos: GhUserReposData = []
+  for (let page = 1; ; page++) {
+    const batch = await github<GhUserReposData>(event, () => '/user/repos', {
+      query: { affiliation: 'owner', per_page: String(PER_PAGE), page: String(page) },
+    })
+    repos.push(...batch)
+    if (batch.length < PER_PAGE) return repos.filter(isVaultRepo)
+  }
 }

@@ -47,7 +47,7 @@
       <UButton
         :disabled="!selectedRepo"
         :to="selectedRepo && `/${selectedRepo}`"
-        :label="selectedRepo ? $t('selectRepo.goToRepo', { selectedRepo: getVaultLabel(selectedRepo) }) : $t('selectRepo.cta')"
+        :label="selectedRepo ? $t('selectRepo.goToRepo', { selectedRepo }) : $t('selectRepo.cta')"
         size="xl"
         block
       />
@@ -57,7 +57,6 @@
 
 <script setup lang="ts">
 import { until } from '@vueuse/core'
-import { GITVAULT_REPO_PREFIX, getVaultLabel } from '~/config'
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 
 const { t } = useI18n()
@@ -80,7 +79,7 @@ const { createUserRepo } = useCreateUserRepo()
 
 // New users never pick a name: the first vault is created for them
 const createFirstVault = async () => {
-  const name: CDNUserRepoName = `${GITVAULT_REPO_PREFIX}personal`
+  const name: CDNUserRepoName = 'personal'
   isCreating.value = true
   const result = await createUserRepo({ name })
   isCreating.value = false
@@ -97,5 +96,5 @@ until(fetchStatus).toBe('success').then(() => {
 })
 
 const selectedRepo = ref<CDNUserRepoName>()
-const vaultItems = computed(() => repositoryNames.value.map(name => ({ label: getVaultLabel(name), value: name })))
+const vaultItems = computed(() => repositoryNames.value.map(name => ({ label: name, value: name })))
 </script>

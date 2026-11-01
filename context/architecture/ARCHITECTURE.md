@@ -2,7 +2,7 @@
 # Architecture
 
 <!-- exodia:section:intro -->
-Client-only Nuxt 4 SPA that uses the user's own GitHub repos (prefixed `gitvault-`) as file storage. The Nitro server is a thin authenticated proxy to the GitHub REST API.
+Client-only Nuxt 4 SPA that uses the user's own GitHub repos (tagged with the `gitvault` topic) as file storage. The Nitro server is a thin authenticated proxy to the GitHub REST API.
 
 ## Entry Points & Routing
 

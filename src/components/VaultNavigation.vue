@@ -37,7 +37,6 @@
 
 <script setup lang='ts'>
 import type { NavigationMenuItem } from '@nuxt/ui'
-import { GITVAULT_REPO_PREFIX, getVaultLabel } from '~/config'
 import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNUserRepos/constants'
 
 defineComponent({ name: 'VaultNavigation' })
@@ -46,7 +45,7 @@ const route = useRoute()
 const { repositoryNames } = useRepoStorage()
 
 const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(name => ({
-  label: getVaultLabel(name),
+  label: name,
   icon: 'i-mdi-archive-outline',
   to: `/${name}`,
   // The vault stays active on every folder below its root
@@ -55,8 +54,9 @@ const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(nam
 
 const isModalOpen = ref(false)
 const { createUserRepo } = useCreateUserRepo()
-const saveAndClose = async (name: string) => {
-  await createUserRepo({ name: `${GITVAULT_REPO_PREFIX}${name}` })
+// Close first: the toast reports progress and errors, the request can take seconds
+const saveAndClose = (name: string) => {
   isModalOpen.value = false
+  createUserRepo({ name })
 }
 </script>
