@@ -81,9 +81,8 @@ const { createUserRepo } = useCreateUserRepo()
 const createFirstVault = async () => {
   const name: CDNUserRepoName = 'personal'
   isCreating.value = true
-  const result = await createUserRepo({ name })
+  await createUserRepo({ name })
   isCreating.value = false
-  if (result === 'success') await navigateTo(`/${name}`)
 }
 
 // Decided once: creating the first vault must not swap this screen for the vault picker
