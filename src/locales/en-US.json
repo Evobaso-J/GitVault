@@ -152,6 +152,7 @@
   },
   "vault": "Vault",
   "vaultFull": "This vault is over {size}. GitHub recommends smaller repos: create a new vault for new files.",
+  "vaultTotal": "{size} in this vault",
   "vaults": "Vaults",
   "viewOnGitHub": "View on @:gitHub",
   "landing": {

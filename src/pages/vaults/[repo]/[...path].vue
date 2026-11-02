@@ -12,6 +12,15 @@
         @retry="refresh()"
       />
       <template v-else-if="folders.length || files.length">
+        <UAlert
+          v-if="showFullAlert"
+          color="warning"
+          variant="subtle"
+          icon="i-mdi-alert-outline"
+          :title="$t('vaultFull', { size: formatBytes(VAULT_FULL_BYTES) })"
+          close
+          @update:open="dismissFullAlert"
+        />
         <p class="text-sm text-muted">
           {{ summary }}
         </p>
@@ -72,9 +81,9 @@
 </template>
 
 <script setup lang="ts">
-import { breakpointsTailwind, useBreakpoints, useDropZone, useInterval } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useDropZone, useInterval, useLocalStorage } from '@vueuse/core'
 
-import { isFileExcluded } from '~/config'
+import { isFileExcluded, VAULT_FULL_BYTES } from '~/config'
 import type { CDNFile } from '~/resources/CDNFiles'
 import { parseGhRepoContentsToCDNFiles } from '~/resources/CDNFiles/parse'
 import type { CDNFolder } from '~/resources/CDNFolders'
@@ -109,11 +118,30 @@ const { data, status, error, refresh } = useFetch('/gh-repo-contents', {
 const folders = computed<CDNFolder[]>(() => parseGhRepoContentsToCDNFolders(data.value ?? []))
 const files = computed<CDNFile[]>(() => parseGhRepoContentsToCDNFiles(data.value ?? []).filter(file => !isFileExcluded(file.name)))
 
+// Whole vault size, shown on its root only: sum of the files on the default branch, not history.
+// Refreshed with the listing (refreshNuxtData after every write).
+const { data: tree } = useFetch('/gh-repo-tree', { query: { repo }, watch: false })
+const vaultSize = computed(() => {
+  if (queryPath.value || !tree.value) return undefined
+  const bytes = tree.value.tree.reduce((total, entry) => total + (entry.type === 'blob' ? entry.size ?? 0 : 0), 0)
+  // A truncated tree (100k entries) misses files: the sum is a lower bound
+  return `${formatBytes(bytes)}${tree.value.truncated ? '+' : ''}`
+})
+
 const summary = computed(() => [
   t('folderCount', folders.value.length),
   t('fileCount', files.value.length),
   formatBytes(files.value.reduce((total, file) => total + file.size, 0)),
-].join(' · '))
+  vaultSize.value && t('vaultTotal', { size: vaultSize.value }),
+].filter(Boolean).join(' · '))
+
+// GitHub's repo size (history included, updated late) is what its 5 GB advice is about
+const { repositorySizes } = useRepoStorage()
+const dismissedFullAlerts = useLocalStorage<string[]>('dismissed-vault-full', [])
+const showFullAlert = computed(() => !queryPath.value
+  && (repositorySizes.value.get(String(repo)) ?? 0) >= VAULT_FULL_BYTES
+  && !dismissedFullAlerts.value.includes(String(repo)))
+const dismissFullAlert = () => dismissedFullAlerts.value.push(String(repo))
 
 // The previewed file lives in the query, so the folder URL is a deep link to it
 // Kept while the listing refreshes: after a rename the query has the new name before the listing does

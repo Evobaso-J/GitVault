@@ -26,12 +26,6 @@
       orientation="vertical"
       :aria-label="$t('vaults')"
     />
-    <p
-      v-if="isOpenVaultFull"
-      class="px-2.5 py-1 text-xs text-warning"
-    >
-      {{ $t('vaultFull', { size: formatBytes(VAULT_FULL_BYTES) }) }}
-    </p>
     <UButton
       :label="$t('newVault')"
       icon="i-mdi-plus"
@@ -80,14 +74,11 @@
 <script setup lang='ts'>
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNUserRepos/constants'
-import { VAULT_FULL_BYTES } from '~/config'
 
 defineComponent({ name: 'VaultNavigation' })
 
 const route = useRoute()
-const { repositoryNames, repositorySizes, fetchStatus } = useRepoStorage()
-
-const isFull = (name: string) => (repositorySizes.value.get(name) ?? 0) >= VAULT_FULL_BYTES
+const { repositoryNames, fetchStatus } = useRepoStorage()
 
 const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(name => ({
   label: name,
@@ -95,15 +86,7 @@ const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(nam
   to: `/vaults/${name}`,
   // The vault stays active on every folder below its root
   active: name === route.params.repo,
-  badge: {
-    // GitHub's figure is approximate and lags behind recent uploads
-    label: `~${formatBytes(repositorySizes.value.get(name) ?? 0)}`,
-    color: isFull(name) ? 'warning' : 'neutral',
-    variant: 'subtle',
-  },
 })))
-
-const isOpenVaultFull = computed(() => !!route.params.repo && isFull(String(route.params.repo)))
 
 const isModalOpen = ref(false)
 const { createUserRepo } = useCreateUserRepo()
