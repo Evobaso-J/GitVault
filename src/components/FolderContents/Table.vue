@@ -25,6 +25,15 @@
         :file="row.original.file"
         @click.stop
       />
+      <UButton
+        v-else-if="row.original.folder"
+        :aria-label="$t('deleteFolderNamed', { name: row.original.name })"
+        icon="i-mdi-trash-can-outline"
+        color="error"
+        variant="ghost"
+        class="sm:opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+        @click.stop="removeFolder(row.original.folder)"
+      />
     </template>
   </UTable>
 </template>
@@ -53,10 +62,12 @@ type Row = {
   type: string
   size: string
   file?: CDNFile
+  folder?: CDNFolder
 }
 
 const route = useRoute()
 const { t } = useI18n()
+const { removeFolder } = useFileActions()
 
 const rows = computed<Row[]>(() => [
   ...props.folders.map(folder => ({
@@ -65,6 +76,7 @@ const rows = computed<Row[]>(() => [
     icon: 'i-mdi-folder',
     type: t('folder'),
     size: '',
+    folder,
   })),
   ...props.files.map(file => ({
     name: file.name,

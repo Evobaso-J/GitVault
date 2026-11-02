@@ -1,20 +1,22 @@
 import { ConfirmDeleteModal } from '#components'
 import type { CDNFile } from '~/resources/CDNFiles'
+import type { CDNFolder } from '~/resources/CDNFolders'
 import { downloadFile, getPathToFile, getPathToFolder } from '~/resources/CDNFiles/utils'
 
 // Shared by every useFileActions: one delete at a time across the app
 let isDeleting = false
 
 /**
- * Actions on a single file of the active vault repo, shared by the folder list,
- * the preview panel and the file page.
+ * Actions on a single file (or folder, for delete) of the active vault repo, shared by
+ * the folder list, the preview panel and the file page.
  */
 export const useFileActions = () => {
   const route = useRoute()
   const { origin } = useRequestURL()
   const toast = useToast()
   const { t } = useI18n()
-  const { pickAndReplace, remove: removeFile } = useVaultContents()
+  const { pickAndReplace, remove: removeFile, removeFolder: removeVaultFolder } = useVaultContents()
+  const { queryPath } = useRouteQueryPath()
   const overlay = useOverlay()
 
   const getFileUrl = (file: CDNFile) => getPathToFile({ path: file.path, repo: route.params.repo })
@@ -55,5 +57,22 @@ export const useFileActions = () => {
     }
   }
 
-  return { getFileUrl, download, copyLink, replace, remove }
+  const removeFolder = async (folder: CDNFolder) => {
+    if (isDeleting) return
+    isDeleting = true
+    try {
+      const confirmed = await overlay.create(ConfirmDeleteModal, { destroyOnClose: true }).open({ name: folder.name, folder: true })
+      if (!confirmed) return
+      // Inside the folder (or a subfolder): leave for its parent first, or the refresh would refetch a deleted folder
+      if (queryPath.value === folder.to || queryPath.value?.startsWith(`${folder.to}/`)) {
+        await navigateTo(getPathToFolder({ path: folder.to.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
+      }
+      await removeVaultFolder(folder.to)
+    }
+    finally {
+      isDeleting = false
+    }
+  }
+
+  return { getFileUrl, download, copyLink, replace, remove, removeFolder }
 }

@@ -194,6 +194,13 @@ export const useVaultContents = () => {
     }))
   }
 
+  /** Deletes the folder and everything inside it, in one commit */
+  const removeFolder = (path: string): Promise<OperationStatus> => {
+    const repo = getRepo()
+    if (!repo) return Promise.resolve('error')
+    return runOperation(`deleting-${path}`, () => $fetch('/gh-repo-tree', { method: 'DELETE', query: { path, repo } }))
+  }
+
   const { open, onChange, reset } = useFileDialog()
   let onPick: (files: File[]) => Promise<unknown> = upload
   onChange(async (files) => {
@@ -223,6 +230,7 @@ export const useVaultContents = () => {
     replace,
     createFolder,
     remove,
+    removeFolder,
     pickAndUpload,
     pickAndReplace,
   }
