@@ -15,6 +15,15 @@
       class="justify-start"
       @click="isModalOpen = true"
     />
+    <UButton
+      v-if="route.params.repo"
+      :label="$t('deleteVault.action')"
+      icon="i-mdi-trash-can-outline"
+      color="error"
+      variant="ghost"
+      class="justify-start"
+      @click="deleteUserRepo(String(route.params.repo))"
+    />
     <CreateNamedResourceModal
       v-model="isModalOpen"
       :title="$t('createRepo')"
@@ -59,4 +68,7 @@ const saveAndClose = (name: string) => {
   isModalOpen.value = false
   createUserRepo({ name })
 }
+
+// Acts on the open vault, like the phone backup link
+const { deleteUserRepo } = useDeleteUserRepo()
 </script>

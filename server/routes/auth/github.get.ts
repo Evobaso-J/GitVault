@@ -8,5 +8,6 @@ export default defineOAuthGitHubEventHandler({
     })
     return sendRedirect(event, '/')
   },
-  config: { scope: ['repo'] },
+  // delete_repo: deleting a vault deletes the repo. Changing scopes needs a new sign-in.
+  config: { scope: ['repo', 'delete_repo'] },
 })

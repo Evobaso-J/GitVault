@@ -9,6 +9,7 @@ export type GhUserReposRequest = Endpoints['POST /user/repos']['parameters']
 export type GhUserReposData = GhUserRepos['data']
 export type GhUserRepo = GhUserReposData extends Array<infer T> ? T : never
 export type GhCreatedUserRepo = Endpoints['POST /user/repos']['response']['data']
+export type GhRepo = Endpoints['GET /repos/{owner}/{repo}']['response']['data']
 
 export type CDNUserRepo = GhUserRepo
 export type CDNUserReposData = CDNUserRepo[]
