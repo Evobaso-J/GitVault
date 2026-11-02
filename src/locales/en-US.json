@@ -24,6 +24,7 @@
     "action": "Delete vault",
     "confirmLabel": "Type {name} to confirm",
     "description": "{name} and all its files will be deleted permanently. This can't be undone.",
+    "lastVault": "You can't delete your only vault",
     "title": "Delete vault?"
   },
   "download": "Download",

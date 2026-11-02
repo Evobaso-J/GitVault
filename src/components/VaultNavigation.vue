@@ -15,15 +15,24 @@
       class="justify-start"
       @click="isModalOpen = true"
     />
-    <UButton
-      v-if="route.params.repo && repositoryNames.length > 1"
-      :label="$t('deleteVault.action')"
-      icon="i-mdi-trash-can-outline"
-      color="error"
-      variant="ghost"
-      class="justify-start"
-      @click="deleteUserRepo(String(route.params.repo))"
-    />
+    <!-- A disabled button gets no pointer events: the tooltip hangs on the wrapper -->
+    <UTooltip
+      v-if="route.params.repo"
+      :text="$t('deleteVault.lastVault')"
+      :disabled="!isLastVault"
+    >
+      <div class="flex flex-col">
+        <UButton
+          :label="$t('deleteVault.action')"
+          icon="i-mdi-trash-can-outline"
+          color="error"
+          variant="ghost"
+          class="justify-start"
+          :disabled="isLastVault"
+          @click="deleteUserRepo(String(route.params.repo))"
+        />
+      </div>
+    </UTooltip>
     <CreateNamedResourceModal
       v-model="isModalOpen"
       :title="$t('createRepo')"
@@ -71,4 +80,6 @@ const saveAndClose = (name: string) => {
 
 // Acts on the open vault, like the phone backup link
 const { deleteUserRepo } = useDeleteUserRepo()
+// The server refuses it too: the app always needs a vault
+const isLastVault = computed(() => repositoryNames.value.length <= 1)
 </script>
