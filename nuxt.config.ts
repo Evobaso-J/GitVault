@@ -57,6 +57,11 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2026-10-30',
 
+  nitro: {
+    // Built from runtimeConfig.public.siteUrl (server/routes), baked at build like the landing's canonical URL.
+    prerender: { routes: ['/robots.txt', '/sitemap.xml'] },
+  },
+
   typescript: {
     typeCheck: true,
     tsConfig: {

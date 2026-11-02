@@ -64,8 +64,8 @@
 definePageMeta({ layout: false })
 
 const FEATURES = ['folders', 'uploads', 'previews', 'downloads'] as const
-// The page is prerendered, so this is the build year.
-const YEAR = new Date().getFullYear()
+// Build year from the prerender payload, so hydration never sees a different year than the static HTML.
+const YEAR = useState('landing-year', () => new Date().getFullYear())
 
 const { t } = useI18n()
 const siteUrl = useRuntimeConfig().public.siteUrl

@@ -74,6 +74,10 @@
               role="tabpanel"
               :aria-labelledby="`${id}-tab-${index}`"
             >
+              <!-- the visual is aria-hidden; the panel carries the reason text for screen readers -->
+              <p class="sr-only">
+                {{ $t(`landing.why.${reason.key}.text`) }}
+              </p>
               <LandingWhyVisual :reason="reason.key" />
             </div>
           </template>
@@ -101,8 +105,12 @@ const isDesktop = useMediaQuery('(min-width: 900px)')
 const isTabs = computed(() => mounted.value && isDesktop.value)
 const motion = usePreferredReducedMotion()
 
-// Auto-advance every 5 s until the first interaction; never under reduced motion or below 900px.
-const { pause, resume, isActive: isAuto } = useIntervalFn(() => select(selected.value + 1), 5000, { immediate: false })
+// Auto-advance every 5 s for one pass back to the first tab, then stop (WCAG 2.2.2); also stops on interaction,
+// and never runs under reduced motion or below 900px.
+const { pause, resume, isActive: isAuto } = useIntervalFn(() => {
+  select(selected.value + 1)
+  if (selected.value === 0) pause()
+}, 5000, { immediate: false })
 let touched = false
 function stopAuto() {
   touched = true
