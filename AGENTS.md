@@ -1,7 +1,7 @@
 # AGENTS.md
 
 <!-- exodia:section:overview -->
-GitVault is a client-only Nuxt 4 SPA that turns the user's own private GitHub repos (prefixed `gitvault-`) into file storage: browse folders, upload, preview and download files. Users sign in with GitHub OAuth (`nuxt-auth-utils`); a thin Nitro server in `server/` proxies every GitHub REST call with the user's token. UI is Nuxt UI 4 + Tailwind 4, strings via `@nuxtjs/i18n`. Product overview for humans: `README.md`. Planned and past work plans: `plan/`.
+GitVault is a client-only Nuxt 4 SPA that turns the user's own private GitHub repos (tagged with the `gitvault` topic) into file storage: browse folders, upload, preview and download files. Users sign in with GitHub OAuth (`nuxt-auth-utils`); a thin Nitro server in `server/` proxies every GitHub REST call with the user's token. UI is Nuxt UI 4 + Tailwind 4, strings via `@nuxtjs/i18n`. Product overview for humans: `README.md`. Planned and past work plans: `plan/`.
 
 ## Commands
 
