@@ -13,9 +13,13 @@ export const useRepoStorage = () => {
 
   const repositoryNames = computed<CDNUserRepoName[]>(() => data.value?.map(repo => repo.name) || [])
 
+  // GitHub reports `size` in KB and refreshes it with a delay (up to hours after a push)
+  const repositorySizes = computed(() => new Map(data.value?.map(repo => [repo.name, repo.size * 1024])))
+
   return {
     lastOpenedRepository,
     repositoryNames,
+    repositorySizes,
     fetchStatus,
   }
 }

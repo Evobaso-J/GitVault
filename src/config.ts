@@ -10,3 +10,9 @@ export const isFileExcluded = (fileName: string) => EXCLUDE_FILES.some(excludeFi
  * request, and Netlify functions reject request bodies over 6 MB.
  */
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024
+
+/**
+ * Vault size past which the app suggests a new vault: GitHub asks to keep repos ideally
+ * under 1 GB and strongly under 5 GB (docs "About large files on GitHub").
+ */
+export const VAULT_FULL_BYTES = 5 * 1024 ** 3
