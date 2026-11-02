@@ -316,5 +316,13 @@
       "source": "Source on GitHub",
       "copyright": "© {year} GitVault"
     }
+  },
+  "feedback": {
+    "menu": "Send feedback",
+    "title": "Send feedback",
+    "description": "Your message becomes a public issue on the GitVault GitHub repo, posted from your account.",
+    "placeholder": "What works, what doesn't, what you'd like to see...",
+    "required": "Write a message first",
+    "send": "Send"
   }
 }

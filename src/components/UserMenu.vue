@@ -11,6 +11,7 @@
       trailing-icon="i-mdi-unfold-more-horizontal"
     />
   </UDropdownMenu>
+  <FeedbackModal v-model="isFeedbackOpen" />
 </template>
 
 <script setup lang='ts'>
@@ -21,7 +22,18 @@ defineComponent({ name: 'UserMenu' })
 const { user, clear } = useUserSession()
 const { t } = useI18n()
 
+const isFeedbackOpen = ref(false)
+
 const items = [
+  [
+    {
+      label: t('feedback.menu'),
+      icon: 'i-mdi-message-text-outline',
+      onSelect: () => {
+        isFeedbackOpen.value = true
+      },
+    },
+  ],
   [
     {
       label: t('logout'),
