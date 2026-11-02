@@ -30,7 +30,7 @@ Single variant. No tenants, markets or feature flags. Per-user isolation comes f
 ## Deploy
 
 <!-- exodia:section:deploy -->
-Netlify, wired through the Netlify GitHub app (no config file in the repo; settings live in the Netlify dashboard, project `gitvault`). Every PR gets a deploy preview and Netlify checks; production branch and env vars are configured in the dashboard. Build: `pnpm build` (Nitro server needed for proxy + OAuth, so static `generate` alone won't work).
+Netlify, wired through the Netlify GitHub app (no config file in the repo; settings live in the Netlify dashboard, project `gitvault`). Every PR gets a deploy preview and Netlify checks; production branch and env vars are configured in the dashboard. Build: `pnpm build` (Nitro server needed for proxy + OAuth, so static `generate` alone won't work). Deploy previews share the production OAuth app: GitHub only accepts sub-paths of the registered callback (`https://<site>/auth/github`), so a preview's login goes through the production relay `/auth/github/relay/<pr>`, which forwards the code back to `deploy-preview-<pr>--<site>` (`server/utils/previewOAuth.ts`). A relay change only works on previews once it is in production.
 
 ## Localization / i18n (if applicable)
 

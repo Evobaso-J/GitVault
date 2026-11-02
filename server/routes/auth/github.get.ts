@@ -1,4 +1,4 @@
-export default defineOAuthGitHubEventHandler({
+export default defineEventHandler(event => defineOAuthGitHubEventHandler({
   onSuccess: async (event, { user, tokens }) => {
     await setUserSession(event, {
       user,
@@ -8,6 +8,9 @@ export default defineOAuthGitHubEventHandler({
     })
     return sendRedirect(event, '/')
   },
-  // delete_repo: deleting a vault deletes the repo. A session keeps the scopes granted at sign-in.
-  config: { scope: ['repo', 'delete_repo'] },
-})
+  config: {
+    scope: ['repo'],
+    // Deploy previews log in through the production relay; elsewhere the request URL is used
+    redirectURL: getPreviewOAuthRedirectURL(getRequestHost(event)),
+  },
+})(event))
