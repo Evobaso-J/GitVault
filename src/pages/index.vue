@@ -52,6 +52,23 @@
         block
       />
     </section>
+
+    <section
+      v-else
+      aria-busy="true"
+      class="w-full max-w-md flex flex-col gap-6"
+    >
+      <div class="flex flex-col gap-2">
+        <USkeleton class="h-8 w-2/3" />
+        <USkeleton class="h-4 w-full" />
+      </div>
+      <USkeleton class="h-11 w-full" />
+      <USkeleton class="h-11 w-full" />
+      <span
+        role="status"
+        class="sr-only"
+      >{{ $t('loading') }}</span>
+    </section>
   </div>
 </template>
 

@@ -49,6 +49,28 @@
       class="h-[75vh]"
     />
   </div>
+  <div
+    v-else-if="status === 'pending'"
+    aria-busy="true"
+    class="flex flex-col gap-4"
+  >
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex-1 min-w-56 flex flex-col gap-2">
+        <USkeleton class="h-5 w-1/2" />
+        <USkeleton class="h-4 w-32" />
+      </div>
+      <USkeleton
+        v-for="n in 5"
+        :key="n"
+        class="h-8 w-28"
+      />
+    </div>
+    <USkeleton class="h-[75vh] rounded-lg" />
+    <span
+      role="status"
+      class="sr-only"
+    >{{ $t('loading') }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -65,7 +87,8 @@ const { queryPath } = useRouteQueryPath()
 const downloadUrlTokenDuration = useInterval(5 * 60 * 1000)
 const { params: { repo } } = useRoute()
 
-const { data: file } = await useFetch('/gh-repo-contents', {
+// Not awaited: the page renders its skeleton while the file is fetched
+const { data: file, status } = useFetch('/gh-repo-contents', {
   method: 'GET',
   query: {
     path: queryPath,

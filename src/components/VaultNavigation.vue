@@ -3,7 +3,25 @@
     <span class="px-2.5 pb-1 text-xs font-semibold uppercase tracking-wide text-muted">
       {{ $t('vaults') }}
     </span>
+    <div
+      v-if="fetchStatus === 'pending' && !items.length"
+      aria-busy="true"
+      class="flex flex-col"
+    >
+      <div
+        v-for="width in ['60%', '45%']"
+        :key="width"
+        class="flex items-center gap-1.5 px-2.5 py-1.5"
+      >
+        <USkeleton class="size-5 shrink-0" />
+        <USkeleton
+          class="h-3"
+          :style="{ width }"
+        />
+      </div>
+    </div>
     <UNavigationMenu
+      v-else
       :items="items"
       orientation="vertical"
       :aria-label="$t('vaults')"
@@ -60,7 +78,7 @@ import { USER_REPO_FORM_INITIAL_STATE, USER_REPO_SCHEMA } from '~/resources/CDNU
 defineComponent({ name: 'VaultNavigation' })
 
 const route = useRoute()
-const { repositoryNames } = useRepoStorage()
+const { repositoryNames, fetchStatus } = useRepoStorage()
 
 const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(name => ({
   label: name,

@@ -1,6 +1,10 @@
 <template>
+  <FilePreviewSkeleton v-if="source.content === undefined" />
   <!-- DO NOT PLACE THE PRE TAG IN MORE THAN ONE LINE -->
-  <pre class="overflow-auto rounded-lg bg-elevated p-4 text-xs">{{ parsedContent }}</pre>
+  <pre
+    v-else
+    class="overflow-auto rounded-lg bg-elevated p-4 text-xs"
+  >{{ parsedContent }}</pre>
 </template>
 
 <script setup lang='ts'>
