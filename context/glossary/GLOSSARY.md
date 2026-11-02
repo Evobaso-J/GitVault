@@ -17,7 +17,7 @@ Business language, entities, and how they relate. Read this when a task involves
 | File category | Preview bucket (code, text, image, video, pdf, …) derived from extension. | `src/resources/CDNFiles/extensions.ts`, `utils.ts` |
 | Excluded file | File hidden from listings (e.g. `.gitkeep` folder placeholders). | `src/config.ts` `EXCLUDE_FILES` |
 | User / session | GitHub user (`id`, `login`) + OAuth tokens in the sealed session. | `shared/types/auth.d.ts` |
-| First vault | Created automatically on `/` (repo `personal`) when the user has no vault repo yet, with a retry on failure; no naming form. If they have vaults but none active, `/` shows a vault picker instead. | `src/pages/index.vue` |
+| First vault | Created automatically on `/vaults` (repo `personal`) when the user has no vault repo yet, with a retry on failure; no naming form. If they have vaults but none active, `/vaults` shows a vault picker instead. | `src/pages/vaults/index.vue` |
 
 "CDN" prefix = files are served from GitHub `download_url`s, not a real CDN.
 
@@ -32,11 +32,11 @@ Business language, entities, and how they relate. Read this when a task involves
 ## User Journey
 
 <!-- exodia:section:journey -->
-1. `/login` → GitHub OAuth (`server/routes/auth/github.get.ts`) → session.
-2. `/` → no vault repo? The first vault is created automatically (`useCreateRepo`) and opened. Otherwise pick the active repo.
-3. `/<repo>` → browse folders/files; path kept in the route query.
+1. `/` (public landing) → "Sign in with GitHub" → `/auth/github` OAuth (`server/routes/auth/github.get.ts`) → session → `/vaults`. Anonymous users on any app page are sent back to `/`.
+2. `/vaults` → no vault repo? The first vault is created automatically (`useCreateRepo`) and opened. Otherwise pick the active repo.
+3. `/vaults/<repo>` → browse folders/files; path kept in the route query.
 4. Create folder (writes `.gitkeep`) or upload file (base64 PUT).
-5. `/<repo>/file/<path>` → preview by file category, download, replace.
+5. `/vaults/<repo>/file/<path>` → preview by file category, download, replace.
 
 ## Type System
 

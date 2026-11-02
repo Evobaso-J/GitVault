@@ -129,16 +129,6 @@
     "title": "Did you get lost?"
   },
   "showAsText": "Show as plain text",
-  "signIn": {
-    "cta": "Continue with @:gitHub",
-    "description": "Keep documents, photos and videos safe and open them from any device. Free.",
-    "howItWorks": "How it works",
-    "pageTitle": "Sign in",
-    "step1": "Continue with @:gitHub, the free service that keeps your files. No account yet? You can create one on the next page.",
-    "step2": "Allow @:app.name to save files for you.",
-    "step3": "Your first vault is ready: start uploading.",
-    "title": "A private place for your files"
-  },
   "size": "Size",
   "successMessage": "Operation successful!",
   "type": "Type",
@@ -168,5 +158,163 @@
   },
   "vault": "Vault",
   "vaults": "Vaults",
-  "viewOnGitHub": "View on @:gitHub"
+  "viewOnGitHub": "View on @:gitHub",
+  "landing": {
+    "meta": {
+      "title": "GitVault: unlimited free storage on your own GitHub",
+      "description": "GitVault turns private GitHub repositories into a simple drive. Upload, organize and preview your files, with no subscription.",
+      "ogImageAlt": "The GitVault app showing a vault with folders, files and a photo preview"
+    },
+    "nav": {
+      "label": "Main",
+      "home": "@:app.name home",
+      "how": "How it works",
+      "faq": "FAQ"
+    },
+    "cta": "Sign in with @:gitHub",
+    "openVaults": "Open your vaults",
+    "hero": {
+      "line1": "Unlimited free storage",
+      "line2": "for your",
+      "line3": "on your own GitHub.",
+      "srTitle": "Unlimited free storage for your files, on your own GitHub.",
+      "words": {
+        "photos": "photos,",
+        "documents": "documents,",
+        "music": "music,",
+        "videos": "videos,",
+        "files": "files,"
+      },
+      "lede": "@:landing.meta.description",
+      "accountRequired": "Free GitHub account required.",
+      "noAccount": "No account?",
+      "createAccount": "Create one in a minute"
+    },
+    "mock": {
+      "label": "The GitVault app: the vault “personal” with the folders Photos, Documents, Music and Videos, three files, a photo open in the preview panel, and an upload in progress.",
+      "you": "you",
+      "summary": "4 folders · 3 files · 11.1 MB",
+      "folders": {
+        "photos": "Photos",
+        "documents": "Documents",
+        "music": "Music",
+        "videos": "Videos"
+      }
+    },
+    "how": {
+      "title": "How it works",
+      "step1": {
+        "title": "Create a free GitHub account.",
+        "text": "Already have one? Skip this step.",
+        "mock": {
+          "title": "Sign up for GitHub",
+          "email": "Email",
+          "emailValue": "you{'@'}example.com",
+          "username": "Username",
+          "usernameValue": "your-name",
+          "continue": "Continue"
+        }
+      },
+      "step2": {
+        "title": "Sign in to GitVault.",
+        "text": "One click, through GitHub.",
+        "mock": {
+          "button": "Continue with GitHub",
+          "authorize": "Authorize GitVault",
+          "repos": "Repositories",
+          "scope": "Public and private",
+          "cta": "Authorize"
+        }
+      },
+      "step3": {
+        "title": "Create a vault and upload.",
+        "text": "A vault is a private repo on your account. Make as many as you need.",
+        "mock": {
+          "value": "trips"
+        }
+      }
+    },
+    "features": {
+      "lead": "Everything you expect from a file drive:",
+      "items": {
+        "folders": "folders",
+        "uploads": "uploads",
+        "previews": "previews",
+        "downloads": "downloads"
+      },
+      "devices": "Works on desktop and mobile."
+    },
+    "why": {
+      "title": "Why GitVault",
+      "free": {
+        "title": "No subscription.",
+        "text": "GitHub gives you private repositories for free. GitVault uses them.",
+        "price": "$0",
+        "perMonth": "/ month",
+        "plan": "GitHub Free",
+        "privateRepos": "Private repositories",
+        "unlimited": "Unlimited",
+        "free": "Free"
+      },
+      "yours": {
+        "title": "Your files stay yours.",
+        "text": "They live in repos on your account. Stop using GitVault tomorrow and they're still there.",
+        "repo": "you / personal",
+        "private": "Private"
+      },
+      "history": {
+        "title": "Every change is saved.",
+        "text": "Git keeps the history of every file.",
+        "commits": "Commits · personal",
+        "c1": "Rename lease.pdf to lease-2026.pdf",
+        "c1When": "2 minutes ago",
+        "c2": "Create folder",
+        "c2When": "1 hour ago",
+        "c3": "Delete folder Old scans",
+        "c3When": "Yesterday"
+      }
+    },
+    "faq": {
+      "title": "FAQ",
+      "cost": {
+        "q": "Does it cost anything?",
+        "a": "No. GitVault is free, and private repos are free on GitHub's free plan."
+      },
+      "storage": {
+        "q": "How much can I store?",
+        "a": "As much as you want, spread across vaults. GitHub recommends keeping each repo under 1–5 GB: when a vault fills up, create another one."
+      },
+      "fileSize": {
+        "q": "Is there a file size limit?",
+        "a": "Yes: 100 MB per file, a hard GitHub limit."
+      },
+      "bulk": {
+        "q": "Can I upload thousands of files at once?",
+        "a": "You can, but GitHub limits how fast. Big uploads take time."
+      },
+      "privacy": {
+        "q": "Who can see my files?",
+        "a": "Your vaults are private: only you. GitHub hosts them, so GitHub's privacy terms apply."
+      },
+      "access": {
+        "q": "Can GitVault access my other repositories?",
+        "a": "GitHub asks you to grant access to your repositories, but GitVault only shows and changes repos tagged with the {topic} topic. Everything else stays untouched."
+      },
+      "existing": {
+        "q": "Can I use a repo I already have?",
+        "a": "Yes. Add the {topic} topic to it on GitHub and it shows up as a vault."
+      },
+      "leave": {
+        "q": "What happens if I stop using GitVault?",
+        "a": "Nothing. Your files stay in your repos on GitHub."
+      }
+    },
+    "final": {
+      "title": "Your free drive is one click away."
+    },
+    "footer": {
+      "source": "Source on GitHub",
+      "copyright": "© {year} GitVault"
+    }
+  }
 }

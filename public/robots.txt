@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /vaults
+Disallow: /auth
+Disallow: /gh-
+
+Sitemap: https://gitvault.netlify.app/sitemap.xml

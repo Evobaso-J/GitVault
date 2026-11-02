@@ -1,6 +1,6 @@
 <template>
   <UApp>
-    <div class="h-screen">
+    <div class="min-h-screen">
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -9,9 +9,10 @@
 </template>
 
 <script setup lang='ts'>
-const { t } = useI18n()
+const { t, locale } = useI18n()
 useHead({
   titleTemplate: t('app.titleTemplate'),
+  htmlAttrs: { lang: locale },
 })
 </script>
 
