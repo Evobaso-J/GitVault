@@ -15,7 +15,7 @@
     </div>
 
     <FilePreview
-      :source="fullFile?.path === file.path ? fullFile : file"
+      :source="previewSource"
       class="h-64"
     />
 
@@ -114,9 +114,16 @@ const route = useRoute()
 const { getFileUrl, download, copyLink, replace, rename, remove } = useFileActions()
 
 // A folder listing has no file content: text and code previews need the single-file response.
-// Until it arrives for the selected file, the listing entry is shown (skeleton), never the previous file
-const { data: fullFile } = useFetch('/gh-repo-contents', {
+// Until it arrives for the selected file, the listing entry is shown (skeleton), never the previous file.
+// Other previews keep the listing entry: on private repos each response signs download_url with a
+// new token, so swapping to the single-file response would reload the image/video/PDF
+const needsContent = computed(() => ['text', 'code'].includes(getFileCategory(props.file.name)))
+const { data: fullFile, execute } = useFetch('/gh-repo-contents', {
   query: computed(() => ({ repo: route.params.repo, path: props.file.path })),
   transform: parseGhRepoContentsToCDNFile,
+  immediate: false,
+  watch: false,
 })
+watch(() => props.file.path, () => needsContent.value && execute(), { immediate: true })
+const previewSource = computed(() => needsContent.value && fullFile.value?.path === props.file.path ? fullFile.value : props.file)
 </script>
