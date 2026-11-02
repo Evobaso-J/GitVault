@@ -3,9 +3,9 @@
     :model-value="true"
     :title="$t('renameFile')"
     :schema="renameSchema"
-    :initial-state="{ name }"
+    :initial-state="{ name: baseName }"
     :submit-label="$t('rename')"
-    @submit="newName => emit('close', newName)"
+    @submit="newBaseName => emit('close', newBaseName + extension)"
     @cancel="emit('close')"
     @update:model-value="open => !open && emit('close')"
   >
@@ -15,8 +15,15 @@
           v-model="state.name"
           autofocus
           class="w-full"
-          @focus.once="selectStem"
-        />
+        >
+          <!-- The extension is locked: a different one would break the preview -->
+          <template
+            v-if="extension"
+            #trailing
+          >
+            <span class="text-sm text-muted">{{ extension }}</span>
+          </template>
+        </UInput>
       </UFormField>
     </template>
   </CreateNamedResourceModal>
@@ -24,7 +31,7 @@
 
 <script setup lang='ts'>
 import { z } from 'zod'
-import { isFileNameValid } from '~/resources/CDNFiles/constants'
+import { getLockedExtension, isFileNameValid } from '~/resources/CDNFiles/constants'
 
 defineComponent({ name: 'RenameFileModal' })
 // useOverlay passes `open`; CreateNamedResourceModal is always open while mounted
@@ -34,14 +41,10 @@ const emit = defineEmits<{ close: [name?: string] }>()
 
 const { t } = useI18n()
 
+const extension = getLockedExtension(props.name)
+const baseName = props.name.slice(0, props.name.length - extension.length)
+
 const renameSchema = z.object({
   name: z.string().trim().refine(isFileNameValid, { message: t('validationError.invalidFileName') }),
 })
-
-// Select the name without its extension, so typing keeps the file type
-const selectStem = (event: FocusEvent) => {
-  if (!(event.target instanceof HTMLInputElement)) return
-  const dot = props.name.lastIndexOf('.')
-  event.target.setSelectionRange(0, dot > 0 ? dot : props.name.length)
-}
 </script>

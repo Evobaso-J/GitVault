@@ -90,6 +90,11 @@
   },
   "openFullScreen": "Open full screen",
   "openInNewTab": "Open in a new tab",
+  "operationError": {
+    "nameTaken": "A file or folder with this name already exists here",
+    "notRenamable": "This item can't be renamed from GitVault",
+    "vaultChanged": "The vault changed in the meantime. Refresh and try again"
+  },
   "operationInProgress": "Operation in progress...",
   "palette": {
     "actions": "Actions",
@@ -158,8 +163,7 @@
     "uploading": "Uploading {current} of {total}"
   },
   "validationError": {
-    "invalidFileName": "Enter a file name without \"/\"",
-    "noSlashInFolderName": "Folder name cannot contain \"/\""
+    "invalidFileName": "Enter a name that isn't empty, isn't \".\" or \"..\", and has no \"/\" or control characters"
   },
   "vault": "Vault",
   "vaults": "Vaults",

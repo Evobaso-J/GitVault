@@ -77,14 +77,17 @@ export const useFileActions = () => {
   const rename = async (file: CDNFile) => {
     const name = await overlay.create(RenameFileModal, { destroyOnClose: true }).open({ name: file.name })
     if (!name || name === file.name) return
-    if (await renameFile({ path: file.path, sha: file.sha }, name) !== 'success') return
-    // Follow the file to its new name: the old path no longer exists
-    if (route.name === 'repo-file-path') {
-      await navigateTo(getPathToFile({ path: createFilePath(file.path.split('/').slice(0, -1).join('/'), name), repo: route.params.repo }), { replace: true })
-    }
-    else if (route.query.file === file.name) {
-      await navigateTo({ query: { ...route.query, file: name } })
-    }
+    const onFilePage = route.name === 'repo-file-path'
+    await renameFile({ path: file.path, sha: file.sha }, name, async () => {
+      // File page: open the new path instead of refreshing, which would refetch the old one
+      if (onFilePage) {
+        await navigateTo(getPathToFile({ path: createFilePath(file.path.split('/').slice(0, -1).join('/'), name), repo: route.params.repo }), { replace: true })
+        return
+      }
+      // Folder view: move the preview to the new name only once the listing has it, so it stays open
+      await refreshNuxtData()
+      if (route.query.file === file.name) await navigateTo({ query: { ...route.query, file: name } })
+    })
   }
 
   return { getFileUrl, download, copyLink, replace, remove, removeFolder, rename }

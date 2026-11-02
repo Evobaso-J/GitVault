@@ -202,14 +202,14 @@ export const useVaultContents = () => {
   }
 
   // One commit on the server (Git Data API): the content isn't re-sent
-  const rename = ({ path, sha }: ReplaceTarget, name: string): Promise<OperationStatus> => {
+  const rename = ({ path, sha }: ReplaceTarget, name: string, onSuccess?: () => unknown): Promise<OperationStatus> => {
     const repo = getRepo()
     if (!repo) return Promise.resolve('error')
     return runOperation(`renaming-${path}`, () => $fetch('/gh-repo-contents', {
       method: 'PATCH',
       query: { path, repo },
       body: { name, sha },
-    }))
+    }), onSuccess)
   }
 
   const { open, onChange, reset } = useFileDialog()
