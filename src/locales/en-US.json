@@ -17,6 +17,9 @@
   "deleteFileDescription": "{name} will be removed from the vault.",
   "deleteFileTitle": "Delete file?",
   "deleteFolder": "Delete folder",
+  "deleteFolderDescription": "{name} and everything inside it will be removed from the vault.",
+  "deleteFolderNamed": "Delete folder {name}",
+  "deleteFolderTitle": "Delete folder?",
   "download": "Download",
   "downloadFile": "Download {name}",
   "dropZone": {

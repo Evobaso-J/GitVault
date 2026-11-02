@@ -1,7 +1,7 @@
 <template>
   <UModal
-    :title="$t('deleteFileTitle')"
-    :description="$t('deleteFileDescription', { name })"
+    :title="$t(folder ? 'deleteFolderTitle' : 'deleteFileTitle')"
+    :description="$t(folder ? 'deleteFolderDescription' : 'deleteFileDescription', { name })"
     :close="false"
     @update:open="open => !open && emit('close', false)"
   >
@@ -26,6 +26,6 @@
 
 <script setup lang='ts'>
 defineComponent({ name: 'ConfirmDeleteModal' })
-defineProps<{ name: string }>()
+defineProps<{ name: string, folder?: boolean }>()
 const emit = defineEmits<{ close: [confirmed: boolean] }>()
 </script>
