@@ -122,12 +122,6 @@
   "retry": "Retry",
   "searchPlaceholder": "Search files, folders or actions…",
   "searchVault": "Search the vault",
-  "selectRepo": {
-    "cta": "Select a vault",
-    "description": "You have vaults, but none is selected. Pick one to open.",
-    "goToRepo": "Go to {selectedRepo}",
-    "title": "Did you get lost?"
-  },
   "showAsText": "Show as plain text",
   "size": "Size",
   "successMessage": "Operation successful!",

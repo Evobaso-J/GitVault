@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center pt-10 md:pt-24">
     <section
-      v-if="status === 'success' && !hasVaults"
+      v-if="status === 'success'"
       class="w-full max-w-md flex flex-col items-center gap-4 text-center"
     >
       <div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -22,34 +22,6 @@
         :label="$t('retry')"
         size="xl"
         @click="createFirstVault"
-      />
-    </section>
-
-    <section
-      v-else-if="status === 'success'"
-      class="w-full max-w-md flex flex-col gap-6"
-    >
-      <div class="flex flex-col gap-2">
-        <h1 class="text-2xl font-bold text-highlighted">
-          {{ $t('selectRepo.title') }}
-        </h1>
-        <p class="text-muted">
-          {{ $t('selectRepo.description') }}
-        </p>
-      </div>
-      <USelectMenu
-        v-model="selectedRepo"
-        :placeholder="$t('selectRepo.cta')"
-        :items="vaultItems"
-        value-key="value"
-        size="xl"
-      />
-      <UButton
-        :disabled="!selectedRepo"
-        :to="selectedRepo && `/vaults/${selectedRepo}`"
-        :label="selectedRepo ? $t('selectRepo.goToRepo', { selectedRepo }) : $t('selectRepo.cta')"
-        size="xl"
-        block
       />
     </section>
 
@@ -79,17 +51,14 @@ import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 const { t } = useI18n()
 
 definePageMeta({
-  middleware: [
-    '00-auth',
-    '04-no-active-repo',
-  ],
+  middleware: ['00-auth'],
   layout: 'no-repo',
 })
 useHead({
   title: t('noRepos.title'),
 })
 
-const { isAnyRepoPresent, repositoryNames, fetchStatus } = useRepoStorage()
+const { lastOpenedRepository, repositoryNames, fetchStatus } = useRepoStorage()
 
 const isCreating = ref(false)
 const { createUserRepo } = useCreateUserRepo()
@@ -102,15 +71,13 @@ const createFirstVault = async () => {
   isCreating.value = false
 }
 
-// Decided once: creating the first vault must not swap this screen for the vault picker
+// Opens the last opened vault, or the first one if it's gone (or none was opened in this browser)
 const status = ref<'pending' | 'success'>('pending')
-const hasVaults = ref(false)
 until(fetchStatus).toBe('success').then(() => {
-  hasVaults.value = isAnyRepoPresent.value
+  const names = repositoryNames.value
+  const target = names.find(name => name === lastOpenedRepository.value) ?? names[0]
+  if (target) return navigateTo(`/vaults/${target}`, { replace: true })
   status.value = 'success'
-  if (!hasVaults.value) createFirstVault()
+  createFirstVault()
 })
-
-const selectedRepo = ref<CDNUserRepoName>()
-const vaultItems = computed(() => repositoryNames.value.map(name => ({ label: name, value: name })))
 </script>

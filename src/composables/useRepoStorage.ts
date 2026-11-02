@@ -2,44 +2,19 @@ import { useLocalStorage } from '@vueuse/core'
 import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 
 /**
- * Exposes a writable ref to save and share the active repository name
- * from the local storage.
- *
- * It also checks if the active repository still exists in the list of repositories
- * fetched from the server.
- * If it doesn't exist, it sets the active repository to `undefined`.
+ * The user's vault list, plus the last vault opened in this browser (localStorage).
+ * The last opened vault may no longer exist: check it against `repositoryNames` before using it.
  */
 export const useRepoStorage = () => {
-  const activeRepository = ref<CDNUserRepoName>()
-  useLocalStorage('default-repo', activeRepository)
+  // Key kept from when this was the "default" vault, so existing users keep their value
+  const lastOpenedRepository = useLocalStorage<CDNUserRepoName | undefined>('default-repo', undefined)
 
   const { data, status: fetchStatus } = useFetch('/gh-user-repos')
 
-  const isAnyRepoPresent = computed<boolean>(() => !!data.value?.length)
-
   const repositoryNames = computed<CDNUserRepoName[]>(() => data.value?.map(repo => repo.name) || [])
 
-  const activeRepositoryStillExists = computed(() => {
-    if (!activeRepository.value) {
-      return false
-    }
-    return repositoryNames.value.includes(activeRepository.value)
-  })
-
-  watch([activeRepository, activeRepositoryStillExists], ([newActiveRepositoryValue, exists]) => {
-    if (!!newActiveRepositoryValue && !exists) {
-      activeRepository.value = undefined
-    }
-  })
-  watch([activeRepository, isAnyRepoPresent], ([newActiveRepositoryValue, isAnyRepoPresent]) => {
-    if (!!newActiveRepositoryValue && !isAnyRepoPresent) {
-      activeRepository.value = undefined
-    }
-  })
-
   return {
-    activeRepository,
-    isAnyRepoPresent,
+    lastOpenedRepository,
     repositoryNames,
     fetchStatus,
   }

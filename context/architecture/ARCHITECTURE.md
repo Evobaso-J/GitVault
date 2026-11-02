@@ -10,7 +10,7 @@ Client-only Nuxt 4 SPA that uses the user's own GitHub repos (tagged with the `g
 File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 
 - `index.vue`: public landing at `/` (the only server-rendered page, prerendered at build; `layout: false`, no middleware). Shown to everyone, logged in or not. Sections live in `src/components/Landing/`; styles are plain CSS on `--lp-*` tokens (defined in `pages/index.vue`, dark via `prefers-color-scheme` since the app forces light) and all timers/media queries start in `onMounted` so hydration matches the prerendered HTML.
-- `vaults/index.vue`: repo picker / no-repo setup wizard (`/vaults`).
+- `vaults/index.vue` (`/vaults`): opens the last opened vault, or the first in the list if that one is gone or none was opened in this browser. With no vault yet, it creates the first one. No picker: the sidebar switches vaults.
 - `/login` is not a page: a `routeRules` redirect to `/vaults`.
 - All vault pages live under `vaults/` (`/vaults/<repo>/…`):
 - `[repo]/[...path].vue`: folder listing (folders + files) of the active repo. `?file=<name>` opens that file in the preview panel beside the list, so the URL is a deep link to it. The folder fetch is not awaited: the page shows `FolderContents/Loading`, `Error` (404 vs other, with retry) or `Empty` instead of a blank page.
@@ -18,7 +18,7 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 - `[repo]/backup.vue`: phone backup (pick photos/videos, upload only those whose content is not in the vault yet; a name clash keeps both). Static segments `file` and `backup` win over the catch-all, so a root folder with either name is unreachable by URL.
 - Build links to these pages with `getPathToFolder` / `getPathToFile` (`src/resources/CDNFiles/utils.ts`), never by string concatenation: file names may contain `#`, `?` or `%`, which must be encoded per path segment.
 
-Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth` sends anonymous users to `/`, `03.active-repo`, `04.no-active-repo`).
+Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth` sends anonymous users to `/`, `03.active-repo` remembers the vault in the URL as the last opened one).
 
 Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `feedback` (POST), `auth/github` (GET). `feedback` is the one route that calls a repo outside the user's own: it opens a public issue on the GitVault repo (entry point: "Send feedback" in `UserMenu`), so its body must never carry vault data.
 
@@ -47,7 +47,7 @@ Boundary: client imports server types type-only via `~~/server/resources/*`.
 <!-- exodia:section:state -->
 No store library. State lives in composables and the `useFetch` cache.
 
-- Active repo: persisted to localStorage by `useRepoStorage` (`src/composables/useRepoStorage.ts`); auto-cleared if the repo no longer exists.
+- Last opened vault: written to localStorage by `03.active-repo`, read by `vaults/index.vue` (`src/composables/useRepoStorage.ts`). Never cleared: `/vaults` checks it against the repo list before using it. The URL, not this value, decides which vault is open.
 - Current folder path: route query, via `useRouteQueryPath`.
 - Session: `useUserSession()` from `nuxt-auth-utils`.
 - After a mutation, composables call `refreshNuxtData()` to refetch.

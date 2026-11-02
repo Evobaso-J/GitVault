@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="activeRepository ? `/vaults/${activeRepository}` : '/vaults'"
+    to="/vaults"
     class="cursor-pointer"
   >
     <NuxtImg
@@ -24,6 +24,4 @@ type AppLogoProps = {
 withDefaults(defineProps<AppLogoProps>(), {
   size: '40',
 })
-
-const { activeRepository } = useRepoStorage()
 </script>
