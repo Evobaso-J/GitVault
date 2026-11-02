@@ -30,7 +30,7 @@
             type="submit"
             variant="outline"
           >
-            {{ $t('create') }}
+            {{ submitLabel ?? $t('create') }}
           </UButton>
         </div>
       </UForm>
@@ -55,6 +55,7 @@ type CreateNamedResourceModalProps = {
   title: string
   schema: z.ZodObject<{ name: z.ZodEffects<z.ZodString> | z.ZodString }>
   initialState: { name: string }
+  submitLabel?: string
 }
 const props = defineProps<CreateNamedResourceModalProps>()
 

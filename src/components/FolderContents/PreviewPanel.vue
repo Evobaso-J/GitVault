@@ -48,6 +48,14 @@
         @click="replace(file)"
       />
       <UButton
+        :label="$t('rename')"
+        icon="i-mdi-rename-outline"
+        color="neutral"
+        variant="outline"
+        block
+        @click="rename(file)"
+      />
+      <UButton
         :label="$t('openFullScreen')"
         icon="i-mdi-arrow-expand"
         color="neutral"
@@ -61,7 +69,6 @@
         color="error"
         variant="outline"
         block
-        class="col-span-2"
         @click="remove(file)"
       />
     </div>
@@ -104,7 +111,7 @@ const props = defineProps<{ file: CDNFile }>()
 const emit = defineEmits<{ close: [] }>()
 
 const route = useRoute()
-const { getFileUrl, download, copyLink, replace, remove } = useFileActions()
+const { getFileUrl, download, copyLink, replace, rename, remove } = useFileActions()
 
 // A folder listing has no file content: text and code previews need the single-file response
 const { data: fullFile } = useFetch('/gh-repo-contents', {

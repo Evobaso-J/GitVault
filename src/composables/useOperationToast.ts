@@ -6,9 +6,10 @@ import type { OperationStatus } from '~/helpers'
  */
 export const useOperationToast = () => {
   const toast = useToast()
-  const { t } = useI18n()
+  const { t, te } = useI18n()
 
-  const runOperation = async (toastId: string, operation: () => Promise<unknown>): Promise<OperationStatus> => {
+  /** `onSuccess` replaces the default refresh, for a caller that must navigate around it */
+  const runOperation = async (toastId: string, operation: () => Promise<unknown>, onSuccess: () => unknown = () => void refreshNuxtData()): Promise<OperationStatus> => {
     toast.add({
       id: toastId,
       title: t('operationInProgress'),
@@ -20,21 +21,15 @@ export const useOperationToast = () => {
     })
     try {
       await operation()
-      toast.update(toastId, {
-        title: t('successMessage'),
-        color: 'success',
-        duration: 3000,
-        icon: 'i-mdi-check',
-        ui: {
-          icon: 'animate-none',
-        },
-      })
-      refreshNuxtData()
-      return 'success'
     }
     catch (error) {
       let errorMessage = t('errorMessage')
-      if (error instanceof Error && 'statusMessage' in error && typeof error.statusMessage === 'string') {
+      // A server error with a known `data.code` (OperationErrorCode) is shown translated
+      const code = error instanceof Error && 'data' in error ? (error.data as { data?: { code?: unknown } } | undefined)?.data?.code : undefined
+      if (typeof code === 'string' && te(`operationError.${code}`)) {
+        errorMessage = t(`operationError.${code}`)
+      }
+      else if (error instanceof Error && 'statusMessage' in error && typeof error.statusMessage === 'string') {
         errorMessage = error.statusMessage
       }
       toast.update(toastId, {
@@ -48,6 +43,18 @@ export const useOperationToast = () => {
       })
       return 'error'
     }
+    toast.update(toastId, {
+      title: t('successMessage'),
+      color: 'success',
+      duration: 3000,
+      icon: 'i-mdi-check',
+      ui: {
+        icon: 'animate-none',
+      },
+    })
+    // The operation succeeded: a failed refresh or navigation must not report it as failed
+    await Promise.resolve().then(onSuccess).catch(() => {})
+    return 'success'
   }
 
   return { runOperation }

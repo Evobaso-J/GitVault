@@ -25,6 +25,13 @@
         @click="replace(file)"
       />
       <UButton
+        :label="$t('rename')"
+        icon="i-mdi-rename-outline"
+        color="neutral"
+        variant="outline"
+        @click="rename(file)"
+      />
+      <UButton
         :label="$t('delete')"
         icon="i-mdi-trash-can-outline"
         color="error"
@@ -70,8 +77,9 @@ const { data: file } = await useFetch('/gh-repo-contents', {
 })
 
 useHead({
-  title: file.value?.name,
+  // A getter: a rename keeps this page mounted and swaps the file
+  title: () => file.value?.name,
 })
 
-const { copyLink, replace, download, remove } = useFileActions()
+const { copyLink, replace, rename, download, remove } = useFileActions()
 </script>

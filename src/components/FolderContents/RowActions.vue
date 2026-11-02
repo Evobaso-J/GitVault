@@ -72,7 +72,7 @@ defineComponent({ name: 'FolderContentsRowActions' })
 const props = defineProps<{ file: CDNFile }>()
 
 const { t } = useI18n()
-const { getFileUrl, download, copyLink, replace, remove } = useFileActions()
+const { getFileUrl, download, copyLink, replace, rename, remove } = useFileActions()
 
 const isDesktop = useBreakpoints(breakpointsTailwind).greaterOrEqual('md')
 const isDrawerOpen = ref(false)
@@ -86,6 +86,7 @@ const items = computed<DropdownMenuItem[][]>(() => [
   [
     { label: t('openInNewTab'), icon: 'i-mdi-open-in-new', to: getFileUrl(props.file), target: '_blank' },
     { label: t('replace'), icon: 'i-mdi-autorenew', onSelect: () => replace(props.file) },
+    { label: t('rename'), icon: 'i-mdi-rename-outline', onSelect: () => rename(props.file) },
     ...(props.file.html_url ? [{ label: t('viewOnGitHub'), icon: 'i-mdi-github', to: props.file.html_url, target: '_blank' }] : []),
   ],
   [

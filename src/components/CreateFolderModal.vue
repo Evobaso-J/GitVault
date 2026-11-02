@@ -11,6 +11,7 @@
 
 <script setup lang='ts'>
 import { z } from 'zod'
+import { isFileNameValid } from '~/resources/CDNFiles/constants'
 
 defineComponent({ name: 'CreateFolderModal' })
 
@@ -19,9 +20,7 @@ const model = defineModel<boolean>()
 const { t } = useI18n()
 
 const createFolderSchema = z.object({
-  name: z.string().min(1).refine(name => !name.includes('/'), {
-    message: t('validationError.noSlashInFolderName'),
-  }),
+  name: z.string().trim().refine(isFileNameValid, { message: t('validationError.invalidFileName') }),
 })
 
 const { createFolder } = useVaultContents()
