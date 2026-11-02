@@ -24,7 +24,6 @@
     "action": "Delete vault",
     "confirmLabel": "Type {name} to confirm",
     "description": "{name} and all its files will be deleted permanently. This can't be undone.",
-    "signInAgain": "Sign out and sign in again to allow @:app.name to delete vaults.",
     "title": "Delete vault?"
   },
   "download": "Download",
