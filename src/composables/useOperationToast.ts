@@ -1,3 +1,4 @@
+import type { ToastProps } from '@nuxt/ui'
 import type { OperationStatus } from '~/helpers'
 
 /**
@@ -8,8 +9,11 @@ export const useOperationToast = () => {
   const toast = useToast()
   const { t, te } = useI18n()
 
-  /** `onSuccess` replaces the default refresh, for a caller that must navigate around it */
-  const runOperation = async (toastId: string, operation: () => Promise<unknown>, onSuccess: () => unknown = () => void refreshNuxtData()): Promise<OperationStatus> => {
+  /**
+   * `onSuccess` replaces the default refresh, for a caller that must navigate around it.
+   * `successToast` overrides the generic success toast; it runs after the operation, so it can use its result.
+   */
+  const runOperation = async (toastId: string, operation: () => Promise<unknown>, onSuccess: () => unknown = () => void refreshNuxtData(), successToast?: () => Partial<ToastProps>): Promise<OperationStatus> => {
     toast.add({
       id: toastId,
       title: t('operationInProgress'),
@@ -51,6 +55,7 @@ export const useOperationToast = () => {
       ui: {
         icon: 'animate-none',
       },
+      ...successToast?.(),
     })
     // The operation succeeded: a failed refresh or navigation must not report it as failed
     await Promise.resolve().then(onSuccess).catch(() => {})

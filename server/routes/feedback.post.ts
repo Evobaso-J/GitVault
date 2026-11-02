@@ -11,12 +11,13 @@ const feedbackSchema = z.object({
 export default defineEventHandler(async (event) => {
   const { message } = await readValidatedBody(event, data => feedbackSchema.parse(data))
   const firstLine = message.split('\n')[0]!
-  await github(event, () => '/repos/Evobaso-J/GitVault/issues', {
+  const issue = await github<{ html_url: string }>(event, () => '/repos/Evobaso-J/GitVault/issues', {
     method: 'POST',
     body: {
       title: `[Feedback] ${firstLine.length > 80 ? `${firstLine.slice(0, 77)}...` : firstLine}`,
       body: message,
     },
   })
-  setResponseStatus(event, 204)
+  // The toast links to the issue just opened
+  return { url: issue.html_url }
 })

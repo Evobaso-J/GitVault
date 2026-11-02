@@ -317,6 +317,8 @@
     "description": "Your message becomes a public issue on the GitVault GitHub repo, posted from your account.",
     "placeholder": "What works, what doesn't, what you'd like to see...",
     "required": "Write a message first",
-    "send": "Send"
+    "send": "Send",
+    "sent": "Feedback sent, thanks!",
+    "viewIssue": "View on GitHub"
   }
 }

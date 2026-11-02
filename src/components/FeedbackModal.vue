@@ -54,10 +54,18 @@ const state = reactive({ message: '' })
 const { runOperation } = useOperationToast()
 const send = async () => {
   model.value = false
-  const status = await runOperation('feedback', () => $fetch('/feedback', {
-    method: 'POST',
-    body: { message: state.message.trim() },
-  }), () => {})
+  let url = ''
+  const status = await runOperation('feedback', async () => {
+    ({ url } = await $fetch('/feedback', {
+      method: 'POST',
+      body: { message: state.message.trim() },
+    }))
+  }, () => {}, () => ({
+    title: t('feedback.sent'),
+    // Long enough to reach the button
+    duration: 8000,
+    actions: [{ label: t('feedback.viewIssue'), icon: 'i-mdi-github', to: url, target: '_blank', color: 'neutral', variant: 'outline' }],
+  }))
   // Keep the text on failure so it can be resent
   if (status === 'success') state.message = ''
 }
