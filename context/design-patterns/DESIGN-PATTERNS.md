@@ -23,7 +23,7 @@ Server: validate every body with zod via `readValidatedBody` (`server/routes/gh-
 
 ## Components & UI
 
-Use Nuxt UI 4 `U*` components + Tailwind 4 utilities. Palettes in `src/assets/css/main.css` (Tailwind 4 `@theme`), semantic color mapping in `src/app.config.ts`. Icons: Iconify classes (`i-mdi-*`, …) from collections in `package.json` devDependencies. Confirmations awaited from a composable use `useOverlay().create(Component, { destroyOnClose: true }).open(props)`, the component emitting `close` with the answer (`ConfirmDeleteModal.vue`); create it inside the action, not at setup, or every row's composable leaves an overlay registered. Destructive actions use `color="error"`.
+Use Nuxt UI 4 `U*` components + Tailwind 4 utilities. Palettes in `src/assets/css/main.css` (Tailwind 4 `@theme`), semantic color mapping in `src/app.config.ts`. Icons: Iconify classes (`i-mdi-*`, …) from collections in `package.json` devDependencies. Confirmations awaited from a composable use `useOverlay().create(Component, { destroyOnClose: true }).open(props)`, the component emitting `close` with the answer (`ConfirmDeleteModal.vue`); create it inside the action, not at setup, or every row's composable leaves an overlay registered. Destructive actions use `color="error"`. Loading states are `USkeleton` shapes mirroring the final layout, with `aria-busy` (plus an `sr-only` `role="status"` on full-page ones); data is fetched with a non-awaited `useFetch` so the skeleton renders immediately. `USkeleton` defaults to `bg-elevated`: inside a `bg-elevated` container pass `bg-accented` or it is invisible.
 
 ## File previews
 

@@ -1,5 +1,9 @@
 <template>
-  <div class="overflow-auto rounded-lg bg-elevated p-4 text-sm whitespace-pre-wrap break-words">
+  <FilePreviewSkeleton v-if="source.content === undefined" />
+  <div
+    v-else
+    class="overflow-auto rounded-lg bg-elevated p-4 text-sm whitespace-pre-wrap break-words"
+  >
     {{ parsedContent }}
   </div>
 </template>

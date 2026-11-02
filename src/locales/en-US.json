@@ -79,6 +79,7 @@
   "folders": "Folders",
   "gitHub": "GitHub",
   "home": "Home",
+  "loading": "Loading",
   "loadingFolder": "Loading the folder",
   "logout": "Logout",
   "moreActions": "More actions for {name}",

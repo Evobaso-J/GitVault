@@ -15,7 +15,7 @@
     </div>
 
     <FilePreview
-      :source="fullFile ?? file"
+      :source="fullFile?.path === file.path ? fullFile : file"
       class="h-64"
     />
 
@@ -113,7 +113,8 @@ const emit = defineEmits<{ close: [] }>()
 const route = useRoute()
 const { getFileUrl, download, copyLink, replace, rename, remove } = useFileActions()
 
-// A folder listing has no file content: text and code previews need the single-file response
+// A folder listing has no file content: text and code previews need the single-file response.
+// Until it arrives for the selected file, the listing entry is shown (skeleton), never the previous file
 const { data: fullFile } = useFetch('/gh-repo-contents', {
   query: computed(() => ({ repo: route.params.repo, path: props.file.path })),
   transform: parseGhRepoContentsToCDNFile,
