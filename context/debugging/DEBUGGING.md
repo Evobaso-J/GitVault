@@ -29,7 +29,7 @@ How to diagnose common problems. Start here when something breaks.
 - **Auth / session**: redirect loops → check page `definePageMeta` middleware and `useUserSession()`; OAuth scope in `server/routes/auth/github.get.ts`.
 - **Garbled non-ASCII text in previews**: GitHub contents are base64; decode via `decodeBase64Utf8` (`src/resources/CDNFiles/utils.ts`), never bare `atob`.
 - **Stale file URLs**: GitHub `download_url` tokens expire; listings refetch on interval.
-- **Active repo vanishes**: `useRepoStorage` clears it if the repo is no longer in `gh-user-repos`.
+- **`/vaults` opens the wrong vault**: the last opened vault is per browser (localStorage `default-repo`); if it's gone from `gh-user-repos`, the first vault in the list opens instead.
 
 ## L3 Data
 
