@@ -23,6 +23,7 @@ Single variant. No tenants, markets or feature flags. Per-user isolation comes f
 <!-- exodia:section:config -->
 - `runtimeConfig` in `nuxt.config.ts`, overridden by `NUXT_*` env vars (Nuxt naming convention). Read with `useRuntimeConfig(event)` server-side, `useRuntimeConfig()` client-side for `public` keys.
 - OAuth: `runtimeConfig.oauth.github` (`nuxt-auth-utils`); scope requested in `server/routes/auth/github.get.ts`.
+- OAuth scopes are `repo` + `delete_repo` (vault deletion). A session keeps the scopes granted at sign-in (`secure.tokens.scope`), so adding a scope needs every user to sign out and back in (an old session gets GitHub's 403 on vault delete, shown as a plain error toast).
 - Session sealing: the `nuxt-auth-utils` session password env var (see `.env.example`); must be at least 32 characters.
 - App constants (not env-driven): `src/config.ts`. UI theme: `src/app.config.ts` + `src/assets/css/main.css`.
 

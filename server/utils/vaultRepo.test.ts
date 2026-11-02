@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { H3Event } from 'h3'
-import { createVaultRepo, listVaultRepos } from './vaultRepo'
+import { createVaultRepo, deleteVaultRepo, listVaultRepos } from './vaultRepo'
 import { github } from './github'
 
 vi.mock('./github', () => ({ github: vi.fn() }))
@@ -59,5 +59,46 @@ describe('listVaultRepos', () => {
       { affiliation: 'owner', per_page: '100', page: '1' },
       { affiliation: 'owner', per_page: '100', page: '2' },
     ])
+  })
+})
+
+describe('deleteVaultRepo', () => {
+  const repo = (topics: string[], owner = 'octo') => ({ name: 'notes', topics, owner: { login: owner } })
+  // Like the real github(): the endpoint is built with the session login
+  const answer = (value: unknown) => githubMock.mockImplementationOnce(async (_event, endpoint) => {
+    endpoint('octo')
+    return value
+  })
+
+  it('refuses a repo without the gitvault topic and never sends the DELETE', async () => {
+    answer(repo(['dotfiles']))
+
+    await expect(deleteVaultRepo(event, 'notes')).rejects.toMatchObject({ statusCode: 404 })
+    expect(githubMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('refuses a vault another account owns (a transferred repo redirects there)', async () => {
+    answer(repo(['gitvault'], 'some-org'))
+
+    await expect(deleteVaultRepo(event, 'notes')).rejects.toMatchObject({ statusCode: 404 })
+    expect(githubMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('refuses the last vault and never sends the DELETE', async () => {
+    answer(repo(['gitvault']))
+    answer([repo(['gitvault']), repo(['dotfiles'])])
+
+    await expect(deleteVaultRepo(event, 'notes')).rejects.toMatchObject({ statusCode: 409 })
+    expect(githubMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('deletes a vault the user owns', async () => {
+    answer(repo(['gitvault']))
+    answer([repo(['gitvault']), { ...repo(['gitvault']), name: 'photos' }])
+    answer(undefined)
+
+    await deleteVaultRepo(event, 'notes')
+    expect(endpointOf(2)).toBe('/repos/octo/notes')
+    expect(githubMock.mock.calls[2]![2]).toEqual({ method: 'DELETE' })
   })
 })

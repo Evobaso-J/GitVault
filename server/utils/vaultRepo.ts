@@ -1,6 +1,6 @@
 import { GITVAULT_TOPIC } from '~/config'
 import { isVaultRepo } from '~~/server/resources/gitHubUserRepos'
-import type { CDNUserReposData, GhCreatedUserRepo, GhUserReposData, GhUserReposRequest } from '~~/server/resources/gitHubUserRepos'
+import type { CDNUserReposData, GhCreatedUserRepo, GhRepo, GhUserReposData, GhUserReposRequest } from '~~/server/resources/gitHubUserRepos'
 import { github } from './github'
 
 /**
@@ -42,4 +42,25 @@ export const listVaultRepos = async (event: Parameters<typeof github>[0]): Promi
     repos.push(...batch)
     if (batch.length < PER_PAGE) return repos.filter(isVaultRepo)
   }
+}
+
+/**
+ * Deletes a vault. The token can delete any repo of the user, so the repo is read first and
+ * refused unless it is a vault the user owns (same topic check as the list).
+ * The DELETE uses the name GitHub returned: a renamed repo answers on its old name too.
+ */
+export const deleteVaultRepo = async (event: Parameters<typeof github>[0], name: string): Promise<void> => {
+  let owner = ''
+  const repo = await github<GhRepo>(event, (login) => {
+    owner = login
+    return `/repos/${login}/${encodeURIComponent(name)}`
+  })
+  if (repo.owner.login !== owner || !isVaultRepo(repo)) {
+    throw createError({ statusCode: 404, statusMessage: `${name} is not a vault` })
+  }
+  // The app always needs a vault: with none left, home would silently create a new one
+  if ((await listVaultRepos(event)).length <= 1) {
+    throw createError({ statusCode: 409, statusMessage: 'The last vault can\'t be deleted' })
+  }
+  await github(event, login => `/repos/${login}/${encodeURIComponent(repo.name)}`, { method: 'DELETE' })
 }

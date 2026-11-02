@@ -41,4 +41,5 @@ Every handler (e.g. `server/routes/gh-repo-contents/index.put.ts`):
 - Uploads go through the shared queue in `useVaultContents` (`upload(files)`, shown by `UploadQueue.vue`): one PUT at a time, because parallel PUTs on one branch get 409; each file is first checked with a GET, and an existing file waits for Replace / Keep both (`name (n).ext`) / Skip.
 - `download_url` carries a short-lived token: lists refetch on an interval.
 - Creating a vault is two calls (`createVaultRepo` in `server/utils/vaultRepo.ts`): `POST /user/repos` takes no topics, so `PUT …/topics` follows; it replaces every topic. Use the name GitHub returns, it normalizes the requested one.
+- Deleting a vault (`DELETE gh-user-repos`, `deleteVaultRepo` in `server/utils/vaultRepo.ts`) deletes the whole repo, and the token can delete any repo of the user: the repo is read first and refused (404) unless it has the vault topic and the session user owns it (a transferred repo redirects to its new owner). Needs the `delete_repo` scope, see `context/operations/OPERATIONS.md`.
 - `gh-repo-tree` reads the branch from `runtimeConfig.public.ghDefaultBranch`.
