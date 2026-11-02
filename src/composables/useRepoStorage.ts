@@ -13,7 +13,7 @@ export const useRepoStorage = () => {
   const activeRepository = ref<CDNUserRepoName>()
   useLocalStorage('default-repo', activeRepository)
 
-  const { data, status: fetchStatus, refresh } = useFetch('/gh-user-repos')
+  const { data, status: fetchStatus } = useFetch('/gh-user-repos')
 
   const isAnyRepoPresent = computed<boolean>(() => !!data.value?.length)
 
@@ -42,6 +42,5 @@ export const useRepoStorage = () => {
     isAnyRepoPresent,
     repositoryNames,
     fetchStatus,
-    refresh,
   }
 }

@@ -4,21 +4,21 @@ import type { CDNUserRepoName } from '~/resources/CDNUserRepos'
 export const useDeleteUserRepo = () => {
   const { runOperation } = useOperationToast()
   const overlay = useOverlay()
-  const { activeRepository, refresh } = useRepoStorage()
+  const { activeRepository, repositoryNames } = useRepoStorage()
 
   const deleteUserRepo = async (name: CDNUserRepoName) => {
     // Created on demand and destroyed on close, like ConfirmDeleteModal in useFileActions
     const confirmed = await overlay.create(ConfirmDeleteVaultModal, { destroyOnClose: true }).open({ name })
     if (!confirmed) return
-    const result = await runOperation(`delete-repo-${name}`, () => $fetch('/gh-user-repos', {
+    // Optimistic: move to another vault before deleting, or the refresh after the delete would
+    // refetch the deleted one. Another vault always exists: the last one can't be deleted.
+    const next = repositoryNames.value.find(repo => repo !== name)
+    if (activeRepository.value === name) activeRepository.value = next
+    await navigateTo(next ? `/${next}` : '/')
+    await runOperation(`delete-repo-${name}`, () => $fetch('/gh-user-repos', {
       method: 'DELETE',
       query: { repo: name },
     }))
-    if (result !== 'success') return
-    // The vault list is shared: '/' would read the stale one and send the user back here
-    await refresh()
-    if (activeRepository.value === name) activeRepository.value = undefined
-    await navigateTo('/')
   }
 
   return { deleteUserRepo }
