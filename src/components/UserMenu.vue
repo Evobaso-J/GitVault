@@ -28,7 +28,7 @@ const items = [
       icon: 'i-heroicons-arrow-left-on-rectangle',
       onSelect: async () => {
         await clear()
-        navigateTo('/login')
+        navigateTo('/')
       },
     },
   ],

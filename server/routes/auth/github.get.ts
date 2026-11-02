@@ -6,7 +6,7 @@ export default defineEventHandler(event => defineOAuthGitHubEventHandler({
         tokens,
       },
     })
-    return sendRedirect(event, '/')
+    return sendRedirect(event, '/vaults')
   },
   config: {
     scope: ['repo'],

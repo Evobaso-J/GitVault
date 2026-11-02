@@ -42,7 +42,7 @@ export const useFileActions = () => {
       if (!confirmed) return
       // Leave the file page for its folder before deleting: the refresh after the delete
       // would refetch the deleted file on the page. A failed delete shows its toast there.
-      if (route.name === 'repo-file-path') {
+      if (route.name === 'vaults-repo-file-path') {
         await navigateTo(getPathToFolder({ path: file.path.split('/').slice(0, -1).join('/'), repo: route.params.repo }))
         await removeFile({ path: file.path, sha: file.sha })
         return
@@ -77,7 +77,7 @@ export const useFileActions = () => {
   const rename = async (file: CDNFile) => {
     const name = await overlay.create(RenameFileModal, { destroyOnClose: true }).open({ name: file.name })
     if (!name || name === file.name) return
-    const onFilePage = route.name === 'repo-file-path'
+    const onFilePage = route.name === 'vaults-repo-file-path'
     await renameFile({ path: file.path, sha: file.sha }, name, async () => {
       // File page: open the new path instead of refreshing, which would refetch the old one
       if (onFilePage) {

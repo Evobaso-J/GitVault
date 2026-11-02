@@ -1,8 +1,7 @@
 <template>
   <NuxtLink
-    :to="`/${activeRepository}`"
+    :to="activeRepository ? `/vaults/${activeRepository}` : '/vaults'"
     class="cursor-pointer"
-    :class="{ 'pointer-events-none': !activeRepository }"
   >
     <NuxtImg
       src="/images/logo.svg"

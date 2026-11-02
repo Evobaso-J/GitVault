@@ -10,7 +10,7 @@
       <UButton
         :label="$t('phoneBackup.title')"
         icon="i-mdi-cellphone-arrow-down"
-        :to="`/${route.params.repo}/backup`"
+        :to="`/vaults/${route.params.repo}/backup`"
         color="neutral"
         variant="ghost"
         class="justify-start"
@@ -80,20 +80,20 @@ import type { BreadcrumbItem } from '@nuxt/ui'
 
 const route = useRoute()
 // Folder actions write to the current folder, which the backup page doesn't have
-const isBackupPage = computed(() => route.name === 'repo-backup')
+const isBackupPage = computed(() => route.name === 'vaults-repo-backup')
 const links = computed<BreadcrumbItem[]>(() => {
   const repo = String(route.params.repo)
-  const linksFromRoute = route.path.split('/')
-    .filter(pathSection => !!pathSection && pathSection !== repo)
+  // Drop the `vaults` and repo segments: by position, so a folder named like the repo survives
+  const linksFromRoute = route.path.split('/').filter(Boolean).slice(2)
     .map((path, index, array) => ({
       label: decodeURIComponent(path),
-      to: `/${repo}/${array.slice(0, index + 1).join('/')}`,
+      to: `/vaults/${repo}/${array.slice(0, index + 1).join('/')}`,
     }))
 
   return [{
     label: repo,
     icon: 'i-mdi-archive-outline',
-    to: `/${repo}`,
+    to: `/vaults/${repo}`,
   }, ...linksFromRoute]
 })
 

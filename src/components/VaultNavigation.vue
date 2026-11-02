@@ -83,7 +83,7 @@ const { repositoryNames, fetchStatus } = useRepoStorage()
 const items = computed<NavigationMenuItem[]>(() => repositoryNames.value.map(name => ({
   label: name,
   icon: 'i-mdi-archive-outline',
-  to: `/${name}`,
+  to: `/vaults/${name}`,
   // The vault stays active on every folder below its root
   active: name === route.params.repo,
 })))

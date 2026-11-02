@@ -118,7 +118,7 @@ const groups = computed<CommandPaletteGroup<CommandPaletteItem>[]>(() => {
       label: t('vaults'),
       items: repositoryNames.value
         .filter(name => name !== repo.value)
-        .map(name => ({ label: name, icon: 'i-mdi-archive-outline', onSelect: () => go(`/${name}`) })),
+        .map(name => ({ label: name, icon: 'i-mdi-archive-outline', onSelect: () => go(getPathToFolder({ path: '', repo: name })) })),
     },
   ]
 })

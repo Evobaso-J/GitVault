@@ -14,7 +14,7 @@ export const useDeleteUserRepo = () => {
     // refetch the deleted one. Another vault always exists: the last one can't be deleted.
     const next = repositoryNames.value.find(repo => repo !== name)
     if (activeRepository.value === name) activeRepository.value = next
-    await navigateTo(next ? `/${next}` : '/')
+    await navigateTo(next ? `/vaults/${next}` : '/vaults')
     await runOperation(`delete-repo-${name}`, () => $fetch('/gh-user-repos', {
       method: 'DELETE',
       query: { repo: name },

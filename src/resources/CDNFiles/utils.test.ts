@@ -15,11 +15,11 @@ describe('decodeBase64Utf8', () => {
 describe('getPathToFile / getPathToFolder', () => {
   it('encodes each segment of a file path', () => {
     expect(getPathToFile({ path: 'smoke/note #1 50% off?.txt', repo: 'gitvault-a' }))
-      .toBe('/gitvault-a/file/smoke/note%20%231%2050%25%20off%3F.txt')
+      .toBe('/vaults/gitvault-a/file/smoke/note%20%231%2050%25%20off%3F.txt')
   })
 
   it('encodes each segment of a folder path', () => {
-    expect(getPathToFolder({ path: 'a #1/b?', repo: 'gitvault-a' })).toBe('/gitvault-a/a%20%231/b%3F')
+    expect(getPathToFolder({ path: 'a #1/b?', repo: 'gitvault-a' })).toBe('/vaults/gitvault-a/a%20%231/b%3F')
   })
 
   it('returns an empty path without a repo', () => {

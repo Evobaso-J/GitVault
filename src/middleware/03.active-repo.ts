@@ -14,11 +14,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const routeRepoName = getRouteParamRepository(to.params.repo)
 
   if (!activeRepository.value && !routeRepoName) {
-    return navigateTo('/')
+    return navigateTo('/vaults')
   }
 
   if (!routeRepoName) {
-    return navigateTo(`/${activeRepository.value}`)
+    return navigateTo(`/vaults/${activeRepository.value}`)
   }
 
   if (isRepoNameValid(routeRepoName)) {
