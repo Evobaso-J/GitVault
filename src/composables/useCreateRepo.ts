@@ -12,7 +12,7 @@ export const useCreateUserRepo = () => {
         body: { name, private: true },
       }))
     })
-    if (createdName) await navigateTo(`/${createdName}`)
+    if (createdName) await navigateTo(`/vaults/${createdName}`)
   }
 
   return { createUserRepo }

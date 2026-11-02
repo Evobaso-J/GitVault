@@ -67,11 +67,11 @@ const getVaultUrl = ({ path, repo }: VaultPathInput, section?: 'file'): string =
     console.error('repo is not a string:', repo)
     return ''
   }
-  return `/${[repo, section, encodePath(path)].filter(Boolean).join('/')}`
+  return `/${['vaults', repo, section, encodePath(path)].filter(Boolean).join('/')}`
 }
 
-/** App URL of a file's page, e.g. `/gitvault-a/file/docs/a%20%231.txt` */
+/** App URL of a file's page, e.g. `/vaults/gitvault-a/file/docs/a%20%231.txt` */
 export const getPathToFile = (input: VaultPathInput): string => getVaultUrl(input, 'file')
 
-/** App URL of a folder, e.g. `/gitvault-a/docs/2026` */
+/** App URL of a folder, e.g. `/vaults/gitvault-a/docs/2026` */
 export const getPathToFolder = (input: VaultPathInput): string => getVaultUrl(input)

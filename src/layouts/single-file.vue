@@ -15,16 +15,16 @@ import type { BreadcrumbItem } from '@nuxt/ui'
 const { t } = useI18n()
 const route = useRoute()
 const links = computed<BreadcrumbItem[]>(() => {
-  const linksFromRoute = route.path.split('/')
-    .filter(pathSection => !!pathSection && pathSection !== route.params.repo && pathSection !== 'file')
+  // Drop the `vaults`, repo and `file` segments: by position, so folders named like them survive
+  const linksFromRoute = route.path.split('/').filter(Boolean).slice(3)
     .map((path, index, array) => ({
       label: decodeURIComponent(path),
-      to: `/${route.params.repo}/${array.slice(0, index + 1).join('/')}`,
+      to: `/vaults/${route.params.repo}/${array.slice(0, index + 1).join('/')}`,
     }))
 
   return [{
     label: t('home'),
-    to: `/${route.params.repo}`,
+    to: `/vaults/${route.params.repo}`,
   }, ...linksFromRoute]
 })
 </script>
