@@ -84,12 +84,21 @@ describe('deleteVaultRepo', () => {
     expect(githubMock).toHaveBeenCalledTimes(1)
   })
 
+  it('refuses the last vault and never sends the DELETE', async () => {
+    answer(repo(['gitvault']))
+    answer([repo(['gitvault']), repo(['dotfiles'])])
+
+    await expect(deleteVaultRepo(event, 'notes')).rejects.toMatchObject({ statusCode: 409 })
+    expect(githubMock).toHaveBeenCalledTimes(2)
+  })
+
   it('deletes a vault the user owns', async () => {
     answer(repo(['gitvault']))
+    answer([repo(['gitvault']), { ...repo(['gitvault']), name: 'photos' }])
     answer(undefined)
 
     await deleteVaultRepo(event, 'notes')
-    expect(endpointOf(1)).toBe('/repos/octo/notes')
-    expect(githubMock.mock.calls[1]![2]).toEqual({ method: 'DELETE' })
+    expect(endpointOf(2)).toBe('/repos/octo/notes')
+    expect(githubMock.mock.calls[2]![2]).toEqual({ method: 'DELETE' })
   })
 })

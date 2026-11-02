@@ -58,5 +58,9 @@ export const deleteVaultRepo = async (event: Parameters<typeof github>[0], name:
   if (repo.owner.login !== owner || !isVaultRepo(repo)) {
     throw createError({ statusCode: 404, statusMessage: `${name} is not a vault` })
   }
+  // The app always needs a vault: with none left, home would silently create a new one
+  if ((await listVaultRepos(event)).length <= 1) {
+    throw createError({ statusCode: 409, statusMessage: 'The last vault can\'t be deleted' })
+  }
   await github(event, login => `/repos/${login}/${encodeURIComponent(repo.name)}`, { method: 'DELETE' })
 }

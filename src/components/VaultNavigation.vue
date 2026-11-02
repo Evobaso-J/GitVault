@@ -16,7 +16,7 @@
       @click="isModalOpen = true"
     />
     <UButton
-      v-if="route.params.repo"
+      v-if="route.params.repo && repositoryNames.length > 1"
       :label="$t('deleteVault.action')"
       icon="i-mdi-trash-can-outline"
       color="error"
