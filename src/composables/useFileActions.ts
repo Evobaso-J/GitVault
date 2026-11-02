@@ -84,9 +84,11 @@ export const useFileActions = () => {
         await navigateTo(getPathToFile({ path: createFilePath(file.path.split('/').slice(0, -1).join('/'), name), repo: route.params.repo }), { replace: true })
         return
       }
-      // Folder view: move the preview to the new name only once the listing has it, so it stays open
-      await refreshNuxtData()
+      // Folder view: start the refresh first, so the listing is already pending when the
+      // query moves to the new name and the page keeps the preview open (see selectedFile)
+      const refreshing = refreshNuxtData()
       if (route.query.file === file.name) await navigateTo({ query: { ...route.query, file: name } })
+      await refreshing
     })
   }
 
