@@ -20,7 +20,7 @@ File-based Nuxt routing under `src/pages/` (`srcDir` in `nuxt.config.ts`).
 
 Route middleware in `src/middleware/` is **named, not global**: pages opt in via `definePageMeta({ middleware: [...] })`. Numeric prefixes only order files (`00.auth` sends anonymous users to `/`, `03.active-repo`, `04.no-active-repo`).
 
-Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `auth/github` (GET).
+Server routes live in `server/routes/` with no `/api` prefix: `gh-repo-contents` (GET/PUT), `gh-repo-tree` (GET), `gh-user-repos` (GET/POST), `feedback` (POST), `auth/github` (GET). `feedback` is the one route that calls a repo outside the user's own: it opens a public issue on the GitVault repo (entry point: "Send feedback" in `UserMenu`), so its body must never carry vault data.
 
 ### Key Files
 
