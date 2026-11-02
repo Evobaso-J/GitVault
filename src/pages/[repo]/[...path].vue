@@ -116,7 +116,12 @@ const summary = computed(() => [
 ].join(' · '))
 
 // The previewed file lives in the query, so the folder URL is a deep link to it
-const selectedFile = computed(() => files.value.find(file => file.name === route.query.file))
+// Kept while the listing refreshes: after a rename the query has the new name before the listing does
+const selectedFile = ref<CDNFile>()
+watchEffect(() => {
+  const found = files.value.find(file => file.name === route.query.file)
+  if (found || status.value !== 'pending' || !route.query.file) selectedFile.value = found
+})
 const closePreview = () => navigateTo({ query: { ...route.query, file: undefined } })
 
 const folderName = computed(() => queryPath.value?.split('/').pop() ?? String(repo))
