@@ -39,7 +39,9 @@ export const commitTreeChanges = async (
       return await github(event, owner => `${repoUrl(owner)}/git/refs/heads/${branch}`, { method: 'PATCH', body: { sha: commit.sha, force: false } })
     }
     catch (error) {
+      // Other 422s (e.g. branch protection) won't pass on a retry
       const notFastForward = error instanceof Error && 'statusCode' in error && error.statusCode === 422
+        && 'statusMessage' in error && typeof error.statusMessage === 'string' && /fast.forward/i.test(error.statusMessage)
       if (!notFastForward) throw error
       if (attempt) throw operationError(409, 'vaultChanged', 'The vault changed meanwhile: refresh and try again')
     }

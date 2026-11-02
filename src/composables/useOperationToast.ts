@@ -21,17 +21,6 @@ export const useOperationToast = () => {
     })
     try {
       await operation()
-      toast.update(toastId, {
-        title: t('successMessage'),
-        color: 'success',
-        duration: 3000,
-        icon: 'i-mdi-check',
-        ui: {
-          icon: 'animate-none',
-        },
-      })
-      await onSuccess()
-      return 'success'
     }
     catch (error) {
       let errorMessage = t('errorMessage')
@@ -54,6 +43,18 @@ export const useOperationToast = () => {
       })
       return 'error'
     }
+    toast.update(toastId, {
+      title: t('successMessage'),
+      color: 'success',
+      duration: 3000,
+      icon: 'i-mdi-check',
+      ui: {
+        icon: 'animate-none',
+      },
+    })
+    // The operation succeeded: a failed refresh or navigation must not report it as failed
+    await Promise.resolve().then(onSuccess).catch(() => {})
+    return 'success'
   }
 
   return { runOperation }

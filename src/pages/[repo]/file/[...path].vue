@@ -77,7 +77,8 @@ const { data: file } = await useFetch('/gh-repo-contents', {
 })
 
 useHead({
-  title: file.value?.name,
+  // A getter: a rename keeps this page mounted and swaps the file
+  title: () => file.value?.name,
 })
 
 const { copyLink, replace, rename, download, remove } = useFileActions()

@@ -59,10 +59,13 @@ describe('commitTreeChanges', () => {
     expect(githubMock).toHaveBeenCalledTimes(10)
   })
 
-  it('does not retry other errors', async () => {
-    mockRound('h1', () => Promise.reject(createError({ statusCode: 403, statusMessage: 'Forbidden' })))
+  it.each([
+    createError({ statusCode: 403, statusMessage: 'Forbidden' }),
+    createError({ statusCode: 422, statusMessage: 'Protected branch update failed' }),
+  ])('does not retry other errors: %s', async (error) => {
+    mockRound('h1', () => Promise.reject(error))
 
-    await expect(commitTreeChanges(event, 'notes', 'main', () => entries, 'm')).rejects.toMatchObject({ statusCode: 403 })
+    await expect(commitTreeChanges(event, 'notes', 'main', () => entries, 'm')).rejects.toBe(error)
     expect(githubMock).toHaveBeenCalledTimes(5)
   })
 
