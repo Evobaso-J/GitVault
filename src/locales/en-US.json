@@ -110,6 +110,8 @@
     "tooLarge": "{n} file over {size} skipped: | {n} files over {size} skipped:"
   },
   "preview": "Preview",
+  "rename": "Rename",
+  "renameFile": "Rename file",
   "replace": "Replace",
   "retry": "Retry",
   "searchPlaceholder": "Search files, folders or actions…",
@@ -156,6 +158,7 @@
     "uploading": "Uploading {current} of {total}"
   },
   "validationError": {
+    "invalidFileName": "Enter a file name without \"/\"",
     "noSlashInFolderName": "Folder name cannot contain \"/\""
   },
   "vault": "Vault",

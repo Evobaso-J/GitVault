@@ -1,4 +1,4 @@
-import { ConfirmDeleteModal } from '#components'
+import { ConfirmDeleteModal, RenameFileModal } from '#components'
 import type { CDNFile } from '~/resources/CDNFiles'
 import type { CDNFolder } from '~/resources/CDNFolders'
 import { downloadFile, getPathToFile, getPathToFolder } from '~/resources/CDNFiles/utils'
@@ -15,7 +15,7 @@ export const useFileActions = () => {
   const { origin } = useRequestURL()
   const toast = useToast()
   const { t } = useI18n()
-  const { pickAndReplace, remove: removeFile, removeFolder: removeVaultFolder } = useVaultContents()
+  const { pickAndReplace, remove: removeFile, removeFolder: removeVaultFolder, rename: renameFile } = useVaultContents()
   const { queryPath } = useRouteQueryPath()
   const overlay = useOverlay()
 
@@ -74,5 +74,18 @@ export const useFileActions = () => {
     }
   }
 
-  return { getFileUrl, download, copyLink, replace, remove, removeFolder }
+  const rename = async (file: CDNFile) => {
+    const name = await overlay.create(RenameFileModal, { destroyOnClose: true }).open({ name: file.name })
+    if (!name || name === file.name) return
+    if (await renameFile({ path: file.path, sha: file.sha }, name) !== 'success') return
+    // Follow the file to its new name: the old path no longer exists
+    if (route.name === 'repo-file-path') {
+      await navigateTo(getPathToFile({ path: createFilePath(file.path.split('/').slice(0, -1).join('/'), name), repo: route.params.repo }), { replace: true })
+    }
+    else if (route.query.file === file.name) {
+      await navigateTo({ query: { ...route.query, file: name } })
+    }
+  }
+
+  return { getFileUrl, download, copyLink, replace, remove, removeFolder, rename }
 }

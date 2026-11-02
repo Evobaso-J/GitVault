@@ -25,6 +25,13 @@
         @click="replace(file)"
       />
       <UButton
+        :label="$t('rename')"
+        icon="i-mdi-rename-outline"
+        color="neutral"
+        variant="outline"
+        @click="rename(file)"
+      />
+      <UButton
         :label="$t('delete')"
         icon="i-mdi-trash-can-outline"
         color="error"
@@ -73,5 +80,5 @@ useHead({
   title: file.value?.name,
 })
 
-const { copyLink, replace, download, remove } = useFileActions()
+const { copyLink, replace, rename, download, remove } = useFileActions()
 </script>

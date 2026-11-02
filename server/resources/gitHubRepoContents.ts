@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import type { Endpoints } from '@octokit/types'
+import { isFileNameValid } from '~/resources/CDNFiles/constants'
 
 export type GhRepoContentsResponse = Endpoints['GET /repos/{owner}/{repo}/contents/{path}']['response']
 export type GhRepoContentsResponseData = GhRepoContentsResponse['data']
@@ -27,3 +28,10 @@ export const fileSchemaDelete: z.ZodType<GhRepoContentsDeleteParams> = z.object(
   message: z.string(),
   sha: z.string(),
 })
+
+/** New name, in the same folder; `sha` is the blob the user saw, so a file changed since isn't clobbered */
+export const fileSchemaRename = z.object({
+  name: z.string().trim().refine(isFileNameValid),
+  sha: z.string(),
+})
+export type GhRepoContentsRenameParams = z.infer<typeof fileSchemaRename>
