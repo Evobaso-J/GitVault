@@ -59,8 +59,10 @@
       v-if="selectedFile && isDesktop"
       class="w-96 shrink-0 border-l border-default pl-6"
     >
+      <!-- Sticks while the listing scrolls; the aside keeps stretching so its border runs full height -->
       <FolderContentsPreviewPanel
         :file="selectedFile"
+        class="sticky top-0 max-h-[calc(100dvh-var(--ui-header-height)-3rem)] overflow-y-auto"
         @close="closePreview"
       />
     </aside>
